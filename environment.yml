@@ -1,0 +1,6 @@
+channels:
+ - cantera
+dependencies:
+ - cantera
+ - matplotlib
+ - pandas
