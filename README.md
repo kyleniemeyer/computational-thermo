@@ -13,4 +13,6 @@ The code portions of this material are licensed under the BSD 3-Clause License (
 
 ## Running notebooks
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/master/colab-demo.ipynb)
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/master?filepath=blob%2Fmaster%2Fcontent%2Fintro-solving-problems.ipynb)
