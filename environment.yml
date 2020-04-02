@@ -1,6 +1,11 @@
 channels:
  - cantera
+ - conda-forge
 dependencies:
  - cantera
  - matplotlib
+ - numpy
+ - scipy
+ - pint
+ - coolprop
  - pandas
