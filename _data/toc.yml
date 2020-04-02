@@ -19,14 +19,15 @@
 # - divider: true  # Will insert a divider in the sidebar
 # - header: My Header  # Will insert a header with no link in the sidebar
 
-- url: /intro
+- url: /intro-solving-problems
   not_numbered: true
 
 #- header:
 
-- url: /first-law/intro-solving-problems
+- url: /first-law/first-law
   expand_sections: true
   sections:
+  - url: /first-law/steam-water-equilibrium
   - url: /first-law/hydrogen-storage-tanks
 
 - url: /second-law/second-law
