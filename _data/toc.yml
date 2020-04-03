@@ -29,16 +29,16 @@
 #- header:
 
 - url: /first-law/first-law
-  expand_sections: true
+  expand_sections: false
   sections:
   - url: /first-law/steam-water-equilibrium
   - url: /first-law/portable-cooling-system
   - url: /first-law/hydrogen-storage-tanks
 
 - url: /second-law/second-law
-  #expand_sections: true
-  #sections:
-  #- url: /second-law/
+  expand_sections: false
+  sections:
+  - url: /second-law/vortex-tube
 
 - divider: true
 
