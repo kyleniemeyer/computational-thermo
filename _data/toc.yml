@@ -19,8 +19,12 @@
 # - divider: true  # Will insert a divider in the sidebar
 # - header: My Header  # Will insert a header with no link in the sidebar
 
-- url: /intro-solving-problems
+- url: /intro
   not_numbered: true
+  expand_sections: true
+  sections:
+  - url: /setting-up-environment
+  - url: /intro-solving-problems
 
 #- header:
 
@@ -36,10 +40,11 @@
   #- url: /second-law/
 
 - divider: true
+
+- url: /contributing
+  not_numbered: true
+
 - url: https://github.com/kyleniemeyer/computational-thermo
   title: GitHub repository
   external: true
-  not_numbered: true
-
-- url: /contributing
   not_numbered: true

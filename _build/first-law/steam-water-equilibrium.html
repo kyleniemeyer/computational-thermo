@@ -5,13 +5,13 @@ kernel_path: content/first-law
 has_widgets: false
 title: |-
   Steam-water-equilibrium
-pagenum: 2
+pagenum: 4
 prev_page:
   url: /first-law/first-law.html
 next_page:
   url: /first-law/hydrogen-storage-tanks.html
 suffix: .ipynb
-search: tank m text liq v s u liquid state steam equation pressure begin frac end volume vapor mass align not initially equilibrium temperature t p energy delta rigid insulated c mpa determine final region fraction balance going does specific equilibrating cold accident scenario leak into partially filled thermal though same total eventually contents reach uniform well problem initial states superheated compressed calculate after dm dt meaning change experiences heat work exhibit any bulk changes kinetic potential process q w ke pe rightarrow left right therefore internal contains mixture saturated
+search: tank m text liq v s u liquid state steam pressure equation begin frac end temperature volume vapor mass align not initially equilibrium t p energy delta rigid insulated c mpa determine final region fraction balance going does specific equilibrating cold accident scenario leaks into partially filled thermal though same total eventually contents reach uniform well problem initial states superheated compressed calculate after dm dt meaning change experiences heat work exhibit any bulk changes kinetic potential process q w ke pe rightarrow left right therefore internal contains mixture saturated
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -23,7 +23,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Hot-steam-equilibrating-with-cold-liquid-water">Hot steam equilibrating with cold liquid water<a class="anchor-link" href="#Hot-steam-equilibrating-with-cold-liquid-water"> </a></h2><p>Accident scenario: steam leak into rigid, insulated tank that is partially filled with water.</p>
+<h2 id="Hot-steam-equilibrating-with-cold-liquid-water">Hot steam equilibrating with cold liquid water<a class="anchor-link" href="#Hot-steam-equilibrating-with-cold-liquid-water"> </a></h2><p>Accident scenario: steam leaks into a rigid, insulated tank that is partially filled with water.</p>
 <p>The steam and liquid water are not initially at thermal equilibrium, though they are at the same pressure. The steam is at temperature $T_{s,1}$ = 600 C and pressure $P_1$ = 20 MPa. 
 The liquid water is initially at $T_{\text{liq},1}$ = 40 C and pressure $P_1$ = 20 MPa.
 The total volume of the tank is $V$ = 10 m$^3$ and the volume of the liquid water initially in the tank is $V_{\text{liq},1} = 1 \; \text{m}^3$.</p>
@@ -349,10 +349,47 @@ Internal energy of state 2: -14809.79 kilojoule / kilogram
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So, at equilibrium, the tank contains a mixture of saturated liquid and vapor.</p>
+<p>So, at equilibrium, the tank contains a mixture of saturated liquid and vapor, with temperature and pressure:</p>
 
 </div>
 </div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">final_temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">water_equilibrium</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="n">final_pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">water_equilibrium</span><span class="o">.</span><span class="n">P</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final temperature: </span><span class="si">{</span><span class="n">final_temperature</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final pressure: </span><span class="si">{</span><span class="n">final_pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">MPa</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Final temperature: 510.44 kelvin
+Final pressure: 3.19 megapascal
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 

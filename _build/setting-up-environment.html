@@ -1,0 +1,163 @@
+---
+interact_link: content/setting-up-environment.ipynb
+kernel_name: python3
+kernel_path: content
+has_widgets: false
+title: |-
+  Setting up your computing environment
+pagenum: 1
+prev_page:
+  url: /intro.html
+next_page:
+  url: /intro-solving-problems.html
+suffix: .ipynb
+search: install jupyter notebooks colab python notebook google com conda cantera datalore packages org azure environment mybinder anaconda thermo bash pint research microsoft binder different need create coolprop should new computer activate y using cloud miniconda installing choose io example command run channel numpy scipy get service apt click kyleniemeyer computational available button package cells few options examples text development ide spyder free slightly rather docs latest macos linux windows matplotlib tell e g zsh want under environments not work account qq pip link svg github master common already automatically based after cell bit search setting computing running solving problems approaches
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Setting up your computing environment</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You have a few options for running these examples and solving other problems using the approaches shown:</p>
+<ul>
+<li>Install and use Python and a text editor or integrated development environment (IDE), like <a href="https://www.spyder-ide.org">Spyder</a>, on your computer</li>
+<li>Install and use Jupyter Notebooks on your computer</li>
+<li>Use a (free) cloud Jupyter Notebook environment like <a href="https://colab.research.google.com">Google Colab</a>, <a href="https://notebooks.azure.com">Microsoft Azure Notebooks</a>, or <a href="https://mybinder.org">Binder</a></li>
+</ul>
+<p>Using Python and Jupyter Notebooks on your computer require essentially the same setup, which is slightly different for different operating systems. The steps following this assume you are planning to use Jupyter Notebook.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>miniconda:</strong> Rather than installing the full Anaconda distribution, you could choose to install <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>, which is a minimal installer for conda. In this case, you would need to explicitly install all the packages you need.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Installing-Jupyter">Installing Jupyter<a class="anchor-link" href="#Installing-Jupyter"> </a></h2><ol>
+<li><p>I recommend you <a href="https://docs.anaconda.com/anaconda/install/">install Anaconda</a> to manage your Python environment—it makes installing and managing packages very easy, and works on macOS, Linux, and Windows.</p>
+</li>
+<li><p>Create and activate an environment (for example, called <code>thermo</code>) for Jupyter with Python 3.7. From the command line for Linux and macOS, or the Anaconda Prompt on Windows, run:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span>$ conda create -vv --name thermo --channel cantera --channel conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 cantera pint coolprop jupyter ipython numpy scipy matplotlib
+$ conda activate thermo
+</pre></div>
+<p>Before the second command, you may need to tell your shell (e.g., bash, zsh) about conda, by doing <code>conda init zsh</code> for example. If you get an error with the <code>conda activate</code> command, your terminal should tell you to do this.</p>
+<p>You should activate this environment whenever you want to use these packages.</p>
+<ol>
+<li>Run Jupyter Notebook:</li>
+</ol>
+<div class="highlight"><pre><span></span>$ jupyter notebook
+</pre></div>
+<p>and create a new Python 3 notebook with "New" then "Python 3" under "Notebook:".</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Cloud-Jupyter-Notebook-Environments">Cloud Jupyter Notebook Environments<a class="anchor-link" href="#Cloud-Jupyter-Notebook-Environments"> </a></h2><p>If you cannot or prefer not to install Anaconda/Python/Jupyter on your computer, you can use one of a number of cloud Jupyter Notebook environments to run these examples and do your work. Major options include:</p>
+<ul>
+<li><a href="https://colab.research.google.com">Google Colab</a></li>
+<li><a href="https://mybinder.org">Binder</a></li>
+<li><a href="https://notebooks.azure.com">Microsoft Azure Notebooks</a></li>
+<li><a href="https://datalore.io">DataLore</a></li>
+</ul>
+<h3 id="Google-Colab">Google Colab<a class="anchor-link" href="#Google-Colab"> </a></h3><p><a href="https://colab.research.google.com">Google Colab</a> (Colaboratory) is a nice, newer service connected to your Google account that offers free computation time.</p>
+<p>In a new notebook, you need to first install Cantera:</p>
+<div class="highlight"><pre><span></span>!apt-get -qq update -y
+!apt-add-repository -y ppa:speth/cantera &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+!apt-get -qq install -y cantera-python3
+</pre></div>
+<p>and then additional packages like Pint and CoolProp:</p>
+<div class="highlight"><pre><span></span>!pip install -q pint coolprop
+</pre></div>
+<p>Or, click this link: <a href="https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/master/colab-demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<p>(Other common packages like NumPy and SciPy should already be available.)</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Binder">Binder<a class="anchor-link" href="#Binder"> </a></h3><p><a href="https://mybinder.org">Binder</a> is a service that runs Jupyter Notebooks online, and can automatically create an environment based on a configuration file:</p>
+<ol>
+<li>Visit <a href="https://mybinder.org">https://mybinder.org</a></li>
+<li>Enter the URL for this textbook: <a href="https://github.com/kyleniemeyer/computational-thermo">https://github.com/kyleniemeyer/computational-thermo</a></li>
+<li>Click the "launch" button.</li>
+</ol>
+<p>Or, just use this link: <a href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/master"><img src="https://mybinder.org/badge_logo.svg" alt="Binder"></a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Microsoft-Azure-Notebooks">Microsoft Azure Notebooks<a class="anchor-link" href="#Microsoft-Azure-Notebooks"> </a></h3><p>With <a href="https://notebooks.azure.com/">Microsoft Azure Notebooks</a>, after signing in with your Microsoft or Outlook account, you can create a "project" which contains one or more notebooks, text files, data, etc.</p>
+<p>In a new Python 3 notebook, you can install Cantera, Pint, and CoolProp in the first cell using:</p>
+<div class="highlight"><pre><span></span>!conda install -y --channel cantera cantera
+!pip install pint coolprop
+</pre></div>
+<p>(This may take some time.)</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="DataLore">DataLore<a class="anchor-link" href="#DataLore"> </a></h3><p><a href="https://datalore.io">DataLore</a> is a new and slightly different service that is still under development. Rather than support Jupyter Notebooks directly, they have developed their own implementation of a Python-based notebook.</p>
+<p>Although DataLore workbooks come with many common packages installed (e.g., NumPy, SciPy, Matplotlib), it is a bit more challenging to install other packages:</p>
+<ol>
+<li>Go to "Tools" → "Library Manager"</li>
+<li>In "All Libraries", search for the package you want to install. For example, we'll need to install <code>pint</code>.</li>
+<li>In the search results, choose the correct package, then from the dropdown next to the "Install" button choose the latest version available (this should already be selected).</li>
+<li>Click the "Install" button. After a few moments, the package should be accessible in your workbook.</li>
+<li>Repeat for other packages as needed.</li>
+</ol>
+<p>Unfortunately, it is not clear how to install Cantera at the moment, so DataLore may be limited. The behavior is also a bit different than expected with Jupyter notebooks regarding work between different cells, since DataLore is more strict about executing cells in order and tracking dependency—it automatically updates any cells that depend on variables that change in the current cell.</p>
+<p>This information will be updated as DataLore evolves and more documentation is available.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
