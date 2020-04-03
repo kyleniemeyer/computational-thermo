@@ -40,6 +40,8 @@
   expand_sections: false
   sections:
   - url: /second-law/vortex-tube
+  - url: /second-law/heating-water
+  - url: /second-law/turbine-efficiency
 
 - divider: true
 
