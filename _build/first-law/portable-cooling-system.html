@@ -1,0 +1,269 @@
+---
+interact_link: content/first-law/portable-cooling-system.ipynb
+kernel_name: python3
+kernel_path: content/first-law
+has_widgets: false
+title: |-
+  Portable cooling system
+pagenum: 5
+prev_page:
+  url: /first-law/steam-water-equilibrium.html
+next_page:
+  url: /first-law/hydrogen-storage-tanks.html
+suffix: .ipynb
+search: system text m cooling canister equation mass state c vapor density h begin end portable refrigerant heat saturated relief valve discarded liquid energy initial final balance process q u uses canisters volume l charged ra quality e fraction transfered person escapes pressure reaches controlled stops working must empty problem determine ratio amount absorbed before compare ice pack latent fusion delta fus j g specify based temperature opens fluid leaves next perform where enthalpy refigerant leaving same properties tank neglecting cd frac
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Portable cooling system</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A portable cooling system uses canisters of volume 2 L charged with refrigerant R134a at 20°C and quality 0.05 (i.e., vapor mass fraction). Heat is transfered from a person to the canister. Saturated vapor escapes from the canister when the pressure in the canister reaches 30°C, controlled by a relief valve. The cooling system stops working and must be discarded when it is empty of liquid refrigerant.</p>
+<p><strong>Problem:</strong> Determine the cooling density of the system: the ratio of the amount of energy that can be absorbed before the canister is discarded to the initial system mass. Compare this to the cooling density of an ice pack (with latent heat of fusion of $\Delta h_{\text{fus}} = 333.6$ J/g).</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># load necessary modules</span>
+
+<span class="c1"># Numpy adds some useful numerical types and functions</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Cantera will handle thermodynamic properties</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="c1"># Pint gives us some helpful unit conversion</span>
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Specify initial state:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">volume</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;liter&#39;</span><span class="p">)</span>
+<span class="n">temp_charge</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+<span class="n">quality_charge</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">initial</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Hfc134a</span><span class="p">()</span>
+<span class="n">initial</span><span class="o">.</span><span class="n">TX</span> <span class="o">=</span> <span class="n">temp_charge</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">quality_charge</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Final state, based on the temperature when the relief valve opens and that the fluid is saturated vapor:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">final</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Hfc134a</span><span class="p">()</span>
+<span class="n">temp_final</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+<span class="n">quality_final</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">final</span><span class="o">.</span><span class="n">TX</span> <span class="o">=</span> <span class="n">temp_final</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">quality_final</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Do a mass balance on the system, over the process from state 1 to state 2:
+\begin{equation}
+0 = m_{\text{out}} + m_2 - m_1 \;,
+\end{equation}
+which we can use to find the mass that leaves the canister ($m_{\text{out}}$):</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mass_initial</span> <span class="o">=</span> <span class="n">volume</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="n">initial</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span>
+<span class="n">mass_final</span> <span class="o">=</span> <span class="n">volume</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="n">final</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span>
+<span class="n">mass_out</span> <span class="o">=</span> <span class="n">mass_initial</span> <span class="o">-</span> <span class="n">mass_final</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mass that left the canister: </span><span class="si">{</span><span class="n">mass_out</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ureg</span><span class="o">.</span><span class="n">kg</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>mass that left the canister: 0.70 kilogram
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, we can perform an energy balance of the system over the process:
+\begin{equation}
+Q_{\text{in}} =  m_{\text{out}}  h_{\text{out}} + m_2 u_2 - m_1 u_1 \;,
+\end{equation}
+where $h_{\text{out}}$ is the enthalpy of the refigerant leaving the system, which has the same properties as the final state in the tank (no liquid, and 30°C):</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">heat_in</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">mass_out</span><span class="o">*</span><span class="n">Q_</span><span class="p">(</span><span class="n">final</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span> <span class="o">+</span> 
+    <span class="n">mass_final</span><span class="o">*</span><span class="n">Q_</span><span class="p">(</span><span class="n">final</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span> <span class="o">-</span> 
+    <span class="n">mass_initial</span><span class="o">*</span><span class="n">Q_</span><span class="p">(</span><span class="n">initial</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>THe cooling density (neglecting the canister mass) is
+\begin{equation}
+CD = \frac{Q_{\text{in}}}{m_1}
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cooling_density</span> <span class="o">=</span> <span class="n">heat_in</span> <span class="o">/</span> <span class="n">mass_initial</span>
+<span class="n">cooling_density</span><span class="o">.</span><span class="n">ito</span><span class="p">(</span><span class="s1">&#39;W hr/kg&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cooling density: </span><span class="si">{</span><span class="n">cooling_density</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">cooling_density_ice</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">333.6</span><span class="p">,</span> <span class="s1">&#39;J/g&#39;</span><span class="p">)</span>
+<span class="n">cooling_density_ice</span><span class="o">.</span><span class="n">ito</span><span class="p">(</span><span class="s1">&#39;W hr/kg&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cooling density of ice: </span><span class="si">{</span><span class="n">cooling_density_ice</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>cooling density: 49.37 hour * watt / kilogram
+cooling density of ice: 92.67 hour * watt / kilogram
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+ 
+
+
+    </main>
+    

@@ -32,6 +32,7 @@
   expand_sections: true
   sections:
   - url: /first-law/steam-water-equilibrium
+  - url: /first-law/portable-cooling-system
   - url: /first-law/hydrogen-storage-tanks
 
 - url: /second-law/second-law
