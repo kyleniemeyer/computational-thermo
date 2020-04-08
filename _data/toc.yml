@@ -44,6 +44,11 @@
   - url: /second-law/turbine-efficiency
   - url: /second-law/solar-powered-pump
 
+- url: /properties-pure/properties-pure
+  expand_sections: false
+  sections: 
+  - url: /properties-pure/reduced-helmholtz
+
 - divider: true
 
 - url: /contributing
