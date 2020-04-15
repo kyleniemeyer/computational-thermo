@@ -11,7 +11,7 @@ prev_page:
 next_page:
   url: /first-law/first-law.html
 suffix: .ipynb
-search: scipy x equations systems function org numpy html f matplotlib docs doc reference root equation solve need python optimization generated optimize rootscalar using plotting solving integrating ode example plot system scalar thermodynamics problems plots integrate examples notebook our set already provides might lets linspace also axes multiple figure same encounter equal unknowns linear linalg roots value mathbf zero g functions vector returns modules addition cantera pint help additional packages scientific ecosystem ordinary differential lecture notes lectures excellent detailed resources topics programming general contained electronic book techniques needed contains specific index produce nice results used anaconda computing environment likely installed not
+search: x scipy equations function y org numpy systems mathbf html equation docs doc reference f root integrate generated solve using need matplotlib example system optimize begin end problems python integrating optimization lets roots rootscalar initial align ordinary plotting solving ode set values plot also data encounter equal unknowns cases value zero scalar vector where frac ammonia pressure volume thermodynamics plots differential examples notebook our used already provides similar might between linspace axes multiple figure same linear linalg words g case form module functions create returns guesses satisfy ln sqrt should integral want trapz during work done piston v t solveivp
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -352,7 +352,80 @@ Function evaluated at root: -2.220446049250313e-16
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Systems-of-equations-/-vector-functions">Systems of equations / vector functions<a class="anchor-link" href="#Systems-of-equations-/-vector-functions"> </a></h3>
+<h3 id="Systems-of-equations-/-vector-functions">Systems of equations / vector functions<a class="anchor-link" href="#Systems-of-equations-/-vector-functions"> </a></h3><p>We can also solve systems of equations in a similar fashion using the SciPy <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root.html"><code>root()</code></a> functino, where we find the roots $\mathbf{x}$ that satisfy $\mathbf{f} (\mathbf{x}) = 0$.</p>
+<p>For example, let's try to find the values of $x$ and $y$ that satisfy these equations:
+\begin{align}
+x \ln (x) &amp;= y^3 \\
+\sqrt(x) &amp;= \frac{1}{y}
+\end{align}
+We have two equations and two unknowns, so we should be able to find the roots.</p>
+<p>To solve, we create a function that evaluates these equations when made equal to zero, or
+\begin{align}
+x \ln (x) - y^3 &amp;= 0 \\
+\sqrt(x) - \frac{1}{y} &amp;= 0
+\end{align}
+then we call <code>root</code> specifying this function and two initial guesses for $x$ and $y$:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
+
+<span class="k">def</span> <span class="nf">system</span><span class="p">(</span><span class="nb">vars</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">y</span><span class="p">)</span>
+        <span class="p">]</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">root</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Roots: x = </span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">, y = </span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Roots: x =  1.467, y =  0.826
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Integrating-ODE-systems">Integrating ODE systems<a class="anchor-link" href="#Integrating-ODE-systems"> </a></h2><p>In some cases, we encounter problems that require integrating one or more ordinary different equations in time. Depending on the form of the problem, we may need to integrate a function between two points (definite integral), or we may have a system of ordinary differential equations.</p>
+
 </div>
 </div>
 </div>
@@ -362,7 +435,114 @@ Function evaluated at root: -2.220446049250313e-16
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Integrating-ODE-systems">Integrating ODE systems<a class="anchor-link" href="#Integrating-ODE-systems"> </a></h2>
+<h3 id="Numerical-integral-of-samples">Numerical integral of samples<a class="anchor-link" href="#Numerical-integral-of-samples"> </a></h3><p>In some cases we have a set of $(x,y)$ data that we want to integrate numerically.
+We can do this using the NumPy <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.trapz.html"><code>trapz()</code> function</a>, which implements the composite trapezoidal rule.</p>
+<p>For example, let's consider a situation where a reciprocating compressor is being used to compress ammonia vapor during a refrigeration cycle. We have some experimental measurements of the pressure-volume data during the compression stroke (see table), and we want to determine the work done on the ammonia by the piston.</p>
+<table>
+<thead><tr>
+<th>Pressure (psi)</th>
+<th>Volume (in^3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>65.1</td>
+<td>80.0</td>
+</tr>
+<tr>
+<td>80.5</td>
+<td>67.2</td>
+</tr>
+<tr>
+<td>93.2</td>
+<td>60.1</td>
+</tr>
+<tr>
+<td>110</td>
+<td>52.5</td>
+</tr>
+<tr>
+<td>134</td>
+<td>44.8</td>
+</tr>
+<tr>
+<td>161</td>
+<td>37.6</td>
+</tr>
+<tr>
+<td>190</td>
+<td>32.5</td>
+</tr>
+</tbody>
+</table>
+<p>To find the work done by the piston to the ammonia, we can integrate pressure with respect to volume:
+\begin{equation}
+W_{\text{in}} = -\int_{V_1}^{V_2} P \, dV
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">([</span><span class="mf">65.1</span><span class="p">,</span> <span class="mf">80.5</span><span class="p">,</span> <span class="mf">93.2</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span> <span class="mi">190</span><span class="p">],</span> <span class="s1">&#39;psi&#39;</span><span class="p">)</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">([</span><span class="mf">80.0</span><span class="p">,</span> <span class="mf">67.2</span><span class="p">,</span> <span class="mf">60.1</span><span class="p">,</span> <span class="mf">52.5</span><span class="p">,</span> <span class="mf">44.8</span><span class="p">,</span> <span class="mf">37.6</span><span class="p">,</span> <span class="mf">32.5</span><span class="p">],</span> <span class="s1">&#39;in^3&#39;</span><span class="p">)</span>
+
+<span class="c1"># convert to SI units</span>
+<span class="n">pressure</span><span class="o">.</span><span class="n">ito</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+<span class="n">volume</span><span class="o">.</span><span class="n">ito</span><span class="p">(</span><span class="s1">&#39;m^3&#39;</span><span class="p">)</span>
+
+<span class="n">work</span> <span class="o">=</span> <span class="o">-</span><span class="n">Q_</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">pressure</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">volume</span><span class="o">.</span><span class="n">magnitude</span><span class="p">),</span> 
+    <span class="n">pressure</span><span class="o">.</span><span class="n">units</span> <span class="o">*</span> <span class="n">volume</span><span class="o">.</span><span class="n">units</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Work done on fluid: </span><span class="si">{</span><span class="n">work</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;J&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Work done on fluid: 589.45 joule
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Initial-value-problems">Initial value problems<a class="anchor-link" href="#Initial-value-problems"> </a></h3><p>In other words, we may have a system like
+\begin{equation}
+\frac{d \mathbf{y}}{dt} = \mathbf{f} (t, \mathbf{y})
+\end{equation}
+where $\mathbf{y}$ is the vector of state variables, for which we should have the initial values ($\mathbf{y}(t=0)$). In this case, we can use the SciPy function <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html"><code>solve_ivp()</code> function</a>, part of the <code>integrate</code> module.</p>
+
 </div>
 </div>
 </div>
