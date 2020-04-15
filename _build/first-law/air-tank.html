@@ -1,0 +1,341 @@
+---
+interact_link: content/first-law/air-tank.ipynb
+kernel_name: python3
+kernel_path: content/first-law
+has_widgets: false
+title: |-
+  Air in a tank
+pagenum: 9
+prev_page:
+  url: /first-law/hydrogen-storage-tanks.html
+next_page:
+  url: /second-law/second-law.html
+suffix: .ipynb
+search: t tank air u v wall final align c steel begin end initially stainless specific kg treat equilibrium temperature not equation energy balance mt ma same solve equations unknowns above four spherical metal stores psi made heat capacity j k density m mm thick inner radius cm outer insulated ideal gas incompressible substance eventually reaches thermal pressure during equilibration process volume does change perform system contains both text temperatures fundamentally unknown using version alternate solution wanted also problem larger although seen necessary example f left right being added used expected get answer before without any real benefits fact bit work
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Air in a tank</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A spherical metal tank stores hot air, initially at 200°C and 350 psi.
+The tank is made out of stainless steel, with specific heat capacity 471 J/kg-K and density 7902 kg/m$^3$. The tank wall is 0.35 mm thick and initially at 20°C; the inner radius is 10 cm and the outer wall is insulated.</p>
+<p>Treat the air in the tank as an ideal gas and the stainless steel tank wall as an incompressible substance.</p>
+<p>Eventually the air reaches thermal equilibrium with the tank wall. Find the final temperature of the air and the tank, and the final pressure of the air.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># input data</span>
+<span class="n">tank_specific_heat</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">471</span><span class="p">,</span> <span class="s1">&#39;J/(kg*K)&#39;</span><span class="p">)</span>
+<span class="n">tank_density</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">7902</span><span class="p">,</span> <span class="s1">&#39;kg/m^3&#39;</span><span class="p">)</span>
+<span class="n">tank_radius</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">)</span>
+<span class="n">tank_thickness</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.35</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">)</span>
+
+<span class="n">tank_temp1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+
+<span class="n">air_temp1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+<span class="n">air_pres1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span> <span class="s1">&#39;psi&#39;</span><span class="p">)</span>
+
+<span class="c1"># use an ideal gas mixture to represent air</span>
+<span class="n">air1</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+<span class="n">air1</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">air_temp1</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> 
+    <span class="n">air_pres1</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> 
+    <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">air_volume</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">tank_radius</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="mf">3.0</span>
+<span class="n">air_mass</span> <span class="o">=</span> <span class="n">air_volume</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span>
+
+<span class="n">tank_volume</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>
+    <span class="p">(</span><span class="n">tank_radius</span> <span class="o">+</span> <span class="n">tank_thickness</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">tank_radius</span><span class="o">**</span><span class="mi">3</span>
+    <span class="p">)</span>
+<span class="n">tank_mass</span> <span class="o">=</span> <span class="n">tank_volume</span> <span class="o">*</span> <span class="n">tank_density</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>During the equilibration process, the specific volume of the air does not change:
+\begin{equation}
+v_{a,2} = v_{a,1} \;.
+\end{equation}</p>
+<p>We can perform an energy balance on the system that contains both the tank and air:
+\begin{align}
+0 &amp;= m_t ( u_{t,2} - u_{t,1} ) + m_a ( u_{a,2} - u_{a,1} ) \\
+0 &amp;= m_t c_{\text{steel}} (T_{t,2} - T_{t,1}) - m_a ( u_{a,2} - u_{a,1} )
+\end{align}
+and we know that at equilibrium the temperatures are the same: $T_{t,2} = T_{a,2}$.</p>
+<p>So, we fundamentally have <strong>one</strong> unknown, the final temperature, which we can solve using the final version of the energy balance:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">tank_energy</span><span class="p">(</span><span class="n">T2</span><span class="p">,</span> <span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Returns value of energy balance equation based on input T2</span>
+<span class="sd">    </span>
+<span class="sd">    This equation should return zero, if the correct T2 is input.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># the temperatures are the same</span>
+    <span class="n">tank_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">T2</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    <span class="n">air_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">T2</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    
+    <span class="n">air_specific_volume2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span>
+    <span class="n">air_density2</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">air_specific_volume2</span>
+
+    <span class="n">air2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+    <span class="n">air2</span><span class="o">.</span><span class="n">TDX</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">air_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="n">air_density2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kg/m^3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+        <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">tank_mass</span> <span class="o">*</span> <span class="n">tank_specific_heat</span> <span class="o">*</span> <span class="p">(</span><span class="n">tank_temp2</span> <span class="o">-</span> <span class="n">tank_temp1</span><span class="p">)</span> <span class="o">+</span>
+        <span class="n">air_mass</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">))</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find the root of the equation, with an initial guess of 300 K</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">root</span><span class="p">(</span>
+    <span class="n">tank_energy</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> 
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># the solution is the first element of the sol.x list</span>
+<span class="n">temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final temperature: </span><span class="si">{</span><span class="n">temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;degC&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">air2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+<span class="n">air2</span><span class="o">.</span><span class="n">TDX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="n">air1</span><span class="o">.</span><span class="n">density</span><span class="p">,</span>
+    <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+    <span class="p">)</span>
+<span class="n">air_pres2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">P</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final air pressure: </span><span class="si">{</span><span class="n">air_pres2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;psi&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Final temperature: 64.83 degree_Celsius
+Final air pressure: 250.01 pound_force_per_square_inch
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Alternate-solution">Alternate solution<a class="anchor-link" href="#Alternate-solution"> </a></h2><p>If we wanted, we could also solve this problem with a larger number of equations and unknowns, although as seen above this is not necessary. For example, we can treat $v_{a,2}$, $T_{a,2}$, $T_{t,2}$, and $u_{a,2}$ as the four unknowns, with the equations
+\begin{align}
+v_{a,2} &amp;= v_{a,1} \\
+T_{a,2} &amp;= T_{t,2} \\
+u_{a,2} &amp;= f \left( T_{a,2}, v_{a,2} \right)
+\end{align}
+being added to the one used above.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">tank_energy2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Returns value of energy balance equation based on input T2</span>
+<span class="sd">    </span>
+<span class="sd">    This equation should return zero, if the correct values are input.</span>
+<span class="sd">    </span>
+<span class="sd">    x: T_t2, v_a2, T_a2, u_a2</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">tank_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    <span class="n">air_specific_volume2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span>
+    <span class="n">air_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    <span class="n">air_internal_energy2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span>
+    
+    <span class="n">air_density2</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">air_specific_volume2</span>
+
+    <span class="n">air2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+    <span class="n">air2</span><span class="o">.</span><span class="n">TDX</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">air_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="n">air_density2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kg/m^3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+        <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">tank_mass</span> <span class="o">*</span> <span class="n">tank_specific_heat</span> <span class="o">*</span> <span class="p">(</span><span class="n">tank_temp2</span> <span class="o">-</span> <span class="n">tank_temp1</span><span class="p">)</span> <span class="o">+</span>
+         <span class="n">air_mass</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">))</span>
+         <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">air_specific_volume2</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">air_temp2</span> <span class="o">-</span> <span class="n">tank_temp2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">air_internal_energy2</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;J/kg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="p">]</span>
+
+<span class="c1"># now we have to give guesses for all four variables</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">root</span><span class="p">(</span>
+    <span class="n">tank_energy2</span><span class="p">,</span> <span class="p">[</span><span class="mf">300.0</span><span class="p">,</span> <span class="n">air1</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="n">air1</span><span class="o">.</span><span class="n">u</span><span class="p">],</span> 
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># the solution is the first element of the sol.x list</span>
+<span class="n">tank_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final temperature of tank: </span><span class="si">{</span><span class="n">tank_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;degC&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">air_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final temperature of air: </span><span class="si">{</span><span class="n">air_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;degC&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">air2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+<span class="n">air2</span><span class="o">.</span><span class="n">TDX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">air_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+    <span class="p">)</span>
+<span class="n">air_pres2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">P</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final air pressure: </span><span class="si">{</span><span class="n">air_pres2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;psi&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Final temperature of tank: 64.83 degree_Celsius
+Final temperature of air: 64.83 degree_Celsius
+Final air pressure: 250.01 pound_force_per_square_inch
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As expected, we get the same answer as before, without any real benefits. In fact, this is a bit more work, since we had to specify four guess values instead of one.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
