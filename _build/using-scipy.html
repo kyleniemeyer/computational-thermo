@@ -11,7 +11,7 @@ prev_page:
 next_page:
   url: /first-law/first-law.html
 suffix: .ipynb
-search: x scipy equations function y org numpy systems mathbf html equation docs doc reference f root integrate generated solve using need matplotlib example system optimize begin end problems python integrating optimization lets roots rootscalar initial align ordinary plotting solving ode set values plot also data encounter equal unknowns cases value zero scalar vector where frac ammonia pressure volume thermodynamics plots differential examples notebook our used already provides similar might between linspace axes multiple figure same linear linalg words g case form module functions create returns guesses satisfy ln sqrt should integral want trapz during work done piston v t solveivp
+search: scipy x equations function org y equation integrate html numpy systems docs doc reference mathbf generated f root lets optimize using solve need example data begin end integrating matplotlib also system problems python optimization roots form rootscalar initial where align work ordinary plotting solving ode set values plot encounter equal unknowns cases value zero module functions scalar vector frac integral ammonia pressure volume v p fit c thermodynamics plots differential examples notebook our used already provides similar might between linspace axes multiple figure same linear linalg words g case create returns guesses satisfy ln sqrt should numerical want numerically trapz
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -523,6 +523,188 @@ W_{\text{in}} = -\int_{V_1}^{V_2} P \, dV
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Work done on fluid: 589.45 joule
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Numerical-integral-of-expression">Numerical integral of expression<a class="anchor-link" href="#Numerical-integral-of-expression"> </a></h3><p>We can also numerically integrate expressions/functions using the SciPy <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html"><code>quad()</code> function</a>, also in the <code>integrate</code> module.</p>
+<p>Let's build on the previous example: first, let's fit the compressor data to the polytropic form $P V^n = c$, where $c$ and $n$ are constants, then we can integrate the resulting function to calculate work.</p>
+<p>To fit the data, we need to rearrange the equation to the form $y = f(x)$:
+\begin{equation}
+P = c V^{-n}
+\end{equation}
+We'll use the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html"><code>scipy.optimize.curve_fit()</code></a> function for that.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">([</span><span class="mf">65.1</span><span class="p">,</span> <span class="mf">80.5</span><span class="p">,</span> <span class="mf">93.2</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span> <span class="mi">190</span><span class="p">],</span> <span class="s1">&#39;psi&#39;</span><span class="p">)</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">([</span><span class="mf">80.0</span><span class="p">,</span> <span class="mf">67.2</span><span class="p">,</span> <span class="mf">60.1</span><span class="p">,</span> <span class="mf">52.5</span><span class="p">,</span> <span class="mf">44.8</span><span class="p">,</span> <span class="mf">37.6</span><span class="p">,</span> <span class="mf">32.5</span><span class="p">],</span> <span class="s1">&#39;in^3&#39;</span><span class="p">)</span>
+
+<span class="c1"># convert to SI units</span>
+<span class="n">pressure</span><span class="o">.</span><span class="n">ito</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+<span class="n">volume</span><span class="o">.</span><span class="n">ito</span><span class="p">(</span><span class="s1">&#39;m^3&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Evaluate P = c * V**(-n). </span>
+<span class="sd">    </span>
+<span class="sd">    n and c will be found by the curve_fit functino.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="o">-</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># this function will automatically fit the unknown constants</span>
+<span class="n">params</span><span class="p">,</span> <span class="n">cov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">fit</span><span class="p">,</span> <span class="n">volume</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Parameters: n=</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s1"> 5.3f</span><span class="si">}</span><span class="s1">, c=</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1"> 5.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Parameters: n= 1.170, c= 194.200
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/miniconda3/envs/jupyter/lib/python3.7/site-packages/ipykernel_launcher.py:21: RuntimeWarning: overflow encountered in power
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">volume</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">volume</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">volume</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># plot data and fit</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">),</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;fit: n=</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s1"> 5.3f</span><span class="si">}</span><span class="s1">, c=</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1"> 5.3f</span><span class="si">}</span><span class="s1">&#39;</span>
+         <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Volume (m^3)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pressure (Pa)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ticklabel_format</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;sci&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">scilimits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/using-scipy_22_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That looks like a great fit to the data, so now let's evaluate the work by integrating:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span>
+    <span class="n">fit</span><span class="p">,</span> <span class="n">volume</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">volume</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> 
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span>
+
+<span class="n">work</span> <span class="o">=</span> <span class="o">-</span><span class="n">Q_</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">units</span> <span class="o">*</span> <span class="n">volume</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Work done on fluid: </span><span class="si">{</span><span class="n">work</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;J&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Work done on fluid: 586.26 joule
 </pre>
 </div>
 </div>
