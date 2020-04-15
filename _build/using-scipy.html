@@ -11,7 +11,7 @@ prev_page:
 next_page:
   url: /first-law/first-law.html
 suffix: .ipynb
-search: scipy x equations function org y equation integrate html numpy systems docs doc reference mathbf generated f root lets optimize using solve need example data begin end integrating matplotlib also system problems python optimization roots form rootscalar initial where align work ordinary plotting solving ode set values plot encounter equal unknowns cases value zero module functions scalar vector frac integral ammonia pressure volume v p fit c thermodynamics plots differential examples notebook our used already provides similar might between linspace axes multiple figure same linear linalg words g case create returns guesses satisfy ln sqrt should numerical want numerically trapz
+search: scipy x function equations y equation org html docs doc reference integrate generated numpy systems f mathbf optimize end system root begin example lets using solve problems need data integrating optimization matplotlib also scalar where python cases roots value form rootscalar input initial align sqrt work minimize force potential energy ordinary plotting solving ode set values plot encounter equal unknowns zero module functions vector frac integral want consider ammonia pressure volume v p fit c variables spring horizontal la lb thermodynamics plots differential general examples notebook our used already provides similar might variable between linspace axes multiple figure same linear
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -724,6 +724,7 @@ We'll use the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scip
 \frac{d \mathbf{y}}{dt} = \mathbf{f} (t, \mathbf{y})
 \end{equation}
 where $\mathbf{y}$ is the vector of state variables, for which we should have the initial values ($\mathbf{y}(t=0)$). In this case, we can use the SciPy function <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html"><code>solve_ivp()</code> function</a>, part of the <code>integrate</code> module.</p>
+<p><strong>TBD</strong></p>
 
 </div>
 </div>
@@ -734,9 +735,139 @@ where $\mathbf{y}$ is the vector of state variables, for which we should have th
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Optimization">Optimization<a class="anchor-link" href="#Optimization"> </a></h2>
+<h2 id="Optimization">Optimization<a class="anchor-link" href="#Optimization"> </a></h2><p>For some problems, we may want to find the input parameter(s) that minimize or maximize some function. In these cases, we can use the SciPy <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html"><code>minimize_scalar()</code></a> function for a scalar function with one input variable, or the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html"><code>minimize()</code></a> function for a scalar function of one or more input variables.</p>
+<p>(Note: this is a fairly complicated topic, and we will only consider relatively simple optimization problems.)</p>
+<p>For example, consider a spring with a horizontal force applied; we can calculate the potential energy of the spring:
+\begin{equation}
+PE(x) = 0.5 k x^2 - F x \;.
+\end{equation}
+At equilibrium, the potential energy will be at a minimum, so given a particular force we can find the displacement by finding the value that minimizes the potential energy.</p>
+
 </div>
 </div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize_scalar</span>
+
+<span class="n">spring_constant</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="c1"># N/cm</span>
+<span class="n">force</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="c1"># N</span>
+
+<span class="k">def</span> <span class="nf">spring</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calculates potential energy of spring pulled by force.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">F</span> <span class="o">*</span> <span class="n">x</span>
+
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">minimize_scalar</span><span class="p">(</span><span class="n">spring</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">spring_constant</span><span class="p">,</span> <span class="n">force</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Equilibrium displacement: </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> cm&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Equilibrium displacement:  2.50 cm
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A more complicated problem is a system with two springs, connected at one end with a force in some general direction (with $x$ and $y$ components); the system has both horizontal and vertical components. The springs have spring constants $k_a$ and $k_b$, and unloaded lengths $L_a$ and $L_b$.</p>
+<p>The potential energy for this system is
+\begin{equation}
+PE(x,y) = 0.5 k_a \left( \sqrt{x^2 + (L_a - y)^2} - L_a \right)^2 + 0.5 k_b \left( \sqrt{x^2 + (L_b + y)^2} - L_b \right)^2 - F_x x - F_y y
+\end{equation}
+where $x$ and $y$ are the horizontal and vertical deformations from the unloaded state.
+We can minimize this function of two variables to find the displacement based on the force:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+
+<span class="n">spring_constant_a</span> <span class="o">=</span> <span class="mf">9.0</span> <span class="c1"># N/cm</span>
+<span class="n">spring_constant_b</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="c1"># N/cm</span>
+<span class="n">length_a</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="c1"># cm</span>
+<span class="n">length_b</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="c1"># cm</span>
+
+<span class="n">force_x</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="c1"># N</span>
+<span class="n">force_y</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="c1"># N</span>
+
+<span class="k">def</span> <span class="nf">spring_system</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">ka</span><span class="p">,</span> <span class="n">kb</span><span class="p">,</span> <span class="n">La</span><span class="p">,</span> <span class="n">Lb</span><span class="p">,</span> <span class="n">Fx</span><span class="p">,</span> <span class="n">Fy</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calculates potential energy of springs pulled by force.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">xvec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">xvec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="mf">0.5</span><span class="o">*</span><span class="n">ka</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">La</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">La</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span>
+        <span class="mf">0.5</span><span class="o">*</span><span class="n">kb</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Lb</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">Lb</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="o">-</span> <span class="p">(</span><span class="n">Fx</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Fy</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+        <span class="p">)</span>
+
+<span class="n">guesses</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+    <span class="n">spring_system</span><span class="p">,</span> <span class="n">guesses</span><span class="p">,</span> 
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">spring_constant_a</span><span class="p">,</span> <span class="n">spring_constant_b</span><span class="p">,</span> <span class="n">length_a</span><span class="p">,</span> <span class="n">length_b</span><span class="p">,</span> <span class="n">force_x</span><span class="p">,</span> <span class="n">force_y</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Equilibrium displacement: x=</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> cm, y=</span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> cm&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Equilibrium displacement: x= 4.95 cm, y= 1.28 cm
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
