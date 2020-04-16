@@ -51,6 +51,11 @@
   sections: 
   - url: /properties-pure/reduced-helmholtz
 
+- url: /mixtures/mixtures
+  expand_sections: false
+  #sections: 
+  #- url: /properties-pure/reduced-helmholtz
+
 - divider: true
 
 - url: /contributing
