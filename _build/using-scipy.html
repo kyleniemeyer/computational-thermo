@@ -11,7 +11,7 @@ prev_page:
 next_page:
   url: /first-law/first-law.html
 suffix: .ipynb
-search: scipy x function equations y equation org html docs doc reference integrate generated numpy systems f mathbf optimize end system root begin example lets using solve problems need data integrating optimization matplotlib also scalar where python cases roots value form rootscalar input initial align sqrt work minimize force potential energy ordinary plotting solving ode set values plot encounter equal unknowns zero module functions vector frac integral want consider ammonia pressure volume v p fit c variables spring horizontal la lb thermodynamics plots differential general examples notebook our used already provides similar might variable between linspace axes multiple figure same linear
+search: scipy x function frac equations y equation f org dt end integrate html begin docs doc reference align generated volume v p numpy systems mathbf lets system optimize pressure example root tank initial where air using solve problems need data integrating optimization matplotlib also scalar rate python set plot cases roots value form functions rootscalar input sqrt want consider work text d dot dvf vg dvg minimize force potential energy ordinary plotting solving ode values encounter equal unknowns zero g module vector problem integral ammonia psi fit c calculate t variables atm rv therefore left right spring horizontal la lb
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -99,6 +99,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># these lines are only for helping improve the display</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
 <span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span><span class="o">=</span> <span class="mi">150</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;savefig.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">150</span>
 </pre></div>
 
@@ -623,10 +624,7 @@ We'll use the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scip
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">volume</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">volume</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">volume</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">volume</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
@@ -724,9 +722,191 @@ We'll use the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scip
 \frac{d \mathbf{y}}{dt} = \mathbf{f} (t, \mathbf{y})
 \end{equation}
 where $\mathbf{y}$ is the vector of state variables, for which we should have the initial values ($\mathbf{y}(t=0)$). In this case, we can use the SciPy function <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html"><code>solve_ivp()</code> function</a>, part of the <code>integrate</code> module.</p>
+<p>For example, let's consider a problem where we want to find the volume of water, volume of air, and pressure in a tank as a function of time, as the tank releases water to an environment. The volumetric flow rate through the tank's valve is based on its instantaneous pressure:
+\begin{equation}
+\dot{V}_f = \frac{P - P_{\text{atm}}}{R_v} \;,
+\end{equation}
+where $P_{\text{atm}}$ is atmospheric pressure and $R_v = 10$ psi/gpm is the valve resistance parameter. The tank has volume 50 gal, and is initially filled with water (volume fraction $f$ = 0.8); the air in the tank is initially at 100 psi. We will treat the air as an ideal gas, and the water as an incompressible substance.</p>
+<p>We have the initial air pressure, and we can calculate the initial volumes of water and air:
+\begin{align}
+V_{f,0} &amp;= f \, V \\
+V_{g,0} &amp;= (1 - f) V \\
+\end{align}</p>
+<p>We can perform a mass balance on the water in the tank to obtain a rate equation for the volume of water:
+\begin{align}
+0 &amp;= \dot{m}_f + \frac{d m_f}{dt} = \dot{V}_f \rho_f + \rho_f \frac{d V_f}{dt} \\
+0 &amp;= \dot{V}_f + \frac{dV_f}{dt} \\
+\therefore \frac{dV_f}{dt} &amp;= -\frac{(P - P_{\text{atm}})}{R_v}
+\end{align}</p>
+<p>Since the overall volume of the tank is constant, we can obtain the rate of change of the volume of air:
+\begin{align}
+V &amp;= V_g + V_f \\
+\frac{dV_g}{dt} + \frac{dV_f}{dt} &amp;= 0 \\
+\therefore \frac{dV_g}{dt} &amp;= -\frac{dV_f}{dt}
+\end{align}</p>
+<p>Finally, a mass balance on the air in the tank allows us to find the rate of change of pressure:
+\begin{align}
+0 &amp;= \frac{dm_a}{dt} \\
+0 &amp;= \frac{d}{dt} \left( \frac{P V_g}{R T} \right) \\
+0 &amp;= V_g \frac{dP}{dt} + P \frac{dV_g}{dt} \\
+\therefore \frac{dP}{dt} &amp;= -\frac{P}{V_g} \frac{dV_g}{dt}
+\end{align}</p>
+<p>Now, we can integrate this system of ODEs:</p>
 
 </div>
 </div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+
+<span class="c1"># initial conditions and constants</span>
+<span class="n">valve_resistance</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;psi/(gal/min)&#39;</span><span class="p">)</span>
+<span class="n">pressure_atmosphere</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+
+<span class="n">volume_tank</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;gal&#39;</span><span class="p">)</span>
+<span class="n">water_fraction</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+<span class="n">pressure_initial</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;psi&#39;</span><span class="p">)</span>
+<span class="n">volume_water_initial</span> <span class="o">=</span> <span class="n">water_fraction</span> <span class="o">*</span> <span class="n">volume_tank</span>
+<span class="n">volume_air_initial</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">water_fraction</span><span class="p">)</span> <span class="o">*</span> <span class="n">volume_tank</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">tank_equations</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">valve_resistance</span><span class="p">,</span> <span class="n">pressure_atmosphere</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Rates of change for water volume, air volume, and air pressure in tank.</span>
+<span class="sd">    </span>
+<span class="sd">    Input values in SI units.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">volume_water</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;m^3&#39;</span><span class="p">)</span>
+    <span class="n">volume_air</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;m^3&#39;</span><span class="p">)</span>
+    <span class="n">pressure_air</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+    
+    <span class="n">dVf_dt</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">pressure_air</span> <span class="o">-</span> <span class="n">pressure_atmosphere</span><span class="p">)</span> <span class="o">/</span> <span class="n">valve_resistance</span>
+    <span class="n">dVg_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">dVf_dt</span>
+    <span class="n">dP_dt</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">pressure_air</span> <span class="o">/</span> <span class="n">volume_air</span><span class="p">)</span> <span class="o">*</span> <span class="n">dVg_dt</span>
+    
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">dVf_dt</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m^3/s&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> 
+        <span class="n">dVg_dt</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m^3/s&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="n">dP_dt</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa/s&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have the initial conditions and rate function set up, we can integrate in time. Let's do this for 500 seconds, and then plot the water volume and tank pressure as functions of time:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+
+<span class="c1"># now integrate for 500 seconds, specifying the function, time interval, </span>
+<span class="c1">#initial conditions, and additional arguments to the function</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
+    <span class="n">tank_equations</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">500.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">volume_water_initial</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m^3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> 
+     <span class="n">volume_air_initial</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m^3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> 
+     <span class="n">pressure_initial</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+     <span class="p">],</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">valve_resistance</span><span class="p">,</span> <span class="n">pressure_atmosphere</span><span class="p">,),</span>
+    <span class="n">method</span><span class="o">=</span><span class="s1">&#39;BDF&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">time</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">t</span>
+<span class="n">volume_water</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;m^3&#39;</span><span class="p">)</span>
+<span class="n">volume_air</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;m^3&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;psi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Tank pressure (psi)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">volume_water</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;gal&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Water volume (gal)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Water volume (gal) and tank pressure (psi)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ymin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span> <span class="c1"># ensure lower y-axis bound is zero</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/using-scipy_30_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
