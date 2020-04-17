@@ -9,9 +9,9 @@ pagenum: 2
 prev_page:
   url: /setting-up-environment.html
 next_page:
-  url: /first-law/first-law.html
+  url: /intro-using-coolprop.html
 suffix: .ipynb
-search: ct cantera units properties pint problems need thermodynamic thermodynamics also fluids expressions e g state solving module using coolprop org setting unit between different involving quantities temperature pressure convert si kelvin k object nitrogen methane hydrogen oxygen heptane ra lets any introduces solve python briefly show used access wider range currently supports help running examples own computing environment import necessary libraries quick intro useful tool parsing converting working values example read give us customary imperial those interprets nearly either written meters abbreviations m except temperatures case celsius degc fahrenheits degf rankine degr another specify multiply value member ureg handles mathematical
+search: cantera using air coolprop properties units ct nitrogen specify model pint fluid composition problems also need fluids pressure thermodynamic state ideal gas pure mole thermodynamics org temperature object oxygen o n fractions density module expressions between example e g si built carbon dioxide lets its given mixture mass html solving solve used setting intro unit different involving quantities convert either kelvin k case chemical transport processes well here methane hydrogen h heptane ra conditions any combination difference pseudo not solution moles molar thermophase specific volume slightly less missing introduces python briefly show access wider range currently supports help running examples
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -530,7 +530,8 @@ critical density:  511.95 kg/m^3
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Compare-ideal-and-real-gas-behavior-for-air">Compare ideal and real gas behavior for air<a class="anchor-link" href="#Compare-ideal-and-real-gas-behavior-for-air"> </a></h2>
+<h2 id="Compare-ideal-and-real-gas-behavior-for-nitrogen">Compare ideal and real gas behavior for nitrogen<a class="anchor-link" href="#Compare-ideal-and-real-gas-behavior-for-nitrogen"> </a></h2><p>Using Cantera's built-in pure fluid model for nitrogen, and its ideal gas model for air (which includes nitrogen), we can see an example of the error involved with treating fluids as ideal gases:</p>
+
 </div>
 </div>
 </div>
@@ -585,6 +586,214 @@ critical density:  511.95 kg/m^3
 <pre>Δu for real gas: 647294.70 joule / kilogram
 Δu for ideal gas: 648472.39 joule / kilogram
 difference:  0.18%
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Fortunately, at these conditions, nitrogen behaves much like an ideal gas, and so calculating the internal energy difference between the two states</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Modeling-air">Modeling air<a class="anchor-link" href="#Modeling-air"> </a></h2><p>Air is a pseudo-pure fluid; in reality it is a multicomponent gas mixture of mostly oxygen and nitrogen, with trace amounts of arfon, carbon dioxide, and water (depending on the humidity). However, since the composition does not change under <em>most</em> processes, we can sometimes treat it like a pure fluid.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Using-Cantera">Using Cantera<a class="anchor-link" href="#Using-Cantera"> </a></h3><p>To solve problems with air, we can use an ideal gas model in Cantera, or the pseudo-pure fluid model in CoolProp (see the <a href="intro-using-coolprop">CoolProp module</a> for more details).</p>
+<p>In Cantera, we create a <code>Solution</code> object using the built-in <code>air.cti</code> model file, then specify the state, including composition. We can use mole fractions (<code>X</code>) or mass fractions (<code>Y</code>). The commonly accepted composition of air is 1 mole of oxygen to 3.76 moles of nitrogen, and we can specify this molar composition using the string <code>'O2:1.0, N2:3.76'</code>:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">air</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+<span class="n">air</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mf">101325.0</span><span class="p">,</span> <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+<span class="n">air</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Density: </span><span class="si">{</span><span class="n">air</span><span class="o">.</span><span class="n">density</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1"> kg/m^3&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+  air:
+
+       temperature             300  K
+          pressure          101325  Pa
+           density         1.17197  kg/m^3
+  mean mol. weight         28.8507  amu
+
+                          1 kg            1 kmol
+                       -----------      ------------
+          enthalpy          1907.6        5.504e+04     J
+   internal energy          -84549       -2.439e+06     J
+           entropy          6891.7        1.988e+05     J/K
+    Gibbs function     -2.0656e+06       -5.959e+07     J
+ heat capacity c_p          1010.1        2.914e+04     J/K
+ heat capacity c_v          721.88        2.083e+04     J/K
+
+                           X                 Y          Chem. Pot. / RT
+                     -------------     ------------     ------------
+                O2       0.210084         0.233008          -26.234
+                N2       0.789916         0.766992          -23.269
+     [   +6 minor]              0                0
+
+Density:  1.172 kg/m^3
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A <code>Solution</code> object can be used to specify and compute thermodynamic, chemical kinetic, and/or transport properties of a mixture; the thermodynamics come from the <a href="https://cantera.org/documentation/docs-2.4/sphinx/html/cython/thermo.html#cantera.ThermoPhase"><code>ThermoPhase</code></a> class.</p>
+<p>We can set the state by using a combination of two intensive properties, from the list <code>[DP, HP, SP, SV, TD, TP, UV]</code>, along with the mole or mass fractions. Here, <code>D</code> is density, <code>H</code> is enthalpy, <code>P</code> is pressure, <code>S</code> is entropy, <code>V</code> is specific volume, and <code>T</code> is temperature; all should be in SI units, either in a mass or molar basis.</p>
+<p>For example, we could specify the temperature, pressure, and air mole fractions using</p>
+
+<pre><code>air.TPX = 300, 101325, 'O2:1.0, N2:3.76'
+
+</code></pre>
+<p>or we could specify via density and pressure:</p>
+
+<pre><code>air.DPX = 1.225, 101325, 'O2:1.0, N2:3.76'
+
+</code></pre>
+<p>(Remember that density and specific volume are inversely related, so if we have one we always have the other.)</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Using-CoolProp">Using CoolProp<a class="anchor-link" href="#Using-CoolProp"> </a></h3><p>We can also use CoolProp to model <a href="http://www.coolprop.org/fluid_properties/fluids/Air.html">air</a>, using its psuedo-pure fluid model. In this case, we do not need to specify the composition.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">CoolProp.CoolProp</span> <span class="kn">import</span> <span class="n">PropsSI</span>
+
+<span class="n">density</span> <span class="o">=</span> <span class="n">PropsSI</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="mi">101325</span><span class="p">,</span> <span class="s1">&#39;air&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Density: </span><span class="si">{</span><span class="n">density</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1"> kg/m^3&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Density:  1.177 kg/m^3
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hmm, the density given by CoolProp differs slightly from that given by Cantera. The difference is less than 1%, but where could that be coming from?</p>
+<p>Well, our specified moles for the composition are only approximate, and also missing a small amount of argon. Let's use a slightly more accurate mixture (though this is still missing traces of carbon dioxide, neon, helium, etc., that are present at less than 0.01% by mole):</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">air</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+<span class="n">air</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mf">101325.0</span><span class="p">,</span> <span class="s1">&#39;N2:0.78084, O2:0.20947, Ar:0.00934&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Density: </span><span class="si">{</span><span class="n">air</span><span class="o">.</span><span class="n">density</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1"> kg/m^3&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Density:  1.176 kg/m^3
 </pre>
 </div>
 </div>
