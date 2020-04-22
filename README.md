@@ -1,5 +1,7 @@
 # Computational Thermodynamics
 
+[![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-contributor%20covenant-green.svg)](https://www.contributor-covenant.org/version/2/0/code_of_conduct/)
+
 This repository contains an electronic book of example problems in thermodynamics, in the format of Jupyter notebooks, developed to supplement the course ME 540, Intermediate Thermodynamics, taught at [Oregon State University](https://oregonstate.edu) by [Prof. Kyle Niemeyer](https://mime.oregonstate.edu/people/kyle-niemeyer).
 
 These example problems are adapted from those given in the (excellent) textbook *Thermodynamics* by Sanford Klein and Gregory Nellis (2017, Cambridge University Press, 3rd edition). The original examples and problems in this book were solved using EES (Engineering Equation Solver), while the examples here use Python combined with [Cantera](https://cantera.org) and the [SciPy](https://www.scipy.org) ecosystem of packages, along with [Pint](https://pint.readthedocs.io) for converting units.
