@@ -11,7 +11,7 @@ prev_page:
 next_page:
   url: /first-law/first-law.html
 suffix: .ipynb
-search: scipy x function frac equations y equation f org dt end integrate html begin docs doc reference align generated volume v p numpy systems mathbf lets system optimize pressure example root tank initial where air using solve problems need data integrating optimization matplotlib also scalar rate python set plot cases roots value form functions rootscalar input sqrt want consider work text d dot dvf vg dvg minimize force potential energy ordinary plotting solving ode values encounter equal unknowns zero g module vector problem integral ammonia psi fit c calculate t variables atm rv therefore left right spring horizontal la lb
+search: x scipy function frac y f equation equations org numpy html end dt derivative begin integrate docs doc reference lets generated align need volume v p using systems example data mathbf system optimize pressure sympy root tank initial where air solve problems also numerical python integrating optimization matplotlib cases form functions scalar input variables rate obtain derivatives set values variable plot roots given value g rootscalar create sqrt want consider work text expressions calculate d dot dvf vg dvg minimize force potential energy take differences analytical exact ordinary plotting solving ode differentiation used sin multiple encounter equal unknowns linear zero
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -51,6 +51,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <li><a href="#Solving-systems-of-equations">Solving systems of equations</a></li>
 <li><a href="#Integrating-ODE-systems">Integrating ODE systems</a></li>
 <li><a href="#Optimization">Optimization</a></li>
+<li><a href="#Differentiation">Differentiation</a></li>
 </ol>
 
 </div>
@@ -1044,6 +1045,313 @@ We can minimize this function of two variables to find the displacement based on
 <pre>Equilibrium displacement: x= 4.95 cm, y= 1.28 cm
 </pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Differentiation">Differentiation<a class="anchor-link" href="#Differentiation"> </a></h2><p>Many thermodynamic properties are derivatives of other properties, so you may find the need to take derivatives of either data or of an expression. We can use the NumPy function <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.gradient.html"><code>gradient()</code></a> to take numerical derivatives of data using finite differences, and we can use <a href="https://www.sympy.org/en/index.html">SymPy</a> to find analytical derivatives of expressions.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Numerical-derivatives">Numerical derivatives<a class="anchor-link" href="#Numerical-derivatives"> </a></h3><p>Let's say we have data for some function $f(x) = x^2$ at some locations $x$:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/using-scipy_37_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We do not need to know the functional form of $f(x)$ to take the numerical derivatives—this example just uses a simple function for ease of checking the results.</p>
+<p>The <code>gradient()</code> function uses second-order central differences to evaluate the derivative of input data, using forward and backward differences at the boundaries. Let's use that to get the derivative, and compare against the exact derivative ($\frac{df}{dx} = 2x$):</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfdx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">dfdx_exact</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dfdx_exact</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exact&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dfdx</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Numerical&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;df/dx&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/using-scipy_39_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The numerical derivative we obtain is very accurate, thanks to the linear nature of the derivative. However, at the boundaries the approximate derivative is a bit off, due to the first-order finite differences used there.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Analytical-derivative">Analytical derivative<a class="anchor-link" href="#Analytical-derivative"> </a></h3><p>In some cases we may be given (or obtain) analytical expressions that we need to differentiate. Given a function, we have two options for calculating the derivative:</p>
+<ol>
+<li>Use the function to calculate values over the desired range, then numerically differentiate.</li>
+<li>Obtain the exact derivative by differentiating analytically.</li>
+</ol>
+<p>We'll now focus on the latter case; we can use SymPy to construct a function symbolically, and then find the exact derivative.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="n">sympy</span><span class="o">.</span><span class="n">init_printing</span><span class="p">(</span><span class="n">use_latex</span><span class="o">=</span><span class="s1">&#39;mathjax&#39;</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># take derivative of f with respect to x</span>
+<span class="n">dfdx</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># this complicated expression is only necessary for printing.</span>
+<span class="c1"># It creates an equation object, that sets the unevaluated </span>
+<span class="c1"># derivative of f equal to the calculated derivative.</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">Derivative</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">dfdx</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\displaystyle \frac{d}{d x} x^{2} = 2 x$
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once we have evaluated the analytical derivative, we can even turn it into a Python function for evaluation! Passing the <code>'numpy'</code> argument creates a NumPy array-compatible function.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">calc_derivative</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dfdx</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exact derivative&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">calc_derivative</span><span class="p">(</span><span class="n">x_vals</span><span class="p">),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SymPy derivative&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;df/dx&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/using-scipy_44_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As expected, the exact derivative we calculated using SymPy matches the known derivative perfectly—this was obtained symbolically, so there are no approximations/errors involved.</p>
+<p>When taking the derivative of more complicated expressions that involve other functions (e.g., $\sin$, $\log$), you will need to use the SymPy-provided versions: <code>sympy.sin</code>, <code>sympy.log</code>, etc. We also need to explicitly define symbolic variables, either using <code>x = sympy.Symbol('x')</code> to create one variable at a time or <code>x, y = sympy.symbols('x y', real=True)</code> to create multiple variables at once. (The string you specify is the displayed representation of the variable, and can include complex formatting such as subscripts/superscripts and Greek letters.)</p>
+<p>For example, let's take the derivative of
+\begin{equation}
+f(x) = \log(x) + x^3
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="n">dfdx</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">dfdx</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\displaystyle 3 x^{2} + \frac{1}{x}$
+</div>
+
 </div>
 </div>
 </div>
