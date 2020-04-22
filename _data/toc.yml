@@ -20,6 +20,7 @@
 # - header: My Header  # Will insert a header with no link in the sidebar
 
 - url: /intro
+  title: Introduction
   not_numbered: true
   expand_sections: true
   sections:
