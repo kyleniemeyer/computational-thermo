@@ -9,7 +9,7 @@ All artwork here is original.
 
 ## Contributing
 
-Contributions are welcome! 
+Contributions are welcome! Please see the [contributing guide](https://kyleniemeyer.github.io/computational-thermo/contributing.html) for more information.
 
 The code portions of this material are licensed under the BSD 3-Clause License (described in `LICENSE.txt`) while the non-code portions of the material are licensed under the Creative Commons Attribution License (CC-BY, described in `LICENSE-text.txt`).
 
