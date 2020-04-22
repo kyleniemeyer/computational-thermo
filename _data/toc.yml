@@ -53,8 +53,8 @@
 
 - url: /mixtures/mixtures
   expand_sections: false
-  #sections: 
-  #- url: /properties-pure/reduced-helmholtz
+  sections: 
+  - url: /mixtures/multicomponent-phase-equilibrium
 
 - divider: true
 
