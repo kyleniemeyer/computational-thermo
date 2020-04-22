@@ -5,11 +5,11 @@ kernel_path: content/properties-pure
 has_widgets: false
 title: |-
   Reduced Helmholtz equation of state: carbon dioxide
-pagenum: 14
+pagenum: 16
 prev_page:
   url: /properties-pure/properties-pure.html
 next_page:
-  url: /contributing.html
+  url: /mixtures/mixtures.html
 suffix: .ipynb
 search: equation delta state tau reduced alpha text helmholtz frac uses begin end t cantera carbon dioxide using function rho given res expression pressure partial approach formulation free energy rt crit quad coefficients left right compare our different full art also iapws doi org described page article modern calculating thermodynamic properties real fluids u ts density temperature helmhotz sum ideal gas residual components ig both high order fits ai thetai ni through math p r estimate k v m kg against obtained symbolic take derivative calculation agree fairly well not exactly same because slightly lets calculations range specific volumes multiple temperatures
 
@@ -66,6 +66,7 @@ which are both given as high-order fits using many coefficients:</p>
 <span class="c1"># these are mostly for making the saved figures nicer</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
 <span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span><span class="o">=</span> <span class="mi">150</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;savefig.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">150</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
