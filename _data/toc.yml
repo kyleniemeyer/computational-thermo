@@ -29,7 +29,7 @@
   - url: /intro-using-coolprop
   - url: /using-scipy
 
-#- header:
+- divider: true
 
 - url: /first-law/first-law
   expand_sections: false
