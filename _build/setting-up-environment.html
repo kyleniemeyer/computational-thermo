@@ -11,7 +11,7 @@ prev_page:
 next_page:
   url: /intro-solving-problems.html
 suffix: .ipynb
-search: install jupyter notebooks colab python notebook google com conda cantera datalore packages org azure environment mybinder anaconda thermo bash pint research microsoft binder different need create coolprop should new computer activate y using cloud miniconda installing choose io example command run channel numpy scipy get service apt click kyleniemeyer computational available button package cells few options examples text development ide spyder free slightly rather docs latest macos linux windows matplotlib tell e g zsh want under environments not work account qq pip link svg github master common already automatically based after cell bit search setting computing running solving problems approaches
+search: install jupyter notebooks python notebook colab google conda cantera datalore com packages environment azure anaconda coolprop org microsoft binder need thermo bash pint mybinder different create should new y computer research activate get apt using cloud miniconda installing choose example command run channel numpy scipy service qq click kyleniemeyer computational available button package cells few options examples problems text development ide spyder free slightly rather docs io latest macos linux windows matplotlib tell e g zsh want under environments not work account pip link open svg github master common already automatically based after cell bit search setting computing running solving
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -41,6 +41,17 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>miniconda:</strong> Rather than installing the full Anaconda distribution, you could choose to install <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>, which is a minimal installer for conda. In this case, you would need to explicitly install all the packages you need.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Important:</strong> You will need to reactivate your environment every time you restart Anaconda.</p>
 
 </div>
 </div>
@@ -80,21 +91,32 @@ $ conda activate thermo
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Cloud-Jupyter-Notebook-Environments">Cloud Jupyter Notebook Environments<a class="anchor-link" href="#Cloud-Jupyter-Notebook-Environments"> </a></h2><p>If you cannot or prefer not to install Anaconda/Python/Jupyter on your computer, you can use one of a number of cloud Jupyter Notebook environments to run these examples and do your work. Major options include:</p>
 <ul>
-<li><a href="https://colab.research.google.com">Google Colab</a></li>
-<li><a href="https://mybinder.org">Binder</a></li>
-<li><a href="https://notebooks.azure.com">Microsoft Azure Notebooks</a></li>
-<li><a href="https://datalore.io">DataLore</a></li>
+<li><a href="#Google-Colab">Google Colab</a></li>
+<li><a href="#Binder">Binder</a></li>
+<li><a href="#Microsoft-Azure-Notebooks">Microsoft Azure Notebooks</a></li>
+<li><a href="#Datalore">DataLore</a></li>
 </ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Google-Colab">Google Colab<a class="anchor-link" href="#Google-Colab"> </a></h3><p><a href="https://colab.research.google.com">Google Colab</a> (Colaboratory) is a nice, newer service connected to your Google account that offers free computation time.</p>
 <p>In a new notebook, you need to first install Cantera:</p>
 <div class="highlight"><pre><span></span>!apt-get -qq update -y
+!apt-get -qq install -y python3-software-properties
 !apt-add-repository -y ppa:speth/cantera &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
 !apt-get -qq install -y cantera-python3
 </pre></div>
 <p>and then additional packages like Pint and CoolProp:</p>
 <div class="highlight"><pre><span></span>!pip install -q pint coolprop
 </pre></div>
-<p>Or, click this link: <a href="https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/master/colab-demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<p>Or, click this link to open a notebook that includes these commands: <a href="https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/master/colab-demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
 <p>(Other common packages like NumPy and SciPy should already be available.)</p>
 
 </div>
@@ -143,11 +165,12 @@ $ conda activate thermo
 <p>Although DataLore workbooks come with many common packages installed (e.g., NumPy, SciPy, Matplotlib), it is a bit more challenging to install other packages:</p>
 <ol>
 <li>Go to "Tools" → "Library Manager"</li>
-<li>In "All Libraries", search for the package you want to install. For example, we'll need to install <code>pint</code>.</li>
+<li>In "All Libraries", search for the package you want to install. For example, you can install <code>pint</code> and <code>coolprop</code>.</li>
 <li>In the search results, choose the correct package, then from the dropdown next to the "Install" button choose the latest version available (this should already be selected).</li>
 <li>Click the "Install" button. After a few moments, the package should be accessible in your workbook.</li>
 <li>Repeat for other packages as needed.</li>
 </ol>
+<p>To solve thermodynamics problems, you'll need to install CoolProp at minimum.</p>
 <p>Unfortunately, it is not clear how to install Cantera at the moment, so DataLore may be limited. The behavior is also a bit different than expected with Jupyter notebooks regarding work between different cells, since DataLore is more strict about executing cells in order and tracking dependency—it automatically updates any cells that depend on variables that change in the current cell.</p>
 <p>This information will be updated as DataLore evolves and more documentation is available.</p>
 
