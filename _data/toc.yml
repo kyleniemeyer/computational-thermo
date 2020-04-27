@@ -47,6 +47,11 @@
   - url: /second-law/turbine-efficiency
   - url: /second-law/solar-powered-pump
 
+- url: /exergy/exergy
+  expand_sections: false
+  #sections:
+  #- url: /exergy/
+
 - url: /properties-pure/properties-pure
   expand_sections: false
   sections: 
@@ -56,6 +61,15 @@
   expand_sections: false
   sections: 
   - url: /mixtures/multicomponent-phase-equilibrium
+
+- url: /combustion/combustion
+  expand_sections: false
+
+- url: /chemical-equilibrium/chemical-equilibrium
+  expand_sections: false
+
+- url: /stat-thermo/stat-thermo
+  expand_sections: false
 
 - divider: true
 

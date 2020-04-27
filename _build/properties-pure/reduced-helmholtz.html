@@ -5,13 +5,13 @@ kernel_path: content/properties-pure
 has_widgets: false
 title: |-
   Reduced Helmholtz equation of state: carbon dioxide
-pagenum: 16
+pagenum: 17
 prev_page:
   url: /properties-pure/properties-pure.html
 next_page:
   url: /mixtures/mixtures.html
 suffix: .ipynb
-search: equation delta state tau reduced alpha text helmholtz frac uses begin end t cantera carbon dioxide using function rho given res expression pressure partial approach formulation free energy rt crit quad coefficients left right compare our different full art also iapws doi org described page article modern calculating thermodynamic properties real fluids u ts density temperature helmhotz sum ideal gas residual components ig both high order fits ai thetai ni through math p r estimate k v m kg against obtained symbolic take derivative calculation agree fairly well not exactly same because slightly lets calculations range specific volumes multiple temperatures
+search: equation state delta tau reduced alpha text helmholtz frac uses using begin end t cantera carbon dioxide function rho given res expression pressure partial approach formulation free energy rt crit quad coefficients left right compare our different bibliography full art also iapws cite wagner available coolprop fluid modern calculating thermodynamic properties real fluids u ts density temperature helmhotz sum ideal gas residual components ig both high order fits ai thetai ni through math p r estimate k v m kg against obtained symbolic take derivative calculation agree fairly well not exactly same because slightly lets calculations range specific volumes multiple
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -23,7 +23,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Water equation of state:</strong> You can see the full, state-of-the-art equation of state for water, which also uses a reduced Helmholtz approach: the <a href="https://doi.org/10.1063/1.1461829">IAPWS 1995 formulation</a>. This is described in a 149-page article from 2002.</p>
+<p><strong>Water equation of state:</strong> You can see the full, state-of-the-art equation of state for water, which also uses a reduced Helmholtz approach: the IAPWS 1995 formulation {% cite Wagner2002 %}. This equation is state is available using CoolProp with the <code>Water</code> fluid.</p>
 
 </div>
 </div>
@@ -372,6 +372,17 @@ Cantera pressure:  5.475 MPa
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can see that the pressure calculated using the reduced Helmholtz equation of state matches closely with that from Cantera, which uses a different but similarly advanced equation of state.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Bibliography">Bibliography<a class="anchor-link" href="#Bibliography"> </a></h2><p>{% bibliography --cited %}</p>
 
 </div>
 </div>
