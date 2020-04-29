@@ -5,13 +5,13 @@ kernel_path: content/mixtures
 has_widgets: false
 title: |-
   Mixture properties
-pagenum: 18
+pagenum: 19
 prev_page:
   url: /properties-pure/reduced-helmholtz.html
 next_page:
   url: /mixtures/multicomponent-phase-equilibrium.html
 suffix: .ipynb
-search: mixture equation align frac pressure bar begin v end xi using compressibility reduced volume t properties specific gas p rule used factor chart van der waals state lets butane c calculate ideal kays values obtain tc temperature ru generalized figure b value evaluate perform methane ch container kmol experimentally pure fractions molar n mixing critical sumi pc above function compressiblity mixtures center below source soave sum experimental consider gases different approaches approximating m includes determined well need coolprop fluids since cantera does not currently include import necessary modules specify known data mass components ni try calculating law r simplest uses
+search: mixture compressibility equation reduced pressure chart align frac bar begin v end generalized xi using figure center less volume t properties specific gas p rule used factor source van der waals state lets butane c calculate ideal kays values obtain tc temperature ru img src pr png alt style width px figcaptionfigure pressures original e f obert emconcepts thermodynamics em mcgraw hill new york figcaption b value evaluate perform methane ch container kmol experimentally pure fractions molar n mixing critical sumi pc above function compressiblity mixtures between soave sum experimental consider gases different approaches approximating m includes determined well need
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -311,7 +311,7 @@ v_red = 0.791 dimensionless
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>With the reduced temperature and specific volume, we can refer to a generalized compressibility chart (or function), which specifies the compressiblity factor as a function of reduced temperature, reduced pressure, and/or reduced specific volume for general gas mixtures. For example, see the following figure:</p>
+<p>With the reduced temperature and specific volume, we can refer to a generalized compressibility chart (or function), which specifies the compressiblity factor as a function of reduced temperature, reduced pressure, and/or reduced specific volume for general gas mixtures. For example, see the following figures:</p>
 
 </div>
 </div>
@@ -324,8 +324,18 @@ v_red = 0.791 dimensionless
 <div class="text_cell_render border-box-sizing rendered_html">
 <figure>
   <center>
-  <img src="compressibility-chart.png" alt="Generalized compressibility chart" style="width: 600px;"/>
-  <figcaption>Figure: Generalized compressibility chart for reduced pressures below 10.0. Original source: E. F. Obert, <em>Concepts of Thermodynamics</em>, McGraw-Hill, New York, 1960.</figcaption>
+  <img src="compressibility-chart-Pr-less-1.png" alt="Generalized compressibility chart, reduced pressure less than 1.0" style="width: 600px;"/>
+  <figcaption>Figure: Generalized compressibility chart for reduced pressures less than 1.0. Original source: E. F. Obert, <em>Concepts of Thermodynamics</em>, McGraw-Hill, New York, 1960.</figcaption>
+  </center>
+</figure><figure>
+  <center>
+  <img src="compressibility-chart-Pr-less-10.png" alt="Generalized compressibility chart, reduced pressure less than 10" style="width: 600px;"/>
+  <figcaption>Figure: Generalized compressibility chart for reduced pressures less than 10.0. Original source: E. F. Obert, <em>Concepts of Thermodynamics</em>, McGraw-Hill, New York, 1960.</figcaption>
+  </center>
+</figure><figure>
+  <center>
+  <img src="compressibility-chart-Pr-10-40.png" alt="Generalized compressibility chart, reduced pressure between 10-40" style="width: 600px;"/>
+  <figcaption>Figure: Generalized compressibility chart for reduced pressures between 10-40. Original source: E. F. Obert, <em>Concepts of Thermodynamics</em>, McGraw-Hill, New York, 1960.</figcaption>
   </center>
 </figure>
 </div>
