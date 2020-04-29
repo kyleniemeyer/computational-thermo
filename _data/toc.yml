@@ -49,8 +49,8 @@
 
 - url: /exergy/exergy
   expand_sections: false
-  #sections:
-  #- url: /exergy/
+  sections:
+  - url: /exergy/second-law-efficiency
 
 - url: /properties-pure/properties-pure
   expand_sections: false

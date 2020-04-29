@@ -1,0 +1,184 @@
+---
+interact_link: content/exergy/second-law-efficiency.ipynb
+kernel_name: python3
+kernel_path: content/exergy
+has_widgets: false
+title: |-
+  Second Law Efficiency
+pagenum: 16
+prev_page:
+  url: /exergy/exergy.html
+next_page:
+  url: /properties-pure/properties-pure.html
+suffix: .ipynb
+search: dot q law efficiency frac equation second power heat kw c begin eta exergy x end plant align text w ht mt receives inputs rejects environment produces calculate desired output supplied where input due transfer qi left t ti right lets compare
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Second Law Efficiency</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A power plant receives two heat inputs, 25 kW at 825°C and 50 kW at 240°C, rejects heat to the environment at 20°C, and produces power of 12 kW. Calculate the second-law efficiency of the power plant.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The second law efficiency is
+\begin{align}
+\eta_2 &amp;= \frac{\text{exergy of desired output}}{\text{exergy supplied}} \\
+\eta_2 &amp;= \frac{\dot{W}}{\dot{X}_{Q_{HT}} + \dot{X}_{Q_{MT}}} \;,
+\end{align}
+where the exergy input due to heat transfer is
+\begin{equation}
+\dot{X}_{Q_i} = \dot{Q}_i \left( 1 - \frac{T_0}{T_i} \right)
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">heat_in_hot</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;kW&#39;</span><span class="p">)</span>
+<span class="n">temp_hot</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">825</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+
+<span class="n">heat_in_med</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;kW&#39;</span><span class="p">)</span>
+<span class="n">temp_med</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+
+<span class="n">temp_out</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+
+<span class="n">work_out</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;kW&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">exergy_heat_hot</span> <span class="o">=</span> <span class="n">heat_in_hot</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">temp_out</span> <span class="o">/</span> <span class="n">temp_hot</span><span class="p">))</span>
+<span class="n">exergy_heat_med</span> <span class="o">=</span> <span class="n">heat_in_med</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">temp_out</span> <span class="o">/</span> <span class="n">temp_med</span><span class="p">))</span>
+
+<span class="n">eta_2</span> <span class="o">=</span> <span class="n">work_out</span> <span class="o">/</span> <span class="p">(</span><span class="n">exergy_heat_hot</span> <span class="o">+</span> <span class="n">exergy_heat_med</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;second law efficiency: </span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">eta_2</span><span class="o">.</span><span class="n">magnitude</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>second law efficiency:  30.2%
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's compare to the first-law efficiency:
+\begin{equation}
+\eta = \frac{\dot{W}}{\dot{Q}_{HT} + \dot{Q}_{MT}}
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">eta</span> <span class="o">=</span> <span class="n">work_out</span> <span class="o">/</span> <span class="p">(</span><span class="n">heat_in_hot</span> <span class="o">+</span> <span class="n">heat_in_med</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;first law efficiency: </span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">eta</span><span class="o">.</span><span class="n">magnitude</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>first law efficiency:  16.0%
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
