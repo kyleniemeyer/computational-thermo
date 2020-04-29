@@ -5,7 +5,7 @@ kernel_path: content/mixtures
 has_widgets: false
 title: |-
   Multi-component phase equilibrium
-pagenum: 19
+pagenum: 20
 prev_page:
   url: /mixtures/mixtures.html
 next_page:
@@ -116,7 +116,7 @@ which come from conservation of mass and Raoult's Law.</p>
 \begin{align}
 x_1 + x_2 - 1 &amp;= 0 \\
 x_{f,1} P_{\text{sat}, 1} - x_1 P &amp;= 0 \\
-x_{f,2} P_{\text{sat}, 2} x_2 P &amp;= 0
+x_{f,2} P_{\text{sat}, 2} - x_2 P &amp;= 0
 \end{align}</p>
 <p>Now, we can define the function, then solve for the roots:</p>
 
@@ -243,7 +243,7 @@ Gas mole fraction of butane:  0.167
 
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mole_fractions_liquid</span><span class="p">):</span>
     <span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
-        <span class="n">get_equilibrium</span><span class="p">,</span> <span class="p">[</span><span class="mi">250</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+        <span class="n">equilibrium</span><span class="p">,</span> <span class="p">[</span><span class="mi">250</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
         <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">x</span><span class="p">],)</span>
         <span class="p">)</span>
     <span class="n">temps</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
