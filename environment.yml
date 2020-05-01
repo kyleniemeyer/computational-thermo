@@ -10,3 +10,4 @@ dependencies:
  - pint
  - coolprop
  - pandas
+ - sympy
