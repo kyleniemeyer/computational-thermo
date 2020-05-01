@@ -30,6 +30,7 @@ jobs:
     - name: Install Jupyter Book
       shell: bash -l {0}
       run: |
+        pip install nbconvert==5.6.1
         pip install -U --pre jupyter-book
 
     # Build the book
