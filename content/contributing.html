@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Contributing to this book &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Bibliography" href="bibliography.html" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="">
+    <a href="properties-pure/properties-pure.html">Properties of Pure Fluids</a>
+  </li>
+  <li class="">
+    <a href="mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="">
+    <a href="combustion/combustion.html">Combustion</a>
+  </li>
+  <li class="">
+    <a href="chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
+  </li>
+  <li class="">
+    <a href="stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="bibliography.html">Bibliography</a>
+  </li>
+  <li class="active">
+    <a href="">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../_sources/content/contributing.md.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.md</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#joining-the-conversation" class="nav-link">Joining the conversation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#contributing-through-github" class="nav-link">Contributing through GitHub</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#understanding-issues-milestones-and-project-boards" class="nav-link">Understanding issues, milestones and project boards</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#issue-labels" class="nav-link">Issue labels</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#making-a-change" class="nav-link">Making a change</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#pull-requests" class="nav-link">Pull Requests</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#recognizing-contributors" class="nav-link">Recognizing contributors</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#thank-you" class="nav-link">Thank you!</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="contributing-to-this-book">
+<h1>Contributing to this book<a class="headerlink" href="#contributing-to-this-book" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the <code class="docutils literal notranslate"><span class="pre">computational-thermo</span></code> repository! We’re excited you’re here and want to contribute.</p>
+<p>These guidelines are designed to make it as easy as possible to get involved.
+If you have any questions that aren’t discussed below, please let us know by opening an <a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/issues">issue</a>!</p>
+<p>Before you start you’ll need to set up a free <a class="reference external" href="https://github.com/">GitHub</a> account and sign in.
+Here are some <a class="reference external" href="https://help.github.com/articles/signing-up-for-a-new-github-account">instructions</a>.</p>
+<p>Already know what you’re looking for in this guide? Use the TOC to the right
+to navigate this page!</p>
+<div class="section" id="joining-the-conversation">
+<h2>Joining the conversation<a class="headerlink" href="#joining-the-conversation" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">computational-thermo</span></code> is a  new project created by Kyle Niemeyer, for teaching thermodynamics using Python and related open-source software packages.</p>
+<p>Since this project currently involves a single primary contributor, there may not be many—or any—public conversations about the project. However, suggestions, contributions, and/or comments are welcome via <a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/issues">issues</a>.</p>
+<p>As a reminder, we expect all contributors to <code class="docutils literal notranslate"><span class="pre">computational-thermo</span></code> to adhere to the project <a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a> in these conversations.</p>
+</div>
+<div class="section" id="contributing-through-github">
+<h2>Contributing through GitHub<a class="headerlink" href="#contributing-through-github" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://git-scm.com">git</a> is a really useful tool for version control.
+<a class="reference external" href="https://github.com/">GitHub</a> sits on top of git and supports collaborative and distributed working.</p>
+<p>You’ll use <a class="reference external" href="https://daringfireball.net/projects/markdown">Markdown</a> to chat in issues and pull requests on GitHub.
+You can think of Markdown as a few little symbols around your text that will allow GitHub
+to render the text with formatting.
+For example you could write words as bold (<code class="docutils literal notranslate"><span class="pre">**bold**</span></code>), or in italics (<code class="docutils literal notranslate"><span class="pre">*italics*</span></code>),
+or as a <a class="reference external" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">link</a> to another webpage: <code class="docutils literal notranslate"><span class="pre">[link](https://https://youtu.be/dQw4w9WgXcQ)</span></code></p>
+<p>GitHub has a helpful page on
+<a class="reference external" href="https://help.github.com/articles/getting-started-with-writing-and-formatting-on-github">getting started with writing and formatting Markdown on GitHub</a>.</p>
+</div>
+<div class="section" id="understanding-issues-milestones-and-project-boards">
+<h2>Understanding issues, milestones and project boards<a class="headerlink" href="#understanding-issues-milestones-and-project-boards" title="Permalink to this headline">¶</a></h2>
+<p>Every project on GitHub uses <a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/issues">issues</a> slightly differently.</p>
+<p>The following outlines how the <code class="docutils literal notranslate"><span class="pre">computational-thermo</span></code> developers think about these tools.</p>
+<p><strong>Issues</strong> are individual pieces of work that need to be completed to move the project forwards.
+A general guideline: if you find yourself tempted to write a great big issue that
+is difficult to describe as one unit of work, please consider splitting it into two or more issues.</p>
+<p>Issues are assigned <a class="reference external" href="#issue-labels">labels</a> which explain how they relate to the overall project’s
+goals and immediate next steps.</p>
+<div class="section" id="issue-labels">
+<h3>Issue labels<a class="headerlink" href="#issue-labels" title="Permalink to this headline">¶</a></h3>
+<p>The current list of labels are <a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/labels">here</a> and include:</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/labels/help%20wanted"><img alt="Help Wanted" src="https://img.shields.io/badge/-help%20wanted-159818.svg" /></a> <em>These issues contain a task that a member of the team has determined we need additional help with.</em></p>
+<p>If you feel that you can contribute to one of these issues, we especially encourage you to do so!</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/labels/help%20wanted"><img alt="Good First Issue" src="https://img.shields.io/badge/-good%20first%20issue-blueviolet.svg" /></a>     <em>These issues contain a task that a member of the team thinks could be a good entry point to the project.</em></p>
+<p>If you’re new to the <code class="docutils literal notranslate"><span class="pre">jupyter-book</span></code> project, we think that this is a great place for your first contribution!</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/labels/bug"><img alt="Bugs" src="https://img.shields.io/badge/-bugs-fc2929.svg" /></a> <em>These issues point to problems in the project.</em></p>
+<p>If you find new a bug, please give as much detail as possible in your issue, including steps to recreate the error.
+If you experience the same bug as one already listed, please add any additional information that you have as a comment.</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/labels/enhancement"><img alt="Enhancement" src="https://img.shields.io/badge/-enhancement-84b6eb.svg" /></a> <em>These issues are asking for enhancements to be added to the project.</em></p>
+<p>Please try to make sure that your enhancement is distinct from any others that have already been requested or implemented.
+If you find one that’s similar but there are subtle differences please reference the other request in your issue.</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/labels/question"><img alt="Question" src="https://img.shields.io/badge/-question-DE8BE7.svg" /></a> <em>These are questions that users and contributors have asked.</em></p>
+<p>Please check the issues (especially closed ones) to see if your question has been asked and answered before.
+If you find one that’s similar but there are subtle differences please reference the other request in your issue.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="making-a-change">
+<h2>Making a change<a class="headerlink" href="#making-a-change" title="Permalink to this headline">¶</a></h2>
+<p>We appreciate all contributions to <code class="docutils literal notranslate"><span class="pre">computational-thermo</span></code>, but those accepted fastest will follow a workflow similar to the following:</p>
+<p><strong>1. Comment on an existing issue or open a new issue referencing your addition.</strong></p>
+<p>This allows other members of the jupyter-book development team to confirm that you aren’t overlapping with work that’s currently underway and that everyone is on the same page with the goal of the work you’re going to carry out.</p>
+<p><a class="reference external" href="https://www.igvita.com/2011/12/19/dont-push-your-pull-requests/">This blog</a> is a nice explanation of why putting this work in up front is so useful to everyone involved.</p>
+<p><strong>2. <a class="reference external" href="https://help.github.com/articles/fork-a-repo/">Fork</a> the <a class="reference external" href="https://github.com/jupyter/jupyter-book">jupyter-book repository</a> to your profile.</strong></p>
+<p>This is now your own unique copy of jupyter-book.
+Changes here won’t effect anyone else’s work, so it’s a safe space to explore edits to the code!</p>
+<p>Make sure to <a class="reference external" href="https://help.github.com/articles/syncing-a-fork/">keep your fork up to date</a> with the master repository.</p>
+<p><strong>3. Make the changes you’ve discussed.</strong></p>
+<p>Try to keep the changes focused.
+We’ve found that working on a <a class="reference external" href="https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/">new branch</a> makes it easier to keep your changes targeted.</p>
+<p><strong>4. Submit a <a class="reference external" href="https://help.github.com/articles/creating-a-pull-request/">pull request</a>.</strong></p>
+<p>A member of the development team will review your changes to confirm that they can be merged into the main code base.
+When opening the pull request, we ask that you follow some <a class="reference external" href="#pull-requests">specific conventions</a>.
+We outline these below.</p>
+<div class="section" id="pull-requests">
+<h3>Pull Requests<a class="headerlink" href="#pull-requests" title="Permalink to this headline">¶</a></h3>
+<p>To improve understanding pull requests “at a glance”, we encourage the use of several standardized tags.
+When opening a pull request, please use at least one of the following prefixes:</p>
+<ul class="simple">
+<li><p><strong>[BRK]</strong> for changes which break existing builds or tests</p></li>
+<li><p><strong>[DOC]</strong> for new or updated documentation</p></li>
+<li><p><strong>[ENH]</strong> for enhancements</p></li>
+<li><p><strong>[FIX]</strong> for bug fixes</p></li>
+<li><p><strong>[REF]</strong> for refactoring existing code</p></li>
+<li><p><strong>[STY]</strong> for stylistic changes</p></li>
+<li><p><strong>[TST]</strong> for new or updated tests, and</p></li>
+</ul>
+<p>You can also combine the tags above, for example if you are updating both a test and
+the documentation: <strong>[TST, DOC]</strong>.</p>
+<p>Pull requests should be submitted early and often!</p>
+<p>If your pull request is not yet ready to be merged, please open your pull request as a draft.
+More information about doing this is <a class="reference external" href="https://help.github.com/articles/about-pull-requests/#draft-pull-requests">available in GitHub’s documentation</a>.
+This tells the development team that your pull request is a “work-in-progress”,
+and that you plan to continue working on it.</p>
+<p>When your pull request is Ready for Review, you can select this option on the PR’s page,
+and a project maintainer will review your proposed changes.</p>
+</div>
+</div>
+<div class="section" id="recognizing-contributors">
+<h2>Recognizing contributors<a class="headerlink" href="#recognizing-contributors" title="Permalink to this headline">¶</a></h2>
+<p>We welcome and recognize all contributions from documentation to testing to code development.
+You can see a list of current contributors in the <a class="reference external" href="https://github.com/kyleniemeyer/computational-thermo/graphs/contributors">contributors tab</a>.</p>
+</div>
+<div class="section" id="thank-you">
+<h2>Thank you!<a class="headerlink" href="#thank-you" title="Permalink to this headline">¶</a></h2>
+<p>You’re awesome.</p>
+<br>
+<p><em>— Based on contributing guidelines from the <a class="reference external" href="https://github.com/KirstieJane/STEMMRoleModels">STEMMRoleModels</a> project.</em></p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="bibliography.html" title="previous page">Bibliography</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

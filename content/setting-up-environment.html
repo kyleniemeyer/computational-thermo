@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Setting up your computing environment &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Solving thermodynamics problems" href="intro-solving-problems.html" />
+    <link rel="prev" title="Getting started" href="getting-started.html" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="active">
+    <a href="getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="">
+    <a href="properties-pure/properties-pure.html">Properties of Pure Fluids</a>
+  </li>
+  <li class="">
+    <a href="mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="">
+    <a href="combustion/combustion.html">Combustion</a>
+  </li>
+  <li class="">
+    <a href="chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
+  </li>
+  <li class="">
+    <a href="stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="bibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../_sources/content/setting-up-environment.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/setting-up-environment.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#installing-jupyter" class="nav-link">Installing Jupyter</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#cloud-jupyter-notebook-environments" class="nav-link">Cloud Jupyter Notebook Environments</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#google-colab" class="nav-link">Google Colab</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#binder" class="nav-link">Binder</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#microsoft-azure-notebooks" class="nav-link">Microsoft Azure Notebooks</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#datalore" class="nav-link">DataLore</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="setting-up-your-computing-environment">
+<h1>Setting up your computing environment<a class="headerlink" href="#setting-up-your-computing-environment" title="Permalink to this headline">¶</a></h1>
+<p>You have a few options for running these examples and solving other problems using the approaches shown:</p>
+<ul class="simple">
+<li><p>Install and use Python and a text editor or integrated development environment (IDE), like <a class="reference external" href="https://www.spyder-ide.org">Spyder</a>, on your computer</p></li>
+<li><p>Install and use Jupyter Notebooks on your computer</p></li>
+<li><p>Use a (free) cloud Jupyter Notebook environment like <a class="reference external" href="https://colab.research.google.com">Google Colab</a>, <a class="reference external" href="https://notebooks.azure.com">Microsoft Azure Notebooks</a>, or <a class="reference external" href="https://mybinder.org">Binder</a></p></li>
+</ul>
+<p>Using Python and Jupyter Notebooks on your computer require essentially the same setup, which is slightly different for different operating systems. The steps following this assume you are planning to use Jupyter Notebook.</p>
+<p><strong>miniconda:</strong> Rather than installing the full Anaconda distribution, you could choose to install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>, which is a minimal installer for conda. In this case, you would need to explicitly install all the packages you need.</p>
+<p><strong>Important:</strong> You will need to reactivate your environment every time you restart Anaconda.</p>
+<div class="section" id="installing-jupyter">
+<h2>Installing Jupyter<a class="headerlink" href="#installing-jupyter" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>I recommend you <a class="reference external" href="https://docs.anaconda.com/anaconda/install/">install Anaconda</a> to manage your Python environment—it makes installing and managing packages very easy, and works on macOS, Linux, and Windows.</p></li>
+<li><p>Create and activate an environment (for example, called <code class="docutils literal notranslate"><span class="pre">thermo</span></code>) for Jupyter with Python 3.7. From the command line for Linux and macOS, or the Anaconda Prompt on Windows, run:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda create -vv --name thermo --channel cantera --channel conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 cantera pint coolprop jupyter ipython numpy scipy matplotlib
+$ conda activate thermo
+</pre></div>
+</div>
+<p>Before the second command, you may need to tell your shell (e.g., bash, zsh) about conda, by doing <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">init</span> <span class="pre">zsh</span></code> for example. If you get an error with the <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code> command, your terminal should tell you to do this.</p>
+<p>You should activate this environment whenever you want to use these packages.</p>
+<ol class="simple">
+<li><p>Run Jupyter Notebook:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ jupyter notebook
+</pre></div>
+</div>
+<p>and create a new Python 3 notebook with “New” then “Python 3” under “Notebook:”.</p>
+</div>
+<div class="section" id="cloud-jupyter-notebook-environments">
+<h2>Cloud Jupyter Notebook Environments<a class="headerlink" href="#cloud-jupyter-notebook-environments" title="Permalink to this headline">¶</a></h2>
+<p>If you cannot or prefer not to install Anaconda/Python/Jupyter on your computer, you can use one of a number of cloud Jupyter Notebook environments to run these examples and do your work. Major options include:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#Google-Colab">Google Colab</a></p></li>
+<li><p><a class="reference external" href="#Binder">Binder</a></p></li>
+<li><p><a class="reference external" href="#Microsoft-Azure-Notebooks">Microsoft Azure Notebooks</a></p></li>
+<li><p><a class="reference external" href="#Datalore">DataLore</a></p></li>
+</ul>
+<div class="section" id="google-colab">
+<h3>Google Colab<a class="headerlink" href="#google-colab" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://colab.research.google.com">Google Colab</a> (Colaboratory) is a nice, newer service connected to your Google account that offers free computation time.</p>
+<p>In a new notebook, you need to first install Cantera:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!apt-get -qq update -y
+!apt-get -qq install -y python3-software-properties
+!apt-add-repository -y ppa:speth/cantera &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+!apt-get -qq install -y cantera-python3
+</pre></div>
+</div>
+<p>and then additional packages like Pint and CoolProp:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!pip install -q pint coolprop
+</pre></div>
+</div>
+<p>Or, click this link to open a notebook that includes these commands: <a class="reference external" href="https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/master/colab-demo.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>(Other common packages like NumPy and SciPy should already be available.)</p>
+</div>
+<div class="section" id="binder">
+<h3>Binder<a class="headerlink" href="#binder" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://mybinder.org">Binder</a> is a service that runs Jupyter Notebooks online, and can automatically create an environment based on a configuration file:</p>
+<ol class="simple">
+<li><p>Visit https://mybinder.org</p></li>
+<li><p>Enter the URL for this textbook: https://github.com/kyleniemeyer/computational-thermo</p></li>
+<li><p>Click the “launch” button.</p></li>
+</ol>
+<p>Or, just use this link: <a class="reference external" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/master"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+</div>
+<div class="section" id="microsoft-azure-notebooks">
+<h3>Microsoft Azure Notebooks<a class="headerlink" href="#microsoft-azure-notebooks" title="Permalink to this headline">¶</a></h3>
+<p>With <a class="reference external" href="https://notebooks.azure.com/">Microsoft Azure Notebooks</a>, after signing in with your Microsoft or Outlook account, you can create a “project” which contains one or more notebooks, text files, data, etc.</p>
+<p>In a new Python 3 notebook, you can install Cantera, Pint, and CoolProp in the first cell using:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!conda install -y --channel cantera cantera
+!pip install pint coolprop
+</pre></div>
+</div>
+<p>(This may take some time.)</p>
+</div>
+<div class="section" id="datalore">
+<h3>DataLore<a class="headerlink" href="#datalore" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://datalore.io">DataLore</a> is a new and slightly different service that is still under development. Rather than support Jupyter Notebooks directly, they have developed their own implementation of a Python-based notebook.</p>
+<p>Although DataLore workbooks come with many common packages installed (e.g., NumPy, SciPy, Matplotlib), it is a bit more challenging to install other packages:</p>
+<ol class="simple">
+<li><p>Go to “Tools” → “Library Manager”</p></li>
+<li><p>In “All Libraries”, search for the package you want to install. For example, you can install <code class="docutils literal notranslate"><span class="pre">pint</span></code> and <code class="docutils literal notranslate"><span class="pre">coolprop</span></code>.</p></li>
+<li><p>In the search results, choose the correct package, then from the dropdown next to the “Install” button choose the latest version available (this should already be selected).</p></li>
+<li><p>Click the “Install” button. After a few moments, the package should be accessible in your workbook.</p></li>
+<li><p>Repeat for other packages as needed.</p></li>
+</ol>
+<p>To solve thermodynamics problems, you’ll need to install CoolProp at minimum.</p>
+<p>Unfortunately, it is not clear how to install Cantera at the moment, so DataLore may be limited. The behavior is also a bit different than expected with Jupyter notebooks regarding work between different cells, since DataLore is more strict about executing cells in order and tracking dependency—it automatically updates any cells that depend on variables that change in the current cell.</p>
+<p>This information will be updated as DataLore evolves and more documentation is available.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="getting-started.html" title="previous page">Getting started</a>
+    <a class='right-next' id="next-link" href="intro-solving-problems.html" title="next page">Solving thermodynamics problems</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

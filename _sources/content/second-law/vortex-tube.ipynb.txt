@@ -1,0 +1,143 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Vortex tube\n",
+    "\n",
+    "A vortex tube takes in high-pressure air at 650 kPa and 305 K, and splits it into two streams at a lower pressure, 100 kPa: one at a higher temperature of 325 K and one at a lower temperature. The fraction of mass entering that leaves at the cold outlet is $f = 0.25$. The vortex tube operates continuously at steady state, is adiabatic, and performs/experiences no work. Air should be modeled as an ideal gas with constant specific heat: $R = 287$ J/kg⋅K and $c_p = 1004$ J/kg⋅K.\n",
+    "\n",
+    "![Vortex tube](../../images/vortex-tube.png)\n",
+    "\n",
+    "**Problem:** Determine the temperature at the cold end. Then, determine whether this device is physically possible."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Enter the known quantities\n",
+    "import numpy as np\n",
+    "from pint import UnitRegistry\n",
+    "ureg = UnitRegistry()\n",
+    "Q_ = ureg.Quantity\n",
+    "\n",
+    "gas_constant = Q_(287, 'J/(kg K)')\n",
+    "cp = Q_(1004, 'J/(kg K)')\n",
+    "\n",
+    "temp_1 = Q_(305, 'K')\n",
+    "pres_1 = Q_(650, 'kPa')\n",
+    "\n",
+    "temp_2 = Q_(325, 'K')\n",
+    "pres_2 = Q_(100, 'kPa')\n",
+    "\n",
+    "f = 0.25\n",
+    "pres_3 = Q_(100, 'kPa')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "First, we can find the temperature at the cold outlet by performing an energy balance on the device:\n",
+    "\\begin{align}\n",
+    "\\dot{m}_1 u_1 &= \\dot{m}_3 u_3 + \\dot{m}_2 u_2 \\\\\n",
+    "\\dot{m} c_p T_1 &= f \\dot{m} c_p T_3 + (1-f) \\dot{m} c_p T_2 \\\\\n",
+    "T_3 &= \\frac{T_1 - (1-f) T_2}{f}\n",
+    "\\end{align}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Temperature at cold outlet: 245.00 kelvin\n"
+     ]
+    }
+   ],
+   "source": [
+    "temp_3 = (temp_1 - (1-f)*temp_2) / f\n",
+    "print(f'Temperature at cold outlet: {temp_3: .2f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now, examine whether the device is physically possible by performing an entropy balance:\n",
+    "\\begin{align}\n",
+    "\\dot{m} s_1 + \\dot{S}_{\\text{gen}} &= f \\dot{m} s_3 + (1-f) \\dot{m} s_2 \\\\\n",
+    "\\frac{\\dot{S}_{\\text{gen}}}{\\dot{m}} &= f s_3 + (1-f) s_2 = f(s_3 - s_2) + (s_2 - s_1)\n",
+    "\\end{align}\n",
+    "\n",
+    "We can obtain the $\\Delta s$ values by using the relationship for an ideal gas with constant specific heat:\n",
+    "\\begin{equation}\n",
+    "\\Delta s_{1-2} = c_p \\ln \\left(\\frac{T_2}{T_1}\\right) - R \\ln \\left( \\frac{p_2}{p_1} \\right)\n",
+    "\\end{equation}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Entropy generation rate: 530.05 joule / kelvin / kilogram\n"
+     ]
+    }
+   ],
+   "source": [
+    "delta_s_12 = (\n",
+    "    cp * np.log(temp_2/temp_1) - \n",
+    "    gas_constant * np.log(pres_2/pres_1)\n",
+    "    )\n",
+    "delta_s_23 = (\n",
+    "    cp * np.log(temp_3/temp_2) - \n",
+    "    gas_constant * np.log(pres_3/pres_2)\n",
+    "    )\n",
+    "\n",
+    "entropy_gen = f * delta_s_23 + delta_s_12\n",
+    "print(f'Entropy generation rate: {entropy_gen: .2f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Since the rate of entropy generation is positive, this device can operate as described."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

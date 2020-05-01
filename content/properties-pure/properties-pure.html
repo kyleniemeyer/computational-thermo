@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Properties of Pure Fluids &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Reduced Helmholtz equation of state: carbon dioxide" href="reduced-helmholtz.html" />
+    <link rel="prev" title="Second Law Efficiency" href="../exergy/second-law-efficiency.html" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="../intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="active">
+    <a href="">Properties of Pure Fluids</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="reduced-helmholtz.html">Reduced Helmholtz equation of state: carbon dioxide</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="">
+    <a href="../combustion/combustion.html">Combustion</a>
+  </li>
+  <li class="">
+    <a href="../chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
+  </li>
+  <li class="">
+    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="../bibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="../contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/content/properties-pure/properties-pure.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/properties-pure/properties-pure.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#van-der-waals-equation-of-state" class="nav-link">van der Waals equation of state</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="properties-of-pure-fluids">
+<h1>Properties of Pure Fluids<a class="headerlink" href="#properties-of-pure-fluids" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can obtain critical properties of fluids using Cantera:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Nitrogen</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Critical temperature: </span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">critical_temperature</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> K&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Critical pressure: </span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">critical_pressure</span><span class="si">:</span><span class="s1"> .2e</span><span class="si">}</span><span class="s1"> Pa&#39;</span><span class="p">)</span>
+
+<span class="n">density_crit</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">critical_density</span>
+<span class="n">mol_weight</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">mean_molecular_weight</span>
+<span class="n">z_crit</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">critical_pressure</span> <span class="o">*</span> <span class="n">mol_weight</span> <span class="o">/</span> 
+    <span class="p">(</span><span class="n">density_crit</span> <span class="o">*</span> <span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span> <span class="o">*</span> <span class="n">f</span><span class="o">.</span><span class="n">critical_temperature</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Critical compressibility factor: </span><span class="si">{</span><span class="n">z_crit</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Critical temperature:  126.20 K
+Critical pressure:  3.40e+06 Pa
+Critical compressibility factor:  0.29
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="van-der-waals-equation-of-state">
+<h2>van der Waals equation of state<a class="headerlink" href="#van-der-waals-equation-of-state" title="Permalink to this headline">¶</a></h2>
+<p>The van der Waals equation of state is
+\begin{equation}
+P = \frac{RT}{v - b} - \frac{a}{v^2} ;,
+\end{equation}
+where <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are substance-specific constants.</p>
+<p>We can find these constants by applying the contraints on equations of state along the critical isotherms:
+\begin{align}
+\left( \frac{\partial P}{\partial v} \right)_T &amp;= 0 \
+\left( \frac{\partial^2 P}{\partial v^2} \right)_T &amp;= 0 ;,
+\end{align}
+which both apply at the critical point. These will give us closed-form expressions for <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> based on the critical properties.</p>
+<p>Let’s use SymPy to help us find these expressions, by taking these derivatives and applying the constraints at the critical point:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="n">sympy</span><span class="o">.</span><span class="n">init_printing</span><span class="p">(</span><span class="n">use_latex</span><span class="o">=</span><span class="s1">&#39;mathjax&#39;</span><span class="p">)</span>
+
+<span class="n">R</span><span class="p">,</span> <span class="n">Tc</span><span class="p">,</span> <span class="n">vc</span><span class="p">,</span> <span class="n">Pc</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;R, T_c, v_c, P_c, a, b&#39;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">equation_state</span> <span class="o">=</span> <span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="n">Tc</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">vc</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="n">vc</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># first derivative with respect to v</span>
+<span class="n">first_deriv</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">equation_state</span><span class="p">,</span> <span class="n">vc</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">first_deriv</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">second_deriv</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">first_deriv</span><span class="p">,</span> <span class="n">vc</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">second_deriv</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle - \frac{R T_{c}}{\left(- b + v_{c}\right)^{2}} + \frac{2 a}{v_{c}^{3}} = 0\]</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{2 R T_{c}}{\left(- b + v_{c}\right)^{3}} - \frac{6 a}{v_{c}^{4}} = 0\]</div>
+</div>
+</div>
+<p>Then, we can solve this system of two equations for our two unknowns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">solve</span><span class="p">((</span>
+    <span class="n">first_deriv</span><span class="p">,</span> 
+    <span class="n">second_deriv</span><span class="p">,</span> 
+    <span class="p">),</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="nb">dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">a_expr</span> <span class="o">=</span> <span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">a</span><span class="p">]</span>
+<span class="n">b_expr</span> <span class="o">=</span> <span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">b</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \left\{ a : \frac{9 R T_{c} v_{c}}{8}, \  b : \frac{v_{c}}{3}\right\}\]</div>
+</div>
+</div>
+<p>This gives us the coefficients <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> as a function of <span class="math notranslate nohighlight">\(T_{\text{crit}}\)</span>, <span class="math notranslate nohighlight">\(P_{\text{crit}}\)</span>, and <span class="math notranslate nohighlight">\(R\)</span>. However, while the critical temperature can be measured experimentally <em>relatively</em> easily, the critical specific volume is harder to measure accurately.</p>
+<p>So, we can introduce the equation of state applied at the critical point,
+\begin{equation}
+P_{\text{crit}} = \frac{R T_{\text{crit}}}{v_{\text{crit}} - b} - \frac{a}{v_{\text{crit}}^2} ;,
+\end{equation}
+and then solve the system of three equations for <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, and <span class="math notranslate nohighlight">\(v_{\text{crit}}\)</span> to eliminate the critical specific volume:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">solve</span><span class="p">((</span>
+    <span class="n">a</span> <span class="o">-</span> <span class="n">a_expr</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="n">b_expr</span><span class="p">,</span> <span class="n">Pc</span> <span class="o">-</span> <span class="p">((</span><span class="n">R</span><span class="o">*</span><span class="n">Tc</span> <span class="o">/</span> <span class="p">(</span><span class="n">vc</span><span class="o">-</span><span class="n">b</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">vc</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="p">),</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">vc</span><span class="p">),</span> <span class="nb">dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \left\{ a : \frac{27 R^{2} T_{c}^{2}}{64 P_{c}}, \  b : \frac{R T_{c}}{8 P_{c}}, \  v_{c} : \frac{3 R T_{c}}{8 P_{c}}\right\}\]</div>
+</div>
+</div>
+<p>Thus, we can now determine the coefficients <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> based on measured values of the critical temperature and pressure.</p>
+<p>We can now use the equation of state to get <span class="math notranslate nohighlight">\(P = f(T,v)\)</span>, but what about determining <span class="math notranslate nohighlight">\(v\)</span> based on <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span>? It turns out that the van der Waals equation of state gives a cubic function of <span class="math notranslate nohighlight">\(v\)</span>, which when expressed in terms of reduced properties is
+\begin{equation}
+v_r^3 - \left( \frac{8}{3} \frac{T_r}{P_r} + \frac{1}{3} \right) + \frac{3}{P_r} v_r - \frac{1}{P_r} = 0
+\end{equation}
+This means that we need to find the roots of this cubic polynomial to get specific volume. As a consequence, there will be three roots and potential solutions for <span class="math notranslate nohighlight">\(v_r\)</span>.
+At minimum, we should only consider real roots; imaginary roots are not physically meaningful.</p>
+<p>First, consider when <span class="math notranslate nohighlight">\(T_r &gt; 1.0\)</span>, such as for <span class="math notranslate nohighlight">\(T_r = 2.5\)</span> and <span class="math notranslate nohighlight">\(P_r = 2.0\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temp_r</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">pres_r</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">coeffs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">1.0</span><span class="p">,</span> 
+    <span class="o">-</span><span class="p">((</span><span class="mf">8.0</span><span class="o">*</span><span class="n">temp_r</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.0</span><span class="o">*</span><span class="n">pres_r</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)),</span>
+    <span class="mf">3.0</span> <span class="o">/</span> <span class="n">pres_r</span><span class="p">,</span>
+    <span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">pres_r</span>
+    <span class="p">]</span>
+<span class="n">roots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Roots: </span><span class="si">{</span><span class="n">roots</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1"># get only real roots</span>
+<span class="n">roots</span> <span class="o">=</span> <span class="n">roots</span><span class="o">.</span><span class="n">real</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">roots</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">1e-5</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Number of real roots: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">roots</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;T_r = </span><span class="si">{</span><span class="n">temp_r</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;P_r = </span><span class="si">{</span><span class="n">pres_r</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">reduced_volumes</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">vol_r</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">vol_r</span> <span class="ow">in</span> <span class="n">roots</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;v_r = </span><span class="si">{</span><span class="n">reduced_volumes</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Roots: [3.25277894+0.j         0.20694386+0.33299993j 0.20694386-0.33299993j]
+Number of real roots: 1
+T_r =  2.50
+P_r =  2.00
+v_r =  3.253
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, for temperatures above the critical temperature, there will be only one real value for reduced specific volume.</p>
+<p>But, if <span class="math notranslate nohighlight">\(T_r &lt; 1\)</span>, we can get three real roots:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temp_r</span> <span class="o">=</span> <span class="mf">0.90</span>
+<span class="n">pres_r</span> <span class="o">=</span> <span class="mf">0.61</span>
+<span class="n">coeffs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">1.0</span><span class="p">,</span> 
+    <span class="o">-</span><span class="p">((</span><span class="mf">8.0</span><span class="o">*</span><span class="n">temp_r</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.0</span><span class="o">*</span><span class="n">pres_r</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)),</span>
+    <span class="mf">3.0</span> <span class="o">/</span> <span class="n">pres_r</span><span class="p">,</span>
+    <span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">pres_r</span>
+    <span class="p">]</span>
+<span class="n">roots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+<span class="n">roots</span> <span class="o">=</span> <span class="n">roots</span><span class="o">.</span><span class="n">real</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">roots</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">1e-5</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Number of real roots: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">roots</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;T_r = </span><span class="si">{</span><span class="n">temp_r</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;P_r = </span><span class="si">{</span><span class="n">pres_r</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">reduced_volumes</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">vol_r</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">vol_r</span> <span class="ow">in</span> <span class="n">roots</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;v_r = </span><span class="si">{</span><span class="n">reduced_volumes</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Number of real roots: 3
+T_r =  0.90
+P_r =  0.61
+v_r =  2.640, 1.017, 0.610
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, we need to apply some additional knowledge to understand these roots and identify any non-physical values, such as considering the sign of <span class="math notranslate nohighlight">\(\frac{\partial P_r}{\partial v_r}\)</span> for these points.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content/properties-pure"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../exergy/second-law-efficiency.html" title="previous page">Second Law Efficiency</a>
+    <a class='right-next' id="next-link" href="reduced-helmholtz.html" title="next page">Reduced Helmholtz equation of state: carbon dioxide</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

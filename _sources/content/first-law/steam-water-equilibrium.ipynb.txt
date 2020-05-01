@@ -1,0 +1,298 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Steam equilibrating with liquid water\n",
+    "\n",
+    "Accident scenario: steam leaks into a rigid, insulated tank that is partially filled with water.\n",
+    "\n",
+    "The steam and liquid water are not initially at thermal equilibrium, though they are at the same pressure. The steam is at temperature $T_{s,1}$ = 600 C and pressure $P_1$ = 20 MPa. \n",
+    "The liquid water is initially at $T_{\\text{liq},1}$ = 40 C and pressure $P_1$ = 20 MPa.\n",
+    "The total volume of the tank is $V$ = 10 m$^3$ and the volume of the liquid water initially in the tank is $V_{\\text{liq},1} = 1 \\; \\text{m}^3$.\n",
+    "\n",
+    "Eventually, the contents of the tank reach a uniform temperature and pressure, $T_2$ and $P_2$. The tank is well-insulated and rigid.\n",
+    "\n",
+    "**Problem:** Determine the final temperature and pressure of the water in the tank."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# load necessary modules\n",
+    "\n",
+    "# Numpy adds some useful numerical types and functions\n",
+    "import numpy as np\n",
+    "\n",
+    "# Cantera will handle thermodynamic properties\n",
+    "import cantera as ct\n",
+    "\n",
+    "# Pint gives us some helpful unit conversion\n",
+    "from pint import UnitRegistry\n",
+    "ureg = UnitRegistry()\n",
+    "Q_ = ureg.Quantity"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "First, what are the initial states of the steam and liquid?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "  water:\n",
+      "\n",
+      "       temperature          873.15  K\n",
+      "          pressure           2e+07  Pa\n",
+      "           density         55.0118  kg/m^3\n",
+      "  mean mol. weight          18.016  amu\n",
+      "    vapor fraction               1\n",
+      "\n",
+      "                          1 kg            1 kmol\n",
+      "                       -----------      ------------\n",
+      "          enthalpy    -1.24332e+07        -2.24e+08     J\n",
+      "   internal energy    -1.27968e+07       -2.305e+08     J\n",
+      "           entropy         10024.8        1.806e+05     J/K\n",
+      "    Gibbs function    -2.11864e+07       -3.817e+08     J\n",
+      " heat capacity c_p         2808.18        5.059e+04     J/K\n",
+      " heat capacity c_v         1964.45        3.539e+04     J/K\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "steam = ct.Water()\n",
+    "temp_steam1 = Q_(600, 'degC')\n",
+    "pres1 = Q_(20, 'MPa')\n",
+    "steam.TP = temp_steam1.to('K').magnitude, pres1.to('Pa').magnitude\n",
+    "steam()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "  water:\n",
+      "\n",
+      "       temperature          313.15  K\n",
+      "          pressure           2e+07  Pa\n",
+      "           density         1000.81  kg/m^3\n",
+      "  mean mol. weight          18.016  amu\n",
+      "    vapor fraction               0\n",
+      "\n",
+      "                          1 kg            1 kmol\n",
+      "                       -----------      ------------\n",
+      "          enthalpy    -1.57857e+07       -2.844e+08     J\n",
+      "   internal energy    -1.58056e+07       -2.848e+08     J\n",
+      "           entropy         4084.54        7.359e+04     J/K\n",
+      "    Gibbs function    -1.70647e+07       -3.074e+08     J\n",
+      " heat capacity c_p         4128.68        7.438e+04     J/K\n",
+      " heat capacity c_v         4011.51        7.227e+04     J/K\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "liquid = ct.Water()\n",
+    "temp_liquid1 = Q_(40, 'degC')\n",
+    "liquid.TP = temp_liquid1.to('K').magnitude, pres1.to('Pa').magnitude\n",
+    "liquid()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "State $s,1$ is in the superheated vapor region (vapor fraction: 1) and state $\\text{liq},1$ is in the compressed liquid region (vapor fraction: 0)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can calculate the mass of liquid water in the tank, and then determine the volume and mass of steam:\n",
+    "\\begin{align}\n",
+    "m_{\\text{liq},1} &= \\frac{V_{\\text{liq},1}}{v_{\\text{liq},1}} \\\\\n",
+    "V_{s,1} &= V_{\\text{tank}} - V_{\\text{liq},1} \\\\\n",
+    "m_{s,1} &= \\frac{V_{s,1}}{v_{s,1}}\n",
+    "\\end{align}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Mass of liquid at state 1: 1000.81 kilogram\n",
+      "Mass of steam at state 1: 495.11 kilogram\n",
+      "Total mass of system: 1495.92 kilogram\n"
+     ]
+    }
+   ],
+   "source": [
+    "vol_tank = Q_(10, 'meter^3')\n",
+    "vol_liquid1 = Q_(1, 'meter^3')\n",
+    "\n",
+    "mass_liquid1 = vol_liquid1 / Q_(liquid.v, 'm^3/kg')\n",
+    "print(f'Mass of liquid at state 1: {mass_liquid1: .2f}')\n",
+    "\n",
+    "vol_steam1 = vol_tank - vol_liquid1\n",
+    "mass_steam1 = vol_steam1 / Q_(steam.v, 'm^3/kg')\n",
+    "print(f'Mass of steam at state 1: {mass_steam1: .2f}')\n",
+    "\n",
+    "mass_1 = mass_liquid1 + mass_steam1\n",
+    "print(f'Total mass of system: {mass_1: .2f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Do a mass balance on the tank for going from state 1 to state 2 (after equilibrium):\n",
+    "\\begin{equation}\n",
+    "\\frac{dm}{dt} = m_2 - m_1 = 0\n",
+    "\\end{equation}\n",
+    "and so $m_2 = m_1$, meaning the mass of water in the tank does not change.\n",
+    "We can then find the specific volume of water in the tank:\n",
+    "\\begin{equation}\n",
+    "v_2 = \\frac{V_{\\text{tank}}}{m_2}\n",
+    "\\end{equation}\n",
+    "\n",
+    "The tank experiences no heat or work, and does not exhibit any bulk changes in kinetic or potential energy; we can do an energy balance on the tank for the process of going from state 1 to state 2:\n",
+    "\\begin{align}\n",
+    "Q - W &= \\Delta KE + \\Delta PE + \\Delta U \\\\\n",
+    "\\rightarrow 0 &= U_2 - U_1 \\\\\n",
+    "0 &= u_2 m_2 - \\left( u_{\\text{liq},1} m_{\\text{liq},1} + u_{s,1} m_{s,1} \\right)\n",
+    "\\end{align}\n",
+    "Therefore, we can find the specific internal energy of the final state:\n",
+    "\\begin{equation}\n",
+    "u_2 = \\frac{ u_{\\text{liq},1} m_{\\text{liq},1} + u_{s,1} m_{s,1} }{m_2}\n",
+    "\\end{equation}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Specific volume of state 2: 6.68e-03 meter ** 3 / kilogram\n",
+      "Internal energy of state 2: -14809.79 kilojoule / kilogram\n",
+      "\n",
+      "  water:\n",
+      "\n",
+      "       temperature         510.436  K\n",
+      "          pressure     3.18519e+06  Pa\n",
+      "           density         149.592  kg/m^3\n",
+      "  mean mol. weight          18.016  amu\n",
+      "    vapor fraction       0.0887074\n",
+      "\n",
+      "                          1 kg            1 kmol\n",
+      "                       -----------      ------------\n",
+      "          enthalpy    -1.47885e+07       -2.664e+08     J\n",
+      "   internal energy    -1.48098e+07       -2.668e+08     J\n",
+      "           entropy         6505.97        1.172e+05     J/K\n",
+      "    Gibbs function    -1.81094e+07       -3.263e+08     J\n",
+      " heat capacity c_p    inf              inf              J/K\n",
+      " heat capacity c_v         6766.85        1.219e+05     J/K\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "mass_2 = mass_1\n",
+    "\n",
+    "spec_vol2 = vol_tank / mass_2\n",
+    "print(f'Specific volume of state 2: {spec_vol2: .2e}')\n",
+    "\n",
+    "int_energy2 = (\n",
+    "    Q_(liquid.u, 'J/kg')*mass_liquid1 + Q_(steam.u, 'J/kg')*mass_steam1\n",
+    "    ) / mass_2\n",
+    "int_energy2.ito('kilojoule/kg')\n",
+    "print(f'Internal energy of state 2: {int_energy2: .2f}')\n",
+    "\n",
+    "water_equilibrium = ct.Water()\n",
+    "water_equilibrium.UV = int_energy2.to('J/kg').magnitude, spec_vol2.to('m^3/kg').magnitude\n",
+    "\n",
+    "water_equilibrium()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "So, at equilibrium, the tank contains a mixture of saturated liquid and vapor, with temperature and pressure:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Final temperature: 510.44 kelvin\n",
+      "Final pressure: 3.19 megapascal\n"
+     ]
+    }
+   ],
+   "source": [
+    "final_temperature = Q_(water_equilibrium.T, 'K')\n",
+    "final_pressure = Q_(water_equilibrium.P, 'Pa')\n",
+    "\n",
+    "print(f'Final temperature: {final_temperature: .2f}')\n",
+    "print(f'Final pressure: {final_pressure.to(ureg.MPa): .2f}')"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

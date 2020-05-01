@@ -1,0 +1,127 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Second Law Efficiency\n",
+    "\n",
+    "A power plant receives two heat inputs, 25 kW at 825°C and 50 kW at 240°C, rejects heat to the environment at 20°C, and produces power of 12 kW. Calculate the second-law efficiency of the power plant."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from pint import UnitRegistry\n",
+    "ureg = UnitRegistry()\n",
+    "Q_ = ureg.Quantity"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The second law efficiency is\n",
+    "\\begin{align}\n",
+    "\\eta_2 &= \\frac{\\text{exergy of desired output}}{\\text{exergy supplied}} \\\\\n",
+    "\\eta_2 &= \\frac{\\dot{W}}{\\dot{X}_{Q_{HT}} + \\dot{X}_{Q_{MT}}} \\;,\n",
+    "\\end{align}\n",
+    "where the exergy input due to heat transfer is\n",
+    "\\begin{equation}\n",
+    "\\dot{X}_{Q_i} = \\dot{Q}_i \\left( 1 - \\frac{T_0}{T_i} \\right)\n",
+    "\\end{equation}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "heat_in_hot = Q_(25, 'kW')\n",
+    "temp_hot = Q_(825, 'degC').to('K')\n",
+    "\n",
+    "heat_in_med = Q_(50, 'kW')\n",
+    "temp_med = Q_(240, 'degC').to('K')\n",
+    "\n",
+    "temp_out = Q_(20, 'degC').to('K')\n",
+    "\n",
+    "work_out = Q_(12, 'kW')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "second law efficiency:  30.2%\n"
+     ]
+    }
+   ],
+   "source": [
+    "exergy_heat_hot = heat_in_hot * (1.0 - (temp_out / temp_hot))\n",
+    "exergy_heat_med = heat_in_med * (1.0 - (temp_out / temp_med))\n",
+    "\n",
+    "eta_2 = work_out / (exergy_heat_hot + exergy_heat_med)\n",
+    "\n",
+    "print(f'second law efficiency: {100*eta_2.magnitude: .1f}%')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's compare to the first-law efficiency:\n",
+    "\\begin{equation}\n",
+    "\\eta = \\frac{\\dot{W}}{\\dot{Q}_{HT} + \\dot{Q}_{MT}}\n",
+    "\\end{equation}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "first law efficiency:  16.0%\n"
+     ]
+    }
+   ],
+   "source": [
+    "eta = work_out / (heat_in_hot + heat_in_med)\n",
+    "print(f'first law efficiency: {100*eta.magnitude: .1f}%')"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

@@ -1,0 +1,579 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Solving thermodynamics problems\n",
+    "\n",
+    "This module introduces how to solve thermodynamics problems in Python using Cantera and Pint. It will also briefly show how [CoolProp](http://coolprop.org) could also be used, if you need access to a wider range of fluids than Cantera currently supports.\n",
+    "\n",
+    "For help running these examples or setting up your own problems, see the module on \"Setting up your computing environment\".\n",
+    "\n",
+    "First, we need to import the necessary libraries:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Numpy adds some useful numerical types and functions\n",
+    "import numpy as np\n",
+    "\n",
+    "# Cantera will handle thermodynamic properties\n",
+    "import cantera as ct\n",
+    "\n",
+    "# Pint gives us some helpful unit conversion\n",
+    "from pint import UnitRegistry\n",
+    "ureg = UnitRegistry()\n",
+    "Q_ = ureg.Quantity # We will use this to construct quantities (value + unit)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Quick Pint intro\n",
+    "\n",
+    "Pint is a useful tool for parsing unit expressions, converting between different units, and working with expressions involving quantities (values + units).\n",
+    "\n",
+    "For example, we can read in expressions that give temperature and pressure in US customary units (e.g., imperial units) and then convert those to SI units:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "tags": [
+     "popout"
+    ]
+   },
+   "source": [
+    "Pint interprets nearly all properties either written out (e.g., `kelvin`, `meters`) or as abbreviations (e.g., `K`, `m`)—except for temperatures. In that case, we need to use `kelvin` or `K`, `celsius` or `degC`, `fahrenheits` or `degF`, and `rankine` or `degR`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Temperature in SI: 310.93 kelvin\n",
+      "Pressure in SI: 68947.57 pascal\n"
+     ]
+    }
+   ],
+   "source": [
+    "temperature = Q_(100, 'degF')\n",
+    "pressure = Q_('10 psi')\n",
+    "\n",
+    "new_temperature = temperature.to('K')\n",
+    "new_pressure = pressure.to('Pa')\n",
+    "\n",
+    "print(f'Temperature in SI: {new_temperature: .2f}')\n",
+    "print(f'Pressure in SI: {new_pressure: .2f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Another way to specify units is to multiply the value by an object with the unit (as a member of the `ureg` object):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "10 meter\n"
+     ]
+    }
+   ],
+   "source": [
+    "distance = 10 * ureg.meter\n",
+    "print(distance)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Pint also handles mathematical operations between physical quantities:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1.1 meter\n"
+     ]
+    }
+   ],
+   "source": [
+    "distance1 = Q_(1, 'm')\n",
+    "distance2 = Q_(10, 'cm')\n",
+    "\n",
+    "print(distance1 + distance2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "2.0 kilogram * meter ** 2 / second ** 2\n",
+      "2.0 joule\n"
+     ]
+    }
+   ],
+   "source": [
+    "mass = Q_(1, 'kg')\n",
+    "velocity = Q_(2, 'm/s')\n",
+    "kinetic_energy = 0.5 * mass * velocity**2\n",
+    "\n",
+    "print(kinetic_energy)\n",
+    "print(kinetic_energy.to('joule'))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Using Cantera for thermodynamic properties"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "[Cantera](https://cantera.org) is a suite of tools for solving problems involving chemical kinetics, thermodynamics, and transport processes. We'll use it here primarily for evaluating thermodynamic properties of fluids.\n",
+    "\n",
+    "Cantera comes with built-in liquid/vapor equations of state for multiple fluids:\n",
+    "\n",
+    " - water: `ct.Water()`\n",
+    " - nitrogen: `ct.Nitrogen()`\n",
+    " - methane: `ct.Methane()`\n",
+    " - hydrogen (H2): `ct.Hydrogen()`\n",
+    " - oxygen (O2): `ct.Oxygen()`\n",
+    " - carbon dioxide (CO2): `ct.CarbonDioxide()`\n",
+    " - n-heptane (C7H16): `ct.Heptane()`\n",
+    " - R134a: `ct.Hfc134a()`\n",
+    " \n",
+    "Let's take a look at water, and evaluate its properties at different conditions:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "  water:\n",
+      "\n",
+      "       temperature          673.15  K\n",
+      "          pressure     1.99362e+07  Pa\n",
+      "           density             100  kg/m^3\n",
+      "  mean mol. weight          18.016  amu\n",
+      "    vapor fraction               1\n",
+      "\n",
+      "                          1 kg            1 kmol\n",
+      "                       -----------      ------------\n",
+      "          enthalpy    -1.31504e+07       -2.369e+08     J\n",
+      "   internal energy    -1.33497e+07       -2.405e+08     J\n",
+      "           entropy         9078.37        1.636e+05     J/K\n",
+      "    Gibbs function    -1.92615e+07        -3.47e+08     J\n",
+      " heat capacity c_p         6284.65        1.132e+05     J/K\n",
+      " heat capacity c_v         2693.99        4.853e+04     J/K\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Create an object to hold the thermodynamic state of water\n",
+    "f = ct.Water()\n",
+    "\n",
+    "# Fix the thermodynamic state by specifying temperature and \n",
+    "# specific volume, in SI units (K and m^3/kg)\n",
+    "f.TV = 673.15, 1e-2\n",
+    "\n",
+    "# Evaluating the object provides a summary of its properties at this state\n",
+    "f()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can do the same thing to get the properties of R134a; this time, let's use Pint to interpret the temperature and pressure as given in units of °C and bar, then convert to SI as needed by Cantera:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "  hfc134a:\n",
+      "\n",
+      "       temperature          323.15  K\n",
+      "          pressure          300000  Pa\n",
+      "           density         11.9442  kg/m^3\n",
+      "  mean mol. weight         102.032  amu\n",
+      "    vapor fraction               1\n",
+      "\n",
+      "                          1 kg            1 kmol\n",
+      "                       -----------      ------------\n",
+      "          enthalpy          243187        2.481e+07     J\n",
+      "   internal energy          218070        2.225e+07     J\n",
+      "           entropy         1607.36         1.64e+05     J/K\n",
+      "    Gibbs function         -276232       -2.818e+07     J\n",
+      " heat capacity c_p         917.046        9.357e+04     J/K\n",
+      " heat capacity c_v         813.222        8.297e+04     J/K\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "f = ct.Hfc134a()\n",
+    "\n",
+    "# Specify temperature and pressure\n",
+    "temp = Q_(50, 'degC')\n",
+    "pres = Q_(3, 'bar')\n",
+    "\n",
+    "# Fix the thermodynamic state using temperature and pressure\n",
+    "# Remember, Cantera requires SI units\n",
+    "f.TP = temp.to('K').magnitude, pres.to('Pa').magnitude\n",
+    "\n",
+    "# see overview of properties\n",
+    "f()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Once we have the thermodynamic state fixed for a fluid, we can easily obtain any properties we need:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Internal energy:  218070.47 J/kg\n",
+      "Enthalpy:  243187.37 J/kg\n",
+      "c_p:  917.05 J\n",
+      "c_v:  813.22 J\n",
+      "density:  11.94 kg/m^3\n",
+      "critical temperature:  374.21 K\n",
+      "critical pressure:  4059280.00 Pa\n",
+      "critical density:  511.95 kg/m^3\n"
+     ]
+    }
+   ],
+   "source": [
+    "# get internal energy in SI units (mass basis)\n",
+    "print(f'Internal energy: {f.u: .2f} J/kg')\n",
+    "\n",
+    "# enthalpy\n",
+    "print(f'Enthalpy: {f.h: .2f} J/kg')\n",
+    "\n",
+    "# constant pressure specific heat\n",
+    "print(f'c_p: {f.cp: .2f} J')\n",
+    "# constant volume specific heat\n",
+    "print(f'c_v: {f.cv: .2f} J')\n",
+    "\n",
+    "# density\n",
+    "print(f'density: {f.density: .2f} kg/m^3')\n",
+    "\n",
+    "# critical properties\n",
+    "print(f'critical temperature: {f.critical_temperature: .2f} K')\n",
+    "print(f'critical pressure: {f.critical_pressure: .2f} Pa')\n",
+    "print(f'critical density: {f.critical_density: .2f} kg/m^3')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can fix the thermodynamic state by any combination of two properties:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Specific volume:  0.1332 m^3/kg\n"
+     ]
+    }
+   ],
+   "source": [
+    "# specify pressure and internal enegy\n",
+    "pres = Q_(250e3, 'Pa')\n",
+    "internal_energy = Q_(300e3, 'J/kg')\n",
+    "f.UP = internal_energy.to('J/kg').magnitude, pres.to('Pa').magnitude\n",
+    "\n",
+    "# get specific volume\n",
+    "print(f'Specific volume: {f.v: 0.4f} m^3/kg')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Compare ideal and real gas behavior for nitrogen\n",
+    "\n",
+    "Using Cantera's built-in pure fluid model for nitrogen, and its ideal gas model for air (which includes nitrogen), we can see an example of the error involved with treating fluids as ideal gases:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Δu for real gas: 647294.70 joule / kilogram\n",
+      "Δu for ideal gas: 648472.39 joule / kilogram\n",
+      "difference:  0.18%\n"
+     ]
+    }
+   ],
+   "source": [
+    "temp1 = Q_(500, 'K')\n",
+    "temp2 = Q_(1270, 'K')\n",
+    "pres = Q_(500, 'kPa')\n",
+    "\n",
+    "# Real gas\n",
+    "air_real1 = ct.Nitrogen()\n",
+    "air_real1.TP = temp1.to('K').magnitude, pres.to('Pa').magnitude \n",
+    "\n",
+    "air_real2 = ct.Nitrogen()\n",
+    "air_real2.TP =  temp2.to('K').magnitude, pres.to('Pa').magnitude \n",
+    "\n",
+    "delta_u_real = Q_(air_real2.u - air_real1.u, 'J/kg')\n",
+    "print(f'Δu for real gas: {delta_u_real: .2f}')\n",
+    "\n",
+    "# ideal gas\n",
+    "air_ideal1 = ct.Solution('air.cti')\n",
+    "air_ideal1.TPX = temp1.to('K').magnitude, pres.to('Pa').magnitude, 'N2:1.0'\n",
+    "\n",
+    "air_ideal2 = ct.Solution('air.cti')\n",
+    "air_ideal2.TPX = temp2.to('K').magnitude, pres.to('Pa').magnitude, 'N2:1.0'\n",
+    "\n",
+    "delta_u_ideal = Q_(air_ideal2.u - air_ideal1.u, 'J/kg')\n",
+    "print(f'Δu for ideal gas: {delta_u_ideal: .2f}')\n",
+    "\n",
+    "diff = 100*np.abs(delta_u_ideal-delta_u_real)/delta_u_real\n",
+    "print(f'difference: {diff.magnitude: .2f}%')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Fortunately, at these conditions, nitrogen behaves much like an ideal gas, and so our calculations of the internal energy difference between two states are quite close."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Modeling air\n",
+    "\n",
+    "Air is a pseudo-pure fluid; in reality it is a multicomponent gas mixture of mostly oxygen and nitrogen, with trace amounts of arfon, carbon dioxide, and water (depending on the humidity). However, since the composition does not change under *most* processes, we can sometimes treat it like a pure fluid."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Using Cantera\n",
+    "\n",
+    "To solve problems with air, we can use an ideal gas model in Cantera, or the pseudo-pure fluid model in CoolProp (see the [CoolProp module](intro-using-coolprop) for more details).\n",
+    "\n",
+    "In Cantera, we create a `Solution` object using the built-in `air.cti` model file, then specify the state, including composition. We can use mole fractions (`X`) or mass fractions (`Y`). The commonly accepted composition of air is 1 mole of oxygen to 3.76 moles of nitrogen, and we can specify this molar composition using the string `'O2:1.0, N2:3.76'`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "  air:\n",
+      "\n",
+      "       temperature             300  K\n",
+      "          pressure          101325  Pa\n",
+      "           density         1.17197  kg/m^3\n",
+      "  mean mol. weight         28.8507  amu\n",
+      "\n",
+      "                          1 kg            1 kmol\n",
+      "                       -----------      ------------\n",
+      "          enthalpy          1907.6        5.504e+04     J\n",
+      "   internal energy          -84549       -2.439e+06     J\n",
+      "           entropy          6891.7        1.988e+05     J/K\n",
+      "    Gibbs function     -2.0656e+06       -5.959e+07     J\n",
+      " heat capacity c_p          1010.1        2.914e+04     J/K\n",
+      " heat capacity c_v          721.88        2.083e+04     J/K\n",
+      "\n",
+      "                           X                 Y          Chem. Pot. / RT\n",
+      "                     -------------     ------------     ------------\n",
+      "                O2       0.210084         0.233008          -26.234\n",
+      "                N2       0.789916         0.766992          -23.269\n",
+      "     [   +6 minor]              0                0\n",
+      "\n",
+      "Density:  1.172 kg/m^3\n"
+     ]
+    }
+   ],
+   "source": [
+    "air = ct.Solution('air.cti')\n",
+    "air.TPX = 300.0, 101325.0, 'O2:1.0, N2:3.76'\n",
+    "air()\n",
+    "\n",
+    "print(f'Density: {air.density: .3f} kg/m^3')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "A `Solution` object can be used to specify and compute thermodynamic, chemical kinetic, and/or transport properties of a mixture; the thermodynamics come from the [`ThermoPhase`](https://cantera.org/documentation/docs-2.4/sphinx/html/cython/thermo.html#cantera.ThermoPhase) class. \n",
+    "\n",
+    "We can set the state by using a combination of two intensive properties, from the list `[DP, HP, SP, SV, TD, TP, UV]`, along with the mole or mass fractions. Here, `D` is density, `H` is enthalpy, `P` is pressure, `S` is entropy, `V` is specific volume, and `T` is temperature; all should be in SI units, either in a mass or molar basis.\n",
+    "\n",
+    "For example, we could specify the temperature, pressure, and air mole fractions using\n",
+    "\n",
+    "    air.TPX = 300, 101325, 'O2:1.0, N2:3.76'\n",
+    "\n",
+    "or we could specify via density and pressure:\n",
+    "\n",
+    "    air.DPX = 1.225, 101325, 'O2:1.0, N2:3.76'\n",
+    "\n",
+    "(Remember that density and specific volume are inversely related, so if we have one we always have the other.)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Using CoolProp\n",
+    "\n",
+    "We can also use CoolProp to model [air](http://www.coolprop.org/fluid_properties/fluids/Air.html), using its psuedo-pure fluid model. In this case, we do not need to specify the composition."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Density:  1.177 kg/m^3\n"
+     ]
+    }
+   ],
+   "source": [
+    "from CoolProp.CoolProp import PropsSI\n",
+    "\n",
+    "density = PropsSI('D', 'T', 300.0, 'P', 101325, 'air')\n",
+    "print(f'Density: {density: .3f} kg/m^3')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Hmm, the density given by CoolProp differs slightly from that given by Cantera. The difference is less than 1%, but where could that be coming from? \n",
+    "\n",
+    "Well, our specified moles for the composition are only approximate, and also missing a small amount of argon. Let's use a slightly more accurate mixture (though this is still missing traces of carbon dioxide, neon, helium, etc., that are present at less than 0.01% by mole):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Density:  1.176 kg/m^3\n"
+     ]
+    }
+   ],
+   "source": [
+    "air = ct.Solution('air.cti')\n",
+    "air.TPX = 300.0, 101325.0, 'N2:0.78084, O2:0.20947, Ar:0.00934'\n",
+    "print(f'Density: {air.density: .3f} kg/m^3')"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

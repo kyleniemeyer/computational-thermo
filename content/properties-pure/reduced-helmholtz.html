@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Reduced Helmholtz equation of state: carbon dioxide &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Mixture properties" href="../mixtures/mixtures.html" />
+    <link rel="prev" title="Properties of Pure Fluids" href="properties-pure.html" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="../intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="active">
+    <a href="properties-pure.html">Properties of Pure Fluids</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="">Reduced Helmholtz equation of state: carbon dioxide</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="">
+    <a href="../combustion/combustion.html">Combustion</a>
+  </li>
+  <li class="">
+    <a href="../chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
+  </li>
+  <li class="">
+    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="../bibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="../contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/content/properties-pure/reduced-helmholtz.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/properties-pure/reduced-helmholtz.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#carbon-dioxide-equation-of-state" class="nav-link">Carbon dioxide equation of state</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="reduced-helmholtz-equation-of-state-carbon-dioxide">
+<h1>Reduced Helmholtz equation of state: carbon dioxide<a class="headerlink" href="#reduced-helmholtz-equation-of-state-carbon-dioxide" title="Permalink to this headline">¶</a></h1>
+<p><strong>Water equation of state:</strong> You can see the full, state-of-the-art equation of state for water, which also uses a reduced Helmholtz approach: the IAPWS 1995 formulation <span class="bibtex" id="id1">[Wagner2002]</span>. This equation is state is available using CoolProp with the <code class="docutils literal notranslate"><span class="pre">Water</span></code> fluid.</p>
+<p>One modern approach for calculating thermodynamic properties of real fluids uses a reduced Helmholtz equation of state, using the reduced Helmholtz free energy function <span class="math notranslate nohighlight">\(\alpha\)</span>:
+\begin{equation}
+\alpha (\tau, \delta) = \frac{a}{RT} = \frac{u - Ts}{RT}
+\end{equation}
+which is a function of reduced density <span class="math notranslate nohighlight">\(\delta\)</span> and reduced temperature <span class="math notranslate nohighlight">\(\tau\)</span>:
+\begin{equation}
+\delta = \frac{\rho}{\rho_{\text{crit}}} \quad \text{and} \quad \tau = \frac{T_{\text{crit}}}{T}
+\end{equation}</p>
+<p>The reduced Helmhotz free energy function, <span class="math notranslate nohighlight">\(\alpha(\tau, \delta)\)</span>, is given as the sum of ideal gas and residual components:
+\begin{equation}
+\alpha(\tau, \delta) = \alpha_{IG} (\tau, \delta) + \alpha_{\text{res}} (\tau, \delta) ;,
+\end{equation}
+which are both given as high-order fits using many coefficients:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="c1"># these are mostly for making the saved figures nicer</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
+<span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span><span class="o">=</span> <span class="mi">150</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;savefig.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">150</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span><span class="p">,</span> <span class="n">optimize</span>
+
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="n">sympy</span><span class="o">.</span><span class="n">init_printing</span><span class="p">(</span><span class="n">use_latex</span><span class="o">=</span><span class="s1">&#39;mathjax&#39;</span><span class="p">)</span>
+
+<span class="n">T</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;T, R, tau, delta&#39;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">a_vars</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;a0, a1, a2, a3, a4, a5, a6, a7&#39;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">theta_vars</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;theta3, theta4, theta5, theta6, theta7&#39;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">n_vars</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11&#39;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">alpha_ideal</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="o">+</span> <span class="n">a_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">a_vars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">tau</span> <span class="o">+</span> <span class="n">a_vars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">sympy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+    <span class="n">alpha_ideal</span> <span class="o">+=</span> <span class="n">a_vars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">sympy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">tau</span> <span class="o">*</span> <span class="n">theta_vars</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">3</span><span class="p">]))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;alpha_IG&#39;</span><span class="p">),</span> <span class="n">alpha_ideal</span><span class="p">))</span>
+
+<span class="n">alpha_res</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">0.25</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">1.25</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">1.50</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">0.25</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span><span class="o">**</span><span class="mi">7</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">0.875</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">2.375</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta</span><span class="p">)</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta</span><span class="p">)</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span><span class="o">**</span><span class="mi">5</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">2.125</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta</span><span class="p">)</span> <span class="o">+</span>
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">3.5</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">6.5</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span><span class="o">**</span><span class="mi">4</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">4.75</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> 
+    <span class="n">n_vars</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">12.5</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;alpha_res&#39;</span><span class="p">),</span> <span class="n">alpha_res</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \alpha_{IG} = a_{0} + a_{1} \tau + a_{2} \log{\left(\tau \right)} + a_{3} \log{\left(1.0 - e^{- \tau \theta_{3}} \right)} + a_{4} \log{\left(1.0 - e^{- \tau \theta_{4}} \right)} + a_{5} \log{\left(1.0 - e^{- \tau \theta_{5}} \right)} + a_{6} \log{\left(1.0 - e^{- \tau \theta_{6}} \right)} + a_{7} \log{\left(1.0 - e^{- \tau \theta_{7}} \right)} + \log{\left(\delta \right)}\]</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \alpha_{res} = \delta^{7} n_{4} \tau^{0.875} + \delta^{5} n_{7} \tau^{2.125} e^{- \delta} + \delta^{4} n_{10} \tau^{4.75} e^{- \delta^{2}} + \delta^{3} n_{3} \tau^{0.25} + \delta^{2} n_{11} \tau^{12.5} e^{- \delta^{3}} + \delta^{2} n_{6} \tau^{2} e^{- \delta} + \delta n_{0} \tau^{0.25} + \delta n_{1} \tau^{1.25} + \delta n_{2} \tau^{1.5} + \delta n_{5} \tau^{2.375} e^{- \delta} + \delta n_{8} \tau^{3.5} e^{- \delta^{2}} + \delta n_{9} \tau^{6.5} e^{- \delta^{2}}\]</div>
+</div>
+</div>
+<div class="section" id="carbon-dioxide-equation-of-state">
+<h2>Carbon dioxide equation of state<a class="headerlink" href="#carbon-dioxide-equation-of-state" title="Permalink to this headline">¶</a></h2>
+<p>The coefficients <span class="math notranslate nohighlight">\(a_i\)</span>, <span class="math notranslate nohighlight">\(\theta_i\)</span>, and <span class="math notranslate nohighlight">\(n_i\)</span> are given for carbon dioxide:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># actual coefficients</span>
+<span class="n">coeffs_a</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">8.37304456</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.70454304</span><span class="p">,</span> <span class="mf">2.500000</span><span class="p">,</span> <span class="mf">1.99427042</span><span class="p">,</span> 
+    <span class="mf">0.62105248</span><span class="p">,</span> <span class="mf">0.41195293</span><span class="p">,</span> <span class="mf">1.04028922</span><span class="p">,</span> <span class="mf">8.327678e-2</span>
+    <span class="p">]</span>
+<span class="n">coeffs_theta</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">3.151630</span><span class="p">,</span> <span class="mf">6.111900</span><span class="p">,</span> <span class="mf">6.777080</span><span class="p">,</span> <span class="mf">11.32384</span><span class="p">,</span> <span class="mf">27.08792</span>
+    <span class="p">]</span>
+<span class="n">coeffs_n</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.89875108</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.21281985e1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.68190320e-1</span><span class="p">,</span> <span class="mf">0.76355306e-1</span><span class="p">,</span>
+    <span class="mf">0.22053253e-3</span><span class="p">,</span> <span class="mf">0.41541823</span><span class="p">,</span> <span class="mf">0.71335657</span><span class="p">,</span> <span class="mf">0.30354234e-3</span><span class="p">,</span>
+    <span class="o">-</span><span class="mf">0.36643143</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14407781e-2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.89166707e-1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.23699887e-1</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Through some math, we can find an expression for pressure:
+\begin{equation}
+P = R T \rho \left[ 1 + \delta \left(\frac{\partial \alpha_{\text{res}}}{\partial \delta} \right)_{\tau} \right]
+\end{equation}</p>
+<p>Use this expression to estimate the pressure at <span class="math notranslate nohighlight">\(T\)</span> = 350 K and <span class="math notranslate nohighlight">\(v\)</span> = 0.01 m<span class="math notranslate nohighlight">\(^3\)</span>/kg, and compare against that obtained from Cantera. We can use our symbolic expression for <span class="math notranslate nohighlight">\(\alpha_{\text{res}} (\tau, \delta)\)</span> and take the partial derivative:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># use Cantera fluid to get specific gas constant and critical properties</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">CarbonDioxide</span><span class="p">()</span>
+<span class="n">gas_constant</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span> <span class="o">/</span> <span class="n">f</span><span class="o">.</span><span class="n">mean_molecular_weight</span>
+<span class="n">temp_crit</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">critical_temperature</span>
+<span class="n">density_crit</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">critical_density</span>
+
+<span class="c1"># conditions of interest</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mi">350</span>
+<span class="n">specific_volume</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">density</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">specific_volume</span>
+
+<span class="c1"># take the partial derivative of alpha_res with respect to delta</span>
+<span class="n">derivative_alpha_delta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">alpha_res</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+
+<span class="c1"># substitute all coefficients</span>
+<span class="n">derivative_alpha_delta</span> <span class="o">=</span> <span class="n">derivative_alpha_delta</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span>
+    <span class="p">[(</span><span class="n">n</span><span class="p">,</span> <span class="n">n_val</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">n_val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">n_vars</span><span class="p">,</span> <span class="n">coeffs_n</span><span class="p">)]</span>
+    <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_pressure</span><span class="p">(</span>
+    <span class="n">temp</span><span class="p">,</span> <span class="n">specific_vol</span><span class="p">,</span> <span class="n">fluid</span><span class="p">,</span> <span class="n">derivative_alpha_delta</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">delta</span>
+    <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calculates pressure for reduced Helmholtz equation of state&#39;&#39;&#39;</span>
+    <span class="n">red_density</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">specific_vol</span><span class="p">)</span> <span class="o">/</span> <span class="n">fluid</span><span class="o">.</span><span class="n">critical_density</span>
+    <span class="n">red_temp_inv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">critical_temperature</span> <span class="o">/</span> <span class="n">temp</span>
+
+    <span class="n">gas_constant</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span> <span class="o">/</span> <span class="n">fluid</span><span class="o">.</span><span class="n">mean_molecular_weight</span>
+    
+    <span class="n">dalpha_ddelta</span> <span class="o">=</span> <span class="n">derivative_alpha_delta</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span>
+        <span class="p">[(</span><span class="n">delta</span><span class="p">,</span> <span class="n">red_density</span><span class="p">),</span> <span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">red_temp_inv</span><span class="p">)]</span>
+        <span class="p">)</span>
+    
+    <span class="n">pres</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">gas_constant</span> <span class="o">*</span> <span class="n">temp</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">specific_vol</span><span class="p">)</span> <span class="o">*</span> 
+        <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">red_density</span> <span class="o">*</span> <span class="n">dalpha_ddelta</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">pres</span>
+
+<span class="n">pres</span> <span class="o">=</span> <span class="n">get_pressure</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">specific_volume</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">derivative_alpha_delta</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Pressure: </span><span class="si">{</span><span class="n">pres</span> <span class="o">/</span> <span class="mf">1e6</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1"> MPa&#39;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">TV</span> <span class="o">=</span> <span class="n">temp</span><span class="p">,</span> <span class="n">specific_volume</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Cantera pressure: </span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">P</span> <span class="o">/</span> <span class="mf">1e6</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1"> MPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Pressure:  5.464 MPa
+Cantera pressure:  5.475 MPa
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our calculation and that from Cantera agree fairly well! They are not exactly the same because Cantera uses a slightly different formulation for the equation of state.</p>
+<p>Let’s compare the calculations now for a range of specific volumes and multiple temperatures:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">specific_volumes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">temperatures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">:</span>
+    <span class="n">pressures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">specific_volumes</span><span class="p">))</span>
+    <span class="n">pressures_cantera</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">specific_volumes</span><span class="p">))</span>
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">spec_vol</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">specific_volumes</span><span class="p">):</span>
+        <span class="n">pressures</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_pressure</span><span class="p">(</span>
+            <span class="n">temp</span><span class="p">,</span> <span class="n">spec_vol</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> 
+            <span class="n">derivative_alpha_delta</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">delta</span>
+            <span class="p">)</span>
+        
+        <span class="n">f</span><span class="o">.</span><span class="n">TV</span> <span class="o">=</span> <span class="n">temp</span><span class="p">,</span> <span class="n">spec_vol</span>
+        <span class="n">pressures_cantera</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">P</span>
+    
+    <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">specific_volumes</span><span class="p">,</span> <span class="n">pressures</span><span class="o">/</span><span class="mf">1000.</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">specific_volumes</span><span class="p">,</span> <span class="n">pressures_cantera</span><span class="o">/</span><span class="mf">1000.</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+<span class="n">bbox_props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2e-3</span><span class="p">,</span> <span class="mf">4e3</span><span class="p">,</span> <span class="s1">&#39;300 K&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="n">bbox_props</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2e-3</span><span class="p">,</span> <span class="mf">1.6e4</span><span class="p">,</span> <span class="s1">&#39;400 K&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="n">bbox_props</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2e-3</span><span class="p">,</span> <span class="mf">7e4</span><span class="p">,</span> <span class="s1">&#39;500 K&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="n">bbox_props</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Reduced Helmholtz&#39;</span><span class="p">,</span> <span class="s1">&#39;Cantera&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Specific volume (m^3/kg)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Pressure (kPa)&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/reduced-helmholtz_10_0.png" src="../../_images/reduced-helmholtz_10_0.png" />
+</div>
+</div>
+<p>We can see that the pressure calculated using the reduced Helmholtz equation of state matches closely with that from Cantera, which uses a different but similarly advanced equation of state.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content/properties-pure"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="properties-pure.html" title="previous page">Properties of Pure Fluids</a>
+    <a class='right-next' id="next-link" href="../mixtures/mixtures.html" title="next page">Mixture properties</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

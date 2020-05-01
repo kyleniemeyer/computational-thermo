@@ -1,0 +1,482 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Air in a tank &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Second Law of Thermodynamics" href="../second-law/second-law.html" />
+    <link rel="prev" title="Hydrogen storage tank" href="hydrogen-storage-tanks.html" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="../intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="active">
+    <a href="first-law.html">First Law of Thermodynamics</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="steam-water-equilibrium.html">Steam equilibrating with liquid water</a>
+    </li>
+    <li class="">
+      <a href="portable-cooling-system.html">Portable cooling system</a>
+    </li>
+    <li class="">
+      <a href="hydrogen-storage-tanks.html">Hydrogen storage tank</a>
+    </li>
+    <li class="active">
+      <a href="">Air in a tank</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="">
+    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
+  </li>
+  <li class="">
+    <a href="../mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="">
+    <a href="../combustion/combustion.html">Combustion</a>
+  </li>
+  <li class="">
+    <a href="../chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
+  </li>
+  <li class="">
+    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="../bibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="../contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/content/first-law/air-tank.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/first-law/air-tank.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#alternate-solution" class="nav-link">Alternate solution</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="air-in-a-tank">
+<h1>Air in a tank<a class="headerlink" href="#air-in-a-tank" title="Permalink to this headline">¶</a></h1>
+<p>A spherical metal tank stores hot air, initially at 200°C and 350 psi.
+The tank is made out of stainless steel, with specific heat capacity 471 J/kg-K and density 7902 kg/m<span class="math notranslate nohighlight">\(^3\)</span>. The tank wall is 0.35 mm thick and initially at 20°C; the inner radius is 10 cm and the outer wall is insulated.</p>
+<p>Treat the air in the tank as an ideal gas and the stainless steel tank wall as an incompressible substance.</p>
+<p>Eventually the air reaches thermal equilibrium with the tank wall. Find the final temperature of the air and the tank, and the final pressure of the air.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># input data</span>
+<span class="n">tank_specific_heat</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">471</span><span class="p">,</span> <span class="s1">&#39;J/(kg*K)&#39;</span><span class="p">)</span>
+<span class="n">tank_density</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">7902</span><span class="p">,</span> <span class="s1">&#39;kg/m^3&#39;</span><span class="p">)</span>
+<span class="n">tank_radius</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">)</span>
+<span class="n">tank_thickness</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.35</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">)</span>
+
+<span class="n">tank_temp1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+
+<span class="n">air_temp1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+<span class="n">air_pres1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span> <span class="s1">&#39;psi&#39;</span><span class="p">)</span>
+
+<span class="c1"># use an ideal gas mixture to represent air</span>
+<span class="n">air1</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+<span class="n">air1</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">air_temp1</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> 
+    <span class="n">air_pres1</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> 
+    <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">air_volume</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">tank_radius</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="mf">3.0</span>
+<span class="n">air_mass</span> <span class="o">=</span> <span class="n">air_volume</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span>
+
+<span class="n">tank_volume</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>
+    <span class="p">(</span><span class="n">tank_radius</span> <span class="o">+</span> <span class="n">tank_thickness</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">tank_radius</span><span class="o">**</span><span class="mi">3</span>
+    <span class="p">)</span>
+<span class="n">tank_mass</span> <span class="o">=</span> <span class="n">tank_volume</span> <span class="o">*</span> <span class="n">tank_density</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>During the equilibration process, the specific volume of the air does not change:
+\begin{equation}
+v_{a,2} = v_{a,1} ;.
+\end{equation}</p>
+<p>We can perform an energy balance on the system that contains both the tank and air:
+\begin{align}
+0 &amp;= m_t ( u_{t,2} - u_{t,1} ) + m_a ( u_{a,2} - u_{a,1} ) \
+0 &amp;= m_t c_{\text{steel}} (T_{t,2} - T_{t,1}) - m_a ( u_{a,2} - u_{a,1} )
+\end{align}
+and we know that at equilibrium the temperatures are the same: <span class="math notranslate nohighlight">\(T_{t,2} = T_{a,2}\)</span>.</p>
+<p>So, we fundamentally have <strong>one</strong> unknown, the final temperature, which we can solve using the final version of the energy balance:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tank_energy</span><span class="p">(</span><span class="n">T2</span><span class="p">,</span> <span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Returns value of energy balance equation based on input T2</span>
+<span class="sd">    </span>
+<span class="sd">    This equation should return zero, if the correct T2 is input.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># the temperatures are the same</span>
+    <span class="n">tank_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">T2</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    <span class="n">air_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">T2</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    
+    <span class="n">air_specific_volume2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span>
+    <span class="n">air_density2</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">air_specific_volume2</span>
+
+    <span class="n">air2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+    <span class="n">air2</span><span class="o">.</span><span class="n">TDX</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">air_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="n">air_density2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kg/m^3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+        <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">tank_mass</span> <span class="o">*</span> <span class="n">tank_specific_heat</span> <span class="o">*</span> <span class="p">(</span><span class="n">tank_temp2</span> <span class="o">-</span> <span class="n">tank_temp1</span><span class="p">)</span> <span class="o">+</span>
+        <span class="n">air_mass</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">))</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># find the root of the equation, with an initial guess of 300 K</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">root</span><span class="p">(</span>
+    <span class="n">tank_energy</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> 
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># the solution is the first element of the sol.x list</span>
+<span class="n">temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final temperature: </span><span class="si">{</span><span class="n">temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;degC&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">air2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+<span class="n">air2</span><span class="o">.</span><span class="n">TDX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="n">air1</span><span class="o">.</span><span class="n">density</span><span class="p">,</span>
+    <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+    <span class="p">)</span>
+<span class="n">air_pres2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">P</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final air pressure: </span><span class="si">{</span><span class="n">air_pres2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;psi&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Final temperature: 64.83 degree_Celsius
+Final air pressure: 250.01 pound_force_per_square_inch
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="alternate-solution">
+<h2>Alternate solution<a class="headerlink" href="#alternate-solution" title="Permalink to this headline">¶</a></h2>
+<p>If we wanted, we could also solve this problem with a larger number of equations and unknowns, although as seen above this is not necessary. For example, we can treat <span class="math notranslate nohighlight">\(v_{a,2}\)</span>, <span class="math notranslate nohighlight">\(T_{a,2}\)</span>, <span class="math notranslate nohighlight">\(T_{t,2}\)</span>, and <span class="math notranslate nohighlight">\(u_{a,2}\)</span> as the four unknowns, with the equations
+\begin{align}
+v_{a,2} &amp;= v_{a,1} \
+T_{a,2} &amp;= T_{t,2} \
+u_{a,2} &amp;= f \left( T_{a,2}, v_{a,2} \right)
+\end{align}
+being added to the one used above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tank_energy2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Returns value of energy balance equation based on input T2</span>
+<span class="sd">    </span>
+<span class="sd">    This equation should return zero, if the correct values are input.</span>
+<span class="sd">    </span>
+<span class="sd">    x: T_t2, v_a2, T_a2, u_a2</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">tank_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    <span class="n">air_specific_volume2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span>
+    <span class="n">air_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    <span class="n">air_internal_energy2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span>
+    
+    <span class="n">air_density2</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">air_specific_volume2</span>
+
+    <span class="n">air2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+    <span class="n">air2</span><span class="o">.</span><span class="n">TDX</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">air_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="n">air_density2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kg/m^3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+        <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">tank_mass</span> <span class="o">*</span> <span class="n">tank_specific_heat</span> <span class="o">*</span> <span class="p">(</span><span class="n">tank_temp2</span> <span class="o">-</span> <span class="n">tank_temp1</span><span class="p">)</span> <span class="o">+</span>
+         <span class="n">air_mass</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">))</span>
+         <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">air_specific_volume2</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air1</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;m^3/kg&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m^3/kg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">air_temp2</span> <span class="o">-</span> <span class="n">tank_temp2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">air_internal_energy2</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;J/kg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="p">]</span>
+
+<span class="c1"># now we have to give guesses for all four variables</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">root</span><span class="p">(</span>
+    <span class="n">tank_energy2</span><span class="p">,</span> <span class="p">[</span><span class="mf">300.0</span><span class="p">,</span> <span class="n">air1</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="n">air1</span><span class="o">.</span><span class="n">u</span><span class="p">],</span> 
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># the solution is the first element of the sol.x list</span>
+<span class="n">tank_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final temperature of tank: </span><span class="si">{</span><span class="n">tank_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;degC&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">air_temp2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final temperature of air: </span><span class="si">{</span><span class="n">air_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;degC&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">air2</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;air.cti&#39;</span><span class="p">)</span>
+<span class="n">air2</span><span class="o">.</span><span class="n">TDX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">air_temp2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;O2:1.0, N2:3.76&#39;</span>
+    <span class="p">)</span>
+<span class="n">air_pres2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">air2</span><span class="o">.</span><span class="n">P</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final air pressure: </span><span class="si">{</span><span class="n">air_pres2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;psi&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Final temperature of tank: 64.83 degree_Celsius
+Final temperature of air: 64.83 degree_Celsius
+Final air pressure: 250.01 pound_force_per_square_inch
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, we get the same answer as before, without any real benefits. In fact, this is a bit more work, since we had to specify four guess values instead of one.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content/first-law"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="hydrogen-storage-tanks.html" title="previous page">Hydrogen storage tank</a>
+    <a class='right-next' id="next-link" href="../second-law/second-law.html" title="next page">Second Law of Thermodynamics</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
