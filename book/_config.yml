@@ -1,0 +1,39 @@
+# Book settings
+title: Computational Thermodynamics
+author: Kyle Niemeyer
+copyright: '2020'
+logo: 'images/logo/logo.png'
+
+email: kyle.niemeyer@oregonstate.edu
+
+description: >- # this means to ignore newlines until "baseurl:"
+  This is a collection of examples in computational thermodynamics. 
+
+execute_notebooks: auto
+
+html:
+  favicon: images/logo/favicon.ico
+  home_page_in_navbar: true
+
+#baseurl: "/computational-thermo" # the subpath of your site, e.g. /blog. If there is no subpath for your site, use an empty string ""
+#url: "https://kyleniemeyer.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+repository:
+  url: https://github.com/kyleniemeyer/computational-thermo
+  branch: newbackend
+  path_to_book: "book"
+
+launch_buttons:
+  binderhub_url: "https://mybinder.org"
+  thebelab: true
+
+binder:
+  binderhub_url: "https://mybinder.org"
+  text: "Launch binder"
+
+sphinx:
+  extra_extensions: ""
+
+latex:
+  latex_documents:
+    targetname: book.tex

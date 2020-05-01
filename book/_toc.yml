@@ -1,0 +1,55 @@
+
+- file: content/intro
+  title: Introduction
+
+- file: content/getting-started
+  expand_sections: true
+  sections:
+    - file: content/setting-up-environment
+    - file: content/intro-solving-problems
+    - file: content/intro-using-coolprop
+    - file: content/using-scipy
+
+- header: Modules
+
+- file: content/first-law/first-law
+  sections:
+    - file: content/first-law/steam-water-equilibrium
+    - file: content/first-law/portable-cooling-system
+    - file: content/first-law/hydrogen-storage-tanks
+    - file: content/first-law/air-tank
+
+- file: content/second-law/second-law
+  sections:
+    - file: content/second-law/vortex-tube
+    - file: content/second-law/heating-water
+    - file: content/second-law/turbine-efficiency
+    - file: content/second-law/solar-powered-pump
+
+- file: content/exergy/exergy
+  sections:
+    - file: content/exergy/second-law-efficiency
+
+- file: content/properties-pure/properties-pure
+  sections: 
+    - file: content/properties-pure/reduced-helmholtz
+
+- file: content/mixtures/mixtures
+  sections: 
+    - file: content/mixtures/multicomponent-phase-equilibrium
+
+- file: content/combustion/combustion
+
+- file: content/chemical-equilibrium/chemical-equilibrium
+
+- file: content/stat-thermo/stat-thermo
+
+- header: Reference
+
+- file: content/bibliography
+- file: content/contributing
+
+# - file: https://github.com/kyleniemeyer/computational-thermo
+#   title: GitHub repository
+#   #external: true
+#   not_numbered: true
