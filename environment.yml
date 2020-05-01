@@ -1,3 +1,4 @@
+name: thermo-env
 channels:
  - cantera
  - conda-forge
