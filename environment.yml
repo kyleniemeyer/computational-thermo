@@ -11,3 +11,6 @@ dependencies:
  - coolprop
  - pandas
  - sympy
+# dependencies for building book
+ - pip:
+    - jupyter-book
