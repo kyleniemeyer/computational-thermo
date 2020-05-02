@@ -46,7 +46,7 @@
 
 - header: Reference
 
-- file: content/bibliography
+- file: content/zbibliography
 - file: content/contributing
 
 # - file: https://github.com/kyleniemeyer/computational-thermo
