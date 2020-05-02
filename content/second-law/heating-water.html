@@ -318,21 +318,21 @@ v_2 &amp;= v_1 \
 \rho_2 &amp;= \rho_1
 \end{align}
 Therefore the final state is fixed by the density and quality, where <span class="math notranslate nohighlight">\(x_2 = 1\)</span>:</p>
-<div class="cell docutils container">
+<div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state_final</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Water</span><span class="p">()</span>
-<span class="c1"># rather than use</span>
-
-<span class="c1"># I know that this will lead to an error...</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">state_final</span><span class="o">.</span><span class="n">DX</span> <span class="o">=</span> <span class="n">state_initial</span><span class="o">.</span><span class="n">density</span><span class="p">,</span> <span class="n">quality_final</span>
-<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This does not work, Cantera PureFluid objects do not support &#39;DX&#39;&quot;</span><span class="p">)</span>
+<span class="n">state_final</span><span class="o">.</span><span class="n">DX</span> <span class="o">=</span> <span class="n">state_initial</span><span class="o">.</span><span class="n">density</span><span class="p">,</span> <span class="n">quality_final</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This does not work, Cantera PureFluid objects do not support &#39;DX&#39;
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mf">845410e31</span><span class="n">b81</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">state_final</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Water</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">state_final</span><span class="o">.</span><span class="n">DX</span> <span class="o">=</span> <span class="n">state_initial</span><span class="o">.</span><span class="n">density</span><span class="p">,</span> <span class="n">quality_final</span>
+
+<span class="ne">AttributeError</span>: &#39;cantera._cantera.PureFluid&#39; object has no attribute &#39;DX&#39;
 </pre></div>
 </div>
 </div>

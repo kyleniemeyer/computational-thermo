@@ -26,7 +26,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -47,7 +47,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 3,
    "metadata": {},
    "outputs": [
     {
@@ -104,26 +104,28 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
-   "metadata": {},
+   "execution_count": 4,
+   "metadata": {
+    "tags": [
+     "raises-exception"
+    ]
+   },
    "outputs": [
     {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "This does not work, Cantera PureFluid objects do not support 'DX'\n"
+     "ename": "AttributeError",
+     "evalue": "'cantera._cantera.PureFluid' object has no attribute 'DX'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-4-845410e31b81>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0mstate_final\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mct\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mWater\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 2\u001b[0;31m \u001b[0mstate_final\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mDX\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mstate_initial\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdensity\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mquality_final\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mAttributeError\u001b[0m: 'cantera._cantera.PureFluid' object has no attribute 'DX'"
      ]
     }
    ],
    "source": [
     "state_final = ct.Water()\n",
-    "# rather than use\n",
-    "\n",
-    "# I know that this will lead to an error...\n",
-    "try:\n",
-    "    state_final.DX = state_initial.density, quality_final\n",
-    "except AttributeError:\n",
-    "    print(\"This does not work, Cantera PureFluid objects do not support 'DX'\")"
+    "state_final.DX = state_initial.density, quality_final"
    ]
   },
   {
@@ -326,16 +328,10 @@
     "fig.tight_layout()\n",
     "plt.show()"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {
+  "celltoolbar": "Tags",
   "kernelspec": {
    "display_name": "Python 3",
    "language": "python",
