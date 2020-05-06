@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Adiabatic flame temperature &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chemical Equilibrium" href="../chemical-equilibrium/chemical-equilibrium.html" />
+    <link rel="prev" title="Combustion" href="combustion.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="../intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="">
+    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
+  </li>
+  <li class="">
+    <a href="../mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="active">
+    <a href="combustion.html">Combustion</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="">Adiabatic flame temperature</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
+  </li>
+  <li class="">
+    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="../zbibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="../contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/content/combustion/adiabatic-flame-temperature.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/combustion/adiabatic-flame-temperature.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#solve-using-mixtures" class="nav-link">Solve using mixtures</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#compare-to-cantera-solution" class="nav-link">Compare to Cantera solution</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="adiabatic-flame-temperature">
+<h1>Adiabatic flame temperature<a class="headerlink" href="#adiabatic-flame-temperature" title="Permalink to this headline">¶</a></h1>
+<p>Consider a stoichiometric mixture of ethane (C<span class="math notranslate nohighlight">\(_2\)</span>H<span class="math notranslate nohighlight">\(_6\)</span>) at 25°C and 1 atm.
+Calculate the adiabatic flame temperature, assuming complete combustion.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root_scalar</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The combustion reaction is
+\begin{equation}
+\text{C}_2 \text{H}_6 + a (0.21 \text{O}_2 + 0.79 \text{N}_2) \rightarrow b \text{CO}_2 + c \text{H}_2 \text{O} + d \text{N}_2
+\end{equation}
+and we can solve for the stoichiometric coefficients <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(c\)</span>, and <span class="math notranslate nohighlight">\(d\)</span> by performing elemental balances:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">6.0</span> <span class="o">/</span> <span class="mf">2.0</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mf">0.21</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="mf">0.79</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;a=</span><span class="si">{</span><span class="n">a</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">, b=</span><span class="si">{</span><span class="n">b</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">, c=</span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">, d=</span><span class="si">{</span><span class="n">d</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>a= 16.667, b= 2.00, c= 3.00, d= 13.167
+</pre></div>
+</div>
+</div>
+</div>
+<p>So the stoichiometric reaction is
+\begin{equation}
+\text{C}_2 \text{H}_6 + 16.667 (0.21 \text{O}_2 + 0.79 \text{N}_2) \rightarrow 2 \text{CO}_2 + 3 \text{H}_2 \text{O} + 13.167 \text{N}_2
+\end{equation}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<span class="n">temperature_in</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+
+<span class="c1"># calculate inlet properties</span>
+<span class="n">ethane</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+<span class="n">ethane</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">temperature_in</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="s1">&#39;C2H6:1.0&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">nitrogen</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+<span class="n">nitrogen</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">temperature_in</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="s1">&#39;N2:1.0&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">oxygen</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+<span class="n">oxygen</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">temperature_in</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="s1">&#39;O2:1.0&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">enthalpy_reactants</span> <span class="o">=</span> <span class="n">ethane</span><span class="o">.</span><span class="n">h</span> <span class="o">+</span> <span class="mf">16.667</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.21</span> <span class="o">*</span> <span class="n">oxygen</span><span class="o">.</span><span class="n">h</span> <span class="o">+</span> <span class="mf">0.79</span> <span class="o">*</span> <span class="n">nitrogen</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_flame_temp</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">enthalpy_in</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>    
+    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="s1">&#39;CO2:1.0&#39;</span>
+    <span class="n">enthalpy_co2</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">h</span>
+    
+    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="s1">&#39;H2O:1.0&#39;</span>
+    <span class="n">enthalpy_h2o</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">h</span>
+    
+    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="s1">&#39;N2:1.0&#39;</span>
+    <span class="n">enthalpy_n2</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">h</span>
+    
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="mf">2.0</span><span class="o">*</span><span class="n">enthalpy_co2</span> <span class="o">+</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">enthalpy_h2o</span> <span class="o">+</span> <span class="mf">13.167</span><span class="o">*</span><span class="n">enthalpy_n2</span> <span class="o">-</span> 
+        <span class="n">enthalpy_in</span>
+        <span class="p">)</span>
+    
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
+    <span class="n">get_flame_temp</span><span class="p">,</span>
+    <span class="n">x0</span><span class="o">=</span><span class="mf">1000.</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="mf">2000.</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">enthalpy_reactants</span><span class="p">,</span> <span class="n">gas</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Adiabatic flame temperature: </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">root</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> K&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Adiabatic flame temperature:  2441.29 K
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="solve-using-mixtures">
+<h2>Solve using mixtures<a class="headerlink" href="#solve-using-mixtures" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">temperature_in</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+    <span class="s1">&#39;C2H6:1.0, O2:3.5, N2:13.167&#39;</span>
+    <span class="p">)</span>
+<span class="n">enthalpy_reactants</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">h</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_flame_temp</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">enthalpy_in</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>
+    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> 
+        <span class="s1">&#39;CO2:2.0, H2O:3.0, N2:13.167&#39;</span>
+        <span class="p">)</span>
+        
+    <span class="k">return</span> <span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">h</span> <span class="o">-</span> <span class="n">enthalpy_in</span><span class="p">)</span>
+    
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
+    <span class="n">get_flame_temp</span><span class="p">,</span>
+    <span class="n">x0</span><span class="o">=</span><span class="mf">1000.</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="mf">2000.</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">enthalpy_reactants</span><span class="p">,</span> <span class="n">gas</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Adiabatic flame temperature: </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">root</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> K&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Adiabatic flame temperature:  2379.21 K
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="compare-to-cantera-solution">
+<h2>Compare to Cantera solution<a class="headerlink" href="#compare-to-cantera-solution" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get all of the Species objects defined in the GRI 3.0 mechanism</span>
+<span class="n">species</span> <span class="o">=</span> <span class="p">{</span><span class="n">S</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">S</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">Species</span><span class="o">.</span><span class="n">listFromFile</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)}</span>
+
+<span class="c1"># Create an IdealGas object with species representing complete combustion</span>
+<span class="n">complete_species</span> <span class="o">=</span> <span class="p">[</span><span class="n">species</span><span class="p">[</span><span class="n">S</span><span class="p">]</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;C2H6&#39;</span><span class="p">,</span><span class="s1">&#39;O2&#39;</span><span class="p">,</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span><span class="s1">&#39;CO2&#39;</span><span class="p">,</span><span class="s1">&#39;H2O&#39;</span><span class="p">)]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="n">thermo</span><span class="o">=</span><span class="s1">&#39;IdealGas&#39;</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="n">complete_species</span><span class="p">)</span>
+
+<span class="n">gas</span><span class="o">.</span><span class="n">TP</span> <span class="o">=</span> <span class="n">temperature_in</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">pressure</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">set_equivalence_ratio</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;C2H6&#39;</span><span class="p">,</span> <span class="s1">&#39;O2:1, N2:3.76&#39;</span><span class="p">)</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="s1">&#39;HP&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Adiabatic flame temperature: </span><span class="si">{</span><span class="n">gas</span><span class="o">.</span><span class="n">T</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> K&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Adiabatic flame temperature:  2379.85 K
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content/combustion"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="combustion.html" title="previous page">Combustion</a>
+    <a class='right-next' id="next-link" href="../chemical-equilibrium/chemical-equilibrium.html" title="next page">Chemical Equilibrium</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
