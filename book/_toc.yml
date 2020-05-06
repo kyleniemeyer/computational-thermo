@@ -39,6 +39,8 @@
     - file: content/mixtures/multicomponent-phase-equilibrium
 
 - file: content/combustion/combustion
+  sections: 
+    - file: content/combustion/adiabatic-flame-temperature
 
 - file: content/chemical-equilibrium/chemical-equilibrium
 
