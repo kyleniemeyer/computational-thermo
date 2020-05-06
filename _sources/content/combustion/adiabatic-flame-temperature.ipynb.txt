@@ -6,27 +6,30 @@
    "source": [
     "# Adiabatic flame temperature\n",
     "\n",
-    "Consider a stoichiometric mixture of ethane (C$_2$H$_6$) at 25°C and 1 atm.\n",
-    "Calculate the adiabatic flame temperature, assuming complete combustion."
+    "Consider a stoichiometric mixture of ethane (C$_2$H$_6$) and air at 25°C and 1 atm.\n",
+    "Calculate the adiabatic flame temperature, assuming complete combustion.\n",
+    "\n",
+    "![Control volume for adiabatic flame temperature](../../images/adiabatic-flame-temperature.png)\n",
+    "\n",
+    "We can find the adiabatic flame temperature by performing a steady-state energy balance on this system:\n",
+    "\\begin{align}\n",
+    "H_{\\text{reactants}} &= Q_{\\text{out}} + H_{\\text{products}} \\\\\n",
+    "H_{\\text{reactants}} &= H_{\\text{products}}\n",
+    "\\end{align}\n",
+    "\n",
+    "First, we need to determine the composition of the products."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 99,
    "metadata": {},
    "outputs": [],
    "source": [
     "import numpy as np\n",
     "import cantera as ct\n",
-    "from scipy.optimize import root_scalar"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 3,
-   "metadata": {},
-   "outputs": [],
-   "source": [
+    "from scipy.optimize import root_scalar\n",
+    "\n",
     "from pint import UnitRegistry\n",
     "ureg = UnitRegistry()\n",
     "Q_ = ureg.Quantity"
@@ -71,67 +74,90 @@
     "So the stoichiometric reaction is\n",
     "\\begin{equation}\n",
     "\\text{C}_2 \\text{H}_6 + 16.667 (0.21 \\text{O}_2 + 0.79 \\text{N}_2) \\rightarrow 2 \\text{CO}_2 + 3 \\text{H}_2 \\text{O} + 13.167 \\text{N}_2\n",
-    "\\end{equation}"
+    "\\end{equation}\n",
+    "\n",
+    "We can then use these stoichiometric coefficients in our energy balance:\n",
+    "\\begin{equation}\n",
+    "\\bar{h}_{\\text{C}_2 \\text{H}_6, \\text{in}} + 16.667 \\left(0.21 \\bar{h}_{\\text{O}_2, \\text{in}} + 0.79 \\bar{h}_{\\text{N}_2, \\text{in}} \\right) = 2 \\bar{h}_{\\text{CO}_2, \\text{out}} + 3 \\bar{h}_{\\text{H}_2 \\text{O}, \\text{out}} + 13.167 \\bar{h}_{\\text{N}_2, \\text{out}} \\;,\n",
+    "\\end{equation}\n",
+    "where the inlet molar enthalpies are known based on the given temperature and pressure, \n",
+    "while the outlet molar enthalpies are unknown due to the unknown final temperature (the adiabatic flame temperature).\n",
+    "\n",
+    "We can find that temperature by setting this up as a root-finding problem to find temperature."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 58,
+   "execution_count": 100,
    "metadata": {},
    "outputs": [],
    "source": [
     "pressure = Q_(1, 'atm')\n",
     "temperature_in = Q_(25, 'degC')\n",
     "\n",
-    "# calculate inlet properties\n",
-    "ethane = ct.Solution('gri30.cti')\n",
-    "ethane.TPX = (\n",
+    "# calculate inlet enthalpies for each species\n",
+    "gas = ct.Solution('gri30.cti')\n",
+    "gas.TPX = (\n",
     "    temperature_in.to('K').magnitude, pressure.to('Pa').magnitude,\n",
     "    'C2H6:1.0'\n",
     "    )\n",
+    "enthalpy_c2h6 = gas.enthalpy_mole\n",
     "\n",
-    "nitrogen = ct.Solution('gri30.cti')\n",
-    "nitrogen.TPX = (\n",
+    "gas.TPX = (\n",
     "    temperature_in.to('K').magnitude, pressure.to('Pa').magnitude,\n",
     "    'N2:1.0'\n",
     "    )\n",
+    "enthalpy_n2 = gas.enthalpy_mole\n",
     "\n",
-    "oxygen = ct.Solution('gri30.cti')\n",
-    "oxygen.TPX = (\n",
+    "gas.TPX = (\n",
     "    temperature_in.to('K').magnitude, pressure.to('Pa').magnitude,\n",
     "    'O2:1.0'\n",
     "    )\n",
+    "enthalpy_o2 = gas.enthalpy_mole\n",
     "\n",
-    "enthalpy_reactants = ethane.h + 16.667 * (0.21 * oxygen.h + 0.79 * nitrogen.h)"
+    "enthalpy_reactants = (\n",
+    "    enthalpy_c2h6 + a * (0.21 * enthalpy_o2 + 0.79 * enthalpy_n2)\n",
+    "    )"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "tags": [
+     "margin"
+    ]
+   },
+   "source": [
+    "**Important:** make sure you use the `enthalpy_mole` attribute for the specific enthalpy on a molar basis. Using the `h` shortcut attribute provides specific enthalpy on a *mass* basis (which you can also get with `enthalpy_mass`). Generally it's a good idea to access properties using their explicit naming."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 61,
+   "execution_count": 101,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Adiabatic flame temperature:  2441.29 K\n"
+      "Adiabatic flame temperature:  2379.21 K\n"
      ]
     }
    ],
    "source": [
-    "def get_flame_temp(temp, pressure, enthalpy_in, gas):    \n",
+    "def get_flame_temp(temp, pressure, enthalpy_reactants, gas):    \n",
     "    gas.TPX = temp, pressure, 'CO2:1.0'\n",
-    "    enthalpy_co2 = gas.h\n",
+    "    enthalpy_co2 = gas.enthalpy_mole\n",
     "    \n",
     "    gas.TPX = temp, pressure, 'H2O:1.0'\n",
-    "    enthalpy_h2o = gas.h\n",
+    "    enthalpy_h2o = gas.enthalpy_mole\n",
     "    \n",
     "    gas.TPX = temp, pressure, 'N2:1.0'\n",
-    "    enthalpy_n2 = gas.h\n",
+    "    enthalpy_n2 = gas.enthalpy_mole\n",
     "    \n",
     "    return (\n",
     "        2.0*enthalpy_co2 + 3.0*enthalpy_h2o + 13.167*enthalpy_n2 - \n",
-    "        enthalpy_in\n",
+    "        enthalpy_reactants\n",
     "        )\n",
     "    \n",
     "gas = ct.Solution('gri30.cti')\n",
@@ -149,12 +175,18 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Solve using mixtures"
+    "## Solve using mixtures\n",
+    "\n",
+    "We can also solve this problem by representing the reactants and products as mixtures, using the `Solution` class and giving the numbers of moles as input for mole fractions, `X`. (These will be automatically normalized to sum to 1.0).\n",
+    "\n",
+    "The molar enthalpies of the reactants and products are then just the molar enthalpies of the mixtures.\n",
+    "\n",
+    "One catch: to ensure the results match, we need to ensure that we multiply the molar enthalpy of each mixture by the number of moles of each, since *total* enthalpy is conserved rather than specific enthalpy."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 47,
+   "execution_count": 106,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -163,12 +195,16 @@
     "    temperature_in.to('K').magnitude, pressure.to('Pa').magnitude,\n",
     "    'C2H6:1.0, O2:3.5, N2:13.167'\n",
     "    )\n",
-    "enthalpy_reactants = gas.h"
+    "\n",
+    "# Multiply the mixture specific enthalpy by \n",
+    "# the total number of moles.\n",
+    "total_moles = 1.0 + 3.5 + 13.167\n",
+    "enthalpy_reactants = gas.enthalpy_mole * total_moles"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 48,
+   "execution_count": 107,
    "metadata": {},
    "outputs": [
     {
@@ -185,8 +221,12 @@
     "        temp, pressure, \n",
     "        'CO2:2.0, H2O:3.0, N2:13.167'\n",
     "        )\n",
+    "    # Multiply the mixture specific enthalpy by \n",
+    "    # the total number of moles.\n",
+    "    total_moles = 2.0 + 3.0 + 13.167\n",
+    "    enthalpy_products = gas.enthalpy_mole * total_moles\n",
     "        \n",
-    "    return (gas.h - enthalpy_in)\n",
+    "    return (enthalpy_products - enthalpy_in)\n",
     "    \n",
     "gas = ct.Solution('gri30.cti')\n",
     "\n",
@@ -203,19 +243,38 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Compare to Cantera solution"
+    "As expected, we get the same solution using this approach, but with significantly less coding effort."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Compare to Cantera solution\n",
+    "\n",
+    "Lastly, we can also find the adiabatic flame temperature by using the built-in `equilibrate()` method provided by the `Solution` class. \n",
+    "\n",
+    "Given an initial state, this finds the equilibrium state (composition and temperature) while holding two properties constant. For the adiabatic flame temperature, we hold enthalpy and pressure constant (`equilibrate('HP')`).\n",
+    "\n",
+    "To ensure that only the species involved in stoichiometric, complete combustion are considered, we also need to construct a new mixture object that only contains the fuel, oxygen, nitrogen, carbon dioxide, and water."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 43,
+   "execution_count": 120,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Adiabatic flame temperature:  2379.85 K\n"
+      "Adiabatic flame temperature:  2379.85 K\n",
+      "Moles of species at equilibrium:\n",
+      "C2H6   2.304e-08\n",
+      "O2     8.065e-08\n",
+      "CO2    2.001e+00\n",
+      "H2O    3.001e+00\n",
+      "N2     1.317e+01\n"
      ]
     }
    ],
@@ -224,25 +283,34 @@
     "species = {S.name: S for S in ct.Species.listFromFile('gri30.cti')}\n",
     "\n",
     "# Create an IdealGas object with species representing complete combustion\n",
-    "complete_species = [species[S] for S in ('C2H6','O2','N2','CO2','H2O')]\n",
+    "complete_species = [species[S] for S in ('C2H6','O2','CO2','H2O','N2')]\n",
     "gas = ct.Solution(thermo='IdealGas', species=complete_species)\n",
     "\n",
     "gas.TP = temperature_in.to('K').magnitude, pressure.to('Pa').magnitude\n",
     "gas.set_equivalence_ratio(1.0, 'C2H6', 'O2:1, N2:3.76')\n",
     "gas.equilibrate('HP')\n",
     "\n",
-    "print(f'Adiabatic flame temperature: {gas.T: .2f} K')"
+    "\n",
+    "# for comparing to the other solutions\n",
+    "num_moles = 2.0 + 3.0 + 13.167\n",
+    "\n",
+    "print(f'Adiabatic flame temperature: {gas.T: .2f} K')\n",
+    "\n",
+    "print('Moles of species at equilibrium:')\n",
+    "for sp, mole_fraction in zip(gas.species_names, gas.X):\n",
+    "    print(f'{sp:4}  {mole_fraction*num_moles: 5.3e}')"
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": null,
+   "cell_type": "markdown",
    "metadata": {},
-   "outputs": [],
-   "source": []
+   "source": [
+    "This result is extremely close to what we obtained previously; the temperature is slightly different due to the (very) small amounts of reactants still present at equilibrium."
+   ]
   }
  ],
  "metadata": {
+  "celltoolbar": "Tags",
   "kernelspec": {
    "display_name": "Python 3",
    "language": "python",
