@@ -146,12 +146,14 @@
    "cell_type": "markdown",
    "metadata": {
     "tags": [
-     "popout",
-     "margin"
+     "margin",
+     "popout"
     ]
    },
    "source": [
-    "**Choice of method:** Here we use the `'BDF'` for the `method` argument, which tells the `solve_ivp()` function to use an implicit integration method based on backward differentiation formula. Other methods [are available](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and may be more efficient for some problems, but this is fairly accurate and can handle stiffness in the ODE system."
+    "```{margin} Choice of method\n",
+    "Here we use the `'BDF'` for the `method` argument, which tells the `solve_ivp()` function to use an implicit integration method based on backward differentiation formula. Other methods [are available](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and may be more efficient for some problems, but this is fairly accurate and can handle stiffness in the ODE system.\n",
+    "```"
    ]
   },
   {

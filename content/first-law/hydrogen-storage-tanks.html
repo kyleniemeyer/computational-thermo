@@ -199,7 +199,7 @@
 
         
     </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
+    <div class="d-none d-md-block col-md-2 bd-toc ">
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
@@ -328,7 +328,10 @@ U &amp;= u , m ;.
 </div>
 </div>
 </div>
-<p><strong>Choice of method:</strong> Here we use the <code class="docutils literal notranslate"><span class="pre">'BDF'</span></code> for the <code class="docutils literal notranslate"><span class="pre">method</span></code> argument, which tells the <code class="docutils literal notranslate"><span class="pre">solve_ivp()</span></code> function to use an implicit integration method based on backward differentiation formula. Other methods <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">are available</a> and may be more efficient for some problems, but this is fairly accurate and can handle stiffness in the ODE system.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Choice of method</p>
+<p>Here we use the <code class="docutils literal notranslate"><span class="pre">'BDF'</span></code> for the <code class="docutils literal notranslate"><span class="pre">method</span></code> argument, which tells the <code class="docutils literal notranslate"><span class="pre">solve_ivp()</span></code> function to use an implicit integration method based on backward differentiation formula. Other methods <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">are available</a> and may be more efficient for some problems, but this is fairly accurate and can handle stiffness in the ODE system.</p>
+</div>
 <p>Finally, we can calcluate the initial mass and internal energy, then integrate over the filling time:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1169,7 +1172,7 @@ mpl.find_output_cell = function(html_output) {
 if (IPython.notebook.kernel != null) {
     IPython.notebook.kernel.comm_manager.register_target('matplotlib', mpl.mpl_figure_comm);
 }
-</script><div class="output text_html"><div id='2244f98d-a553-4b7f-984c-19546a8208f6'></div></div></div>
+</script><div class="output text_html"><div id='2711ebce-80c1-4609-9a11-d3d97b84c023'></div></div></div>
 </div>
 <p>Now plot the mass of fuel added as a function of time:</p>
 <div class="cell docutils container">
@@ -1953,7 +1956,7 @@ mpl.find_output_cell = function(html_output) {
 if (IPython.notebook.kernel != null) {
     IPython.notebook.kernel.comm_manager.register_target('matplotlib', mpl.mpl_figure_comm);
 }
-</script><div class="output text_html"><div id='8299f0e3-736e-4f62-b4a9-99a63ef424cc'></div></div></div>
+</script><div class="output text_html"><div id='d92d3590-f514-4070-b6ca-ce77c6bbdbd0'></div></div></div>
 </div>
 </div>
 
