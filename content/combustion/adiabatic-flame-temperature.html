@@ -223,10 +223,10 @@
 Calculate the adiabatic flame temperature, assuming complete combustion.</p>
 <p><img alt="Control volume for adiabatic flame temperature" src="../../_images/adiabatic-flame-temperature.png" /></p>
 <p>We can find the adiabatic flame temperature by performing a steady-state energy balance on this system:
-\begin{align}
-H_{\text{reactants}} &amp;= Q_{\text{out}} + H_{\text{products}} \
-H_{\text{reactants}} &amp;= H_{\text{products}}
-\end{align}</p>
+\begin{equation}
+H_{\text{reactants}} = Q_{\text{out}} + H_{\text{products}}
+\end{equation}
+where <span class="math notranslate nohighlight">\(H\)</span> is the total enthalpy and <span class="math notranslate nohighlight">\(Q_{\text{out}} = 0\)</span> is the (zero) heat release.</p>
 <p>First, we need to determine the composition of the products.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -266,12 +266,14 @@ and we can solve for the stoichiometric coefficients <span class="math notransla
 \begin{equation}
 \text{C}_2 \text{H}_6 + 16.667 (0.21 \text{O}_2 + 0.79 \text{N}_2) \rightarrow 2 \text{CO}_2 + 3 \text{H}_2 \text{O} + 13.167 \text{N}_2
 \end{equation}</p>
-<p>We can then use these stoichiometric coefficients in our energy balance:
-\begin{equation}
-\bar{h}_{\text{C}_2 \text{H}<em>6, \text{in}} + 16.667 \left(0.21 \bar{h}</em>{\text{O}<em>2, \text{in}} + 0.79 \bar{h}</em>{\text{N}<em>2, \text{in}} \right) = 2 \bar{h}</em>{\text{CO}<em>2, \text{out}} + 3 \bar{h}</em>{\text{H}<em>2 \text{O}, \text{out}} + 13.167 \bar{h}</em>{\text{N}_2, \text{out}} ;,
-\end{equation}
-where the inlet molar enthalpies are known based on the given temperature and pressure,
-while the outlet molar enthalpies are unknown due to the unknown final temperature (the adiabatic flame temperature).</p>
+<p>We can then use these stoichiometric coefficients in our energy balance:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{aligned}
+\sum_{i=1}^{N_R} n_i \overline{h}_{i} ( T_{\text{in}}, P) = \sum_{i=1}^{N_P} n_i \overline{h}_{i} (T_{\text{out}}, P)
+\end{aligned}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(N_R\)</span> and <span class="math notranslate nohighlight">\(N_P\)</span> are the numbers of reactants and products, <span class="math notranslate nohighlight">\(T_{\text{in}}\)</span> is the inlet temperature, <span class="math notranslate nohighlight">\(P\)</span> is the pressure, <span class="math notranslate nohighlight">\(\overline{h}_{i}\)</span> is the standard molar enthalpy of a particular species <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(T_{\text{out}}\)</span> is the unknown final temperature.</p>
 <p>We can find that temperature by setting this up as a root-finding problem to find temperature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
