@@ -282,12 +282,13 @@ The tank is made out of stainless steel, with specific heat capacity 471 J/kg-K 
 \begin{equation}
 v_{a,2} = v_{a,1} ;.
 \end{equation}</p>
-<p>We can perform an energy balance on the system that contains both the tank and air:
-\begin{align}
-0 &amp;= m_t ( u_{t,2} - u_{t,1} ) + m_a ( u_{a,2} - u_{a,1} ) \
-0 &amp;= m_t c_{\text{steel}} (T_{t,2} - T_{t,1}) - m_a ( u_{a,2} - u_{a,1} )
-\end{align}
-and we know that at equilibrium the temperatures are the same: <span class="math notranslate nohighlight">\(T_{t,2} = T_{a,2}\)</span>.</p>
+<p>We can perform an energy balance on the system that contains both the tank and air:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+0 = m_t ( u_{t,2} - u_{t,1} ) + m_a ( u_{a,2} - u_{a,1} ) \\
+0 = m_t c_{\text{steel}} (T_{t,2} - T_{t,1}) - m_a ( u_{a,2} - u_{a,1} )
+\end{split}\]</div>
+<p>and we know that at equilibrium the temperatures are the same: <span class="math notranslate nohighlight">\(T_{t,2} = T_{a,2}\)</span>.</p>
 <p>So, we fundamentally have <strong>one</strong> unknown, the final temperature, which we can solve using the final version of the energy balance:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -350,13 +351,14 @@ Final air pressure: 250.01 pound_force_per_square_inch
 </div>
 <div class="section" id="alternate-solution">
 <h2>Alternate solution<a class="headerlink" href="#alternate-solution" title="Permalink to this headline">¶</a></h2>
-<p>If we wanted, we could also solve this problem with a larger number of equations and unknowns, although as seen above this is not necessary. For example, we can treat <span class="math notranslate nohighlight">\(v_{a,2}\)</span>, <span class="math notranslate nohighlight">\(T_{a,2}\)</span>, <span class="math notranslate nohighlight">\(T_{t,2}\)</span>, and <span class="math notranslate nohighlight">\(u_{a,2}\)</span> as the four unknowns, with the equations
-\begin{align}
-v_{a,2} &amp;= v_{a,1} \
-T_{a,2} &amp;= T_{t,2} \
-u_{a,2} &amp;= f \left( T_{a,2}, v_{a,2} \right)
-\end{align}
-being added to the one used above.</p>
+<p>If we wanted, we could also solve this problem with a larger number of equations and unknowns, although as seen above this is not necessary. For example, we can treat <span class="math notranslate nohighlight">\(v_{a,2}\)</span>, <span class="math notranslate nohighlight">\(T_{a,2}\)</span>, <span class="math notranslate nohighlight">\(T_{t,2}\)</span>, and <span class="math notranslate nohighlight">\(u_{a,2}\)</span> as the four unknowns, with the equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+v_{a,2} = v_{a,1} \\
+T_{a,2} = T_{t,2} \\
+u_{a,2} = f \left( T_{a,2}, v_{a,2} \right)
+\end{split}\]</div>
+<p>being added to the one used above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tank_energy2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">air_mass</span><span class="p">,</span> <span class="n">air1</span><span class="p">,</span> <span class="n">tank_mass</span><span class="p">,</span> <span class="n">tank_specific_heat</span><span class="p">,</span> <span class="n">tank_temp1</span><span class="p">):</span>

@@ -258,11 +258,12 @@
 </div>
 </div>
 </div>
-<p>We can first evaluate the mass fractions of the components (<span class="math notranslate nohighlight">\(x_i\)</span>) and the molar specific volume of the mixture:
-\begin{align}
-x_i &amp;= \frac{n_i}{n} \
-\bar{v} &amp;= \frac{V}{n}
-\end{align}</p>
+<p>We can first evaluate the mass fractions of the components (<span class="math notranslate nohighlight">\(x_i\)</span>) and the molar specific volume of the mixture:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x_i = \frac{n_i}{n} \\
+\bar{v} = \frac{V}{n}
+\end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total_moles</span> <span class="o">=</span> <span class="n">moles_methane</span> <span class="o">+</span> <span class="n">moles_butane</span>
@@ -303,16 +304,18 @@ P = \frac{R T}{\bar{v}}
 </div>
 <div class="section" id="kay-s-rule">
 <h2>Kay’s rule<a class="headerlink" href="#kay-s-rule" title="Permalink to this headline">¶</a></h2>
-<p>Kay’s rule is the simplest mixing rule, which uses pseudo-critical properties based on values weighted by mole fractions. These are used to calculate the compressibility factor, which can in turn be used to obtain pressure:
-\begin{align}
-T_c &amp;= \sum_i T_{c,i} x_i \
-P_c &amp;= \sum_i P_{c,i} x_i \
-\end{align}
-Then, we treat the mixture as if it is a pure component with the above critical values, and obtain the reduced temperature and (molar) specific volume:
-\begin{align}
-T_r &amp;= \frac{T}{T_c} \
-v_r &amp;= \frac{\bar{v} P_c}{R_u t_c}
-\end{align}</p>
+<p>Kay’s rule is the simplest mixing rule, which uses pseudo-critical properties based on values weighted by mole fractions. These are used to calculate the compressibility factor, which can in turn be used to obtain pressure:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+T_c = \sum_i T_{c,i} x_i \\
+P_c = \sum_i P_{c,i} x_i \\
+\end{split}\]</div>
+<p>Then, we treat the mixture as if it is a pure component with the above critical values, and obtain the reduced temperature and (molar) specific volume:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+T_r = \frac{T}{T_c} \\
+v_r = \frac{\bar{v} P_c}{R_u t_c}
+\end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for methane</span>
@@ -412,12 +415,13 @@ P = Z \frac{R_u T}{\bar{v}}
 </div>
 <div class="section" id="van-der-waals">
 <h2>van der Waals<a class="headerlink" href="#van-der-waals" title="Permalink to this headline">¶</a></h2>
-<p>We can obtain the coefficients <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> used in the van der Waals equation of state for the mixture by using these relations:
-\begin{align}
-a &amp;= \left( \sum_{i=1} x_i , a_i^{1/2} \right)^2 \
-b &amp;=  \sum_{i=1} x_i , b_i  ;,
-\end{align}
-which were proposed by Soave (1972) <a class="bibtex reference internal" href="../zbibliography.html#soave1972" id="id2">[Soa72]</a>.</p>
+<p>We can obtain the coefficients <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> used in the van der Waals equation of state for the mixture by using these relations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+a = \left( \sum_{i=1} x_i \, a_i^{1/2} \right)^2 \\
+b =  \sum_{i=1} x_i \, b_i  \;,
+\end{split}\]</div>
+<p>which were proposed by Soave (1972) <a class="bibtex reference internal" href="../zbibliography.html#soave1972" id="id2">[Soa72]</a>.</p>
 <p>These are then used in the equation of state
 \begin{equation}
 P = \frac{R_u T}{\bar{v} - b} - \frac{a}{\bar{v}^2}

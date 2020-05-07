@@ -26,7 +26,9 @@
     ]
    },
    "source": [
-    "**miniconda:** Rather than installing the full Anaconda distribution, you could choose to install [Miniconda](https://docs.conda.io/en/latest/miniconda.html), which is a minimal installer for conda. In this case, you would need to explicitly install all the packages you need."
+    "```{margin} miniconda\n",
+    "Rather than installing the full Anaconda distribution, you could choose to install [Miniconda](https://docs.conda.io/en/latest/miniconda.html), which is a minimal installer for conda. In this case, you would need to explicitly install all the packages you need.\n",
+    "```"
    ]
   },
   {
@@ -38,7 +40,9 @@
     ]
    },
    "source": [
-    "**Important:** You will need to reactivate your environment every time you restart Anaconda."
+    "```{margin}\n",
+    "**Important:** You will need to reactivate your environment every time you restart Anaconda.\n",
+    "```"
    ]
   },
   {

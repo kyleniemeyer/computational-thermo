@@ -131,11 +131,12 @@
    "metadata": {},
    "source": [
     "We can calculate the mass of liquid water in the tank, and then determine the volume and mass of steam:\n",
-    "\\begin{align}\n",
-    "m_{\\text{liq},1} &= \\frac{V_{\\text{liq},1}}{v_{\\text{liq},1}} \\\\\n",
-    "V_{s,1} &= V_{\\text{tank}} - V_{\\text{liq},1} \\\\\n",
-    "m_{s,1} &= \\frac{V_{s,1}}{v_{s,1}}\n",
-    "\\end{align}"
+    "\n",
+    "$$\n",
+    "m_{\\text{liq},1} = \\frac{V_{\\text{liq},1}}{v_{\\text{liq},1}} \\\\\n",
+    "V_{s,1} = V_{\\text{tank}} - V_{\\text{liq},1} \\\\\n",
+    "m_{s,1} = \\frac{V_{s,1}}{v_{s,1}}\n",
+    "$$"
    ]
   },
   {
@@ -183,11 +184,13 @@
     "\\end{equation}\n",
     "\n",
     "The tank experiences no heat or work, and does not exhibit any bulk changes in kinetic or potential energy; we can do an energy balance on the tank for the process of going from state 1 to state 2:\n",
-    "\\begin{align}\n",
-    "Q - W &= \\Delta KE + \\Delta PE + \\Delta U \\\\\n",
-    "\\rightarrow 0 &= U_2 - U_1 \\\\\n",
-    "0 &= u_2 m_2 - \\left( u_{\\text{liq},1} m_{\\text{liq},1} + u_{s,1} m_{s,1} \\right)\n",
-    "\\end{align}\n",
+    "\n",
+    "$$\n",
+    "Q - W = \\Delta KE + \\Delta PE + \\Delta U \\\\\n",
+    "\\rightarrow 0 = U_2 - U_1 \\\\\n",
+    "0 = u_2 m_2 - \\left( u_{\\text{liq},1} m_{\\text{liq},1} + u_{s,1} m_{s,1} \\right)\n",
+    "$$\n",
+    "\n",
     "Therefore, we can find the specific internal energy of the final state:\n",
     "\\begin{equation}\n",
     "u_2 = \\frac{ u_{\\text{liq},1} m_{\\text{liq},1} + u_{s,1} m_{s,1} }{m_2}\n",

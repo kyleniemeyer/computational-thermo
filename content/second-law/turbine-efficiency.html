@@ -290,15 +290,17 @@ and then with <span class="math notranslate nohighlight">\(P_2\)</span> and <spa
 </div>
 </div>
 </div>
-<p>Then, we can do an energy balance for the reversible turbine, which is also steady state and adiabatic:
-\begin{equation}
+<p>Then, we can do an energy balance for the reversible turbine, which is also steady state and adiabatic:</p>
+<div class="math notranslate nohighlight">
+\[
 \dot{m} h_1 = \dot{m} h_{s,2} + \dot{W}_{s,t}
-\end{equation}
-Then, recall that the isentropic efficiency is defined as
-\begin{equation}
-\eta_t = \frac{\dot{W}<em>t}{\dot{W}</em>{s,t}} ;,
-\end{equation}
-so we can obtain the actual turbine work using <span class="math notranslate nohighlight">\(\dot{W}_t = \eta_t \dot{W}_{s,t}\)</span> :</p>
+\]</div>
+<p>Then, recall that the isentropic efficiency is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+\eta_t = \frac{\dot{W}_t}{\dot{W}_{s,t}} \;,
+\]</div>
+<p>so we can obtain the actual turbine work using <span class="math notranslate nohighlight">\(\dot{W}_t = \eta_t \dot{W}_{s,t}\)</span> :</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">work_isentropic</span> <span class="o">=</span> <span class="n">mass_flow_rate</span> <span class="o">*</span> <span class="p">(</span>
@@ -315,11 +317,12 @@ so we can obtain the actual turbine work using <span class="math notranslate noh
 </div>
 </div>
 </div>
-<p>Then, we can perform an energy balance on the actual turbine:
-\begin{equation}
-\dot{m} h_1 = \dot{m} h_2 + \dot{W}_t ;,
-\end{equation}
-which we can use with the exit pressure to fix state 2.</p>
+<p>Then, we can perform an energy balance on the actual turbine:</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{m} h_1 = \dot{m} h_2 + \dot{W}_t \;,
+\]</div>
+<p>which we can use with the exit pressure to fix state 2.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enthalpy2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">state1</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">work_actual</span> <span class="o">/</span> <span class="n">mass_flow_rate</span><span class="p">)</span>
@@ -353,11 +356,12 @@ which we can use with the exit pressure to fix state 2.</p>
 </div>
 </div>
 </div>
-<p>Finally, we can perform an entropy balance on the actual turbine:
-\begin{equation}
-\dot{m} s_1 + \dot{S}_{\text{gen}} = \dot{m} s_2 ;,
-\end{equation}
-which allows us to find the rate of entropy generation.</p>
+<p>Finally, we can perform an entropy balance on the actual turbine:</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{m} s_1 + \dot{S}_{\text{gen}} = \dot{m} s_2 \;,
+\]</div>
+<p>which allows us to find the rate of entropy generation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">entropy_gen</span> <span class="o">=</span> <span class="n">mass_flow_rate</span> <span class="o">*</span> <span class="p">(</span>

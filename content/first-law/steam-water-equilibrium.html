@@ -308,12 +308,13 @@ The total volume of the tank is <span class="math notranslate nohighlight">\(V\)
 </div>
 </div>
 <p>State <span class="math notranslate nohighlight">\(s,1\)</span> is in the superheated vapor region (vapor fraction: 1) and state <span class="math notranslate nohighlight">\(\text{liq},1\)</span> is in the compressed liquid region (vapor fraction: 0).</p>
-<p>We can calculate the mass of liquid water in the tank, and then determine the volume and mass of steam:
-\begin{align}
-m_{\text{liq},1} &amp;= \frac{V_{\text{liq},1}}{v_{\text{liq},1}} \
-V_{s,1} &amp;= V_{\text{tank}} - V_{\text{liq},1} \
-m_{s,1} &amp;= \frac{V_{s,1}}{v_{s,1}}
-\end{align}</p>
+<p>We can calculate the mass of liquid water in the tank, and then determine the volume and mass of steam:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+m_{\text{liq},1} = \frac{V_{\text{liq},1}}{v_{\text{liq},1}} \\
+V_{s,1} = V_{\text{tank}} - V_{\text{liq},1} \\
+m_{s,1} = \frac{V_{s,1}}{v_{s,1}}
+\end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vol_tank</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;meter^3&#39;</span><span class="p">)</span>
@@ -348,13 +349,14 @@ We can then find the specific volume of water in the tank:
 \begin{equation}
 v_2 = \frac{V_{\text{tank}}}{m_2}
 \end{equation}</p>
-<p>The tank experiences no heat or work, and does not exhibit any bulk changes in kinetic or potential energy; we can do an energy balance on the tank for the process of going from state 1 to state 2:
-\begin{align}
-Q - W &amp;= \Delta KE + \Delta PE + \Delta U \
-\rightarrow 0 &amp;= U_2 - U_1 \
-0 &amp;= u_2 m_2 - \left( u_{\text{liq},1} m_{\text{liq},1} + u_{s,1} m_{s,1} \right)
-\end{align}
-Therefore, we can find the specific internal energy of the final state:
+<p>The tank experiences no heat or work, and does not exhibit any bulk changes in kinetic or potential energy; we can do an energy balance on the tank for the process of going from state 1 to state 2:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Q - W = \Delta KE + \Delta PE + \Delta U \\
+\rightarrow 0 = U_2 - U_1 \\
+0 = u_2 m_2 - \left( u_{\text{liq},1} m_{\text{liq},1} + u_{s,1} m_{s,1} \right)
+\end{split}\]</div>
+<p>Therefore, we can find the specific internal energy of the final state:
 \begin{equation}
 u_2 = \frac{ u_{\text{liq},1} m_{\text{liq},1} + u_{s,1} m_{s,1} }{m_2}
 \end{equation}</p>

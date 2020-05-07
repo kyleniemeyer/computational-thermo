@@ -284,11 +284,12 @@ and the energy balance gives
 \dot{m} h_{\text{supply}} + \dot{Q} = \frac{dU}{dt} ;,
 \end{equation}
 which provide the governing equations for how this system evolves.</p>
-<p>We can use mass (<span class="math notranslate nohighlight">\(m\)</span>) and total internal energy (<span class="math notranslate nohighlight">\(U\)</span>) as our state variables, and construct an ODE system for these variables. We need to be able to convert between internal system properties and these:
-\begin{align}
-m &amp;= \frac{ N_{\text{tank}} V_{\text{tank}} }{v} \
-U &amp;= u , m ;.
-\end{align}</p>
+<p>We can use mass (<span class="math notranslate nohighlight">\(m\)</span>) and total internal energy (<span class="math notranslate nohighlight">\(U\)</span>) as our state variables, and construct an ODE system for these variables. We need to be able to convert between internal system properties and these:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+m = \frac{ N_{\text{tank}} V_{\text{tank}} }{v} \\
+U = u \, m \;.
+\end{split}\]</div>
 <p>We need to define a function that evaluates the time derivative system:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1172,7 +1173,7 @@ mpl.find_output_cell = function(html_output) {
 if (IPython.notebook.kernel != null) {
     IPython.notebook.kernel.comm_manager.register_target('matplotlib', mpl.mpl_figure_comm);
 }
-</script><div class="output text_html"><div id='2711ebce-80c1-4609-9a11-d3d97b84c023'></div></div></div>
+</script><div class="output text_html"><div id='c5214f49-89c0-4c50-a65d-7dc524eefdb7'></div></div></div>
 </div>
 <p>Now plot the mass of fuel added as a function of time:</p>
 <div class="cell docutils container">
@@ -1956,7 +1957,7 @@ mpl.find_output_cell = function(html_output) {
 if (IPython.notebook.kernel != null) {
     IPython.notebook.kernel.comm_manager.register_target('matplotlib', mpl.mpl_figure_comm);
 }
-</script><div class="output text_html"><div id='d92d3590-f514-4070-b6ca-ce77c6bbdbd0'></div></div></div>
+</script><div class="output text_html"><div id='140cc6ef-e893-4c0d-84d4-47ece82e7bed'></div></div></div>
 </div>
 </div>
 

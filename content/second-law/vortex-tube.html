@@ -243,12 +243,13 @@
 </div>
 </div>
 </div>
-<p>First, we can find the temperature at the cold outlet by performing an energy balance on the device:
-\begin{align}
-\dot{m}_1 u_1 &amp;= \dot{m}_3 u_3 + \dot{m}_2 u_2 \
-\dot{m} c_p T_1 &amp;= f \dot{m} c_p T_3 + (1-f) \dot{m} c_p T_2 \
-T_3 &amp;= \frac{T_1 - (1-f) T_2}{f}
-\end{align}</p>
+<p>First, we can find the temperature at the cold outlet by performing an energy balance on the device:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{m}_1 u_1 = \dot{m}_3 u_3 + \dot{m}_2 u_2 \\
+\dot{m} c_p T_1 = f \dot{m} c_p T_3 + (1-f) \dot{m} c_p T_2 \\
+T_3 = \frac{T_1 - (1-f) T_2}{f}
+\end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temp_3</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="p">)</span><span class="o">*</span><span class="n">temp_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">f</span>
@@ -262,11 +263,12 @@ T_3 &amp;= \frac{T_1 - (1-f) T_2}{f}
 </div>
 </div>
 </div>
-<p>Now, examine whether the device is physically possible by performing an entropy balance:
-\begin{align}
-\dot{m} s_1 + \dot{S}<em>{\text{gen}} &amp;= f \dot{m} s_3 + (1-f) \dot{m} s_2 \
-\frac{\dot{S}</em>{\text{gen}}}{\dot{m}} &amp;= f s_3 + (1-f) s_2 = f(s_3 - s_2) + (s_2 - s_1)
-\end{align}</p>
+<p>Now, examine whether the device is physically possible by performing an entropy balance:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot{m} s_1 + \dot{S}_{\text{gen}} = f \dot{m} s_3 + (1-f) \dot{m} s_2 \\
+\frac{\dot{S}_{\text{gen}}}{\dot{m}} = f s_3 + (1-f) s_2 = f(s_3 - s_2) + (s_2 - s_1) \;.
+\end{split}\]</div>
 <p>We can obtain the <span class="math notranslate nohighlight">\(\Delta s\)</span> values by using the relationship for an ideal gas with constant specific heat:
 \begin{equation}
 \Delta s_{1-2} = c_p \ln \left(\frac{T_2}{T_1}\right) - R \ln \left( \frac{p_2}{p_1} \right)

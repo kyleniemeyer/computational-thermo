@@ -305,12 +305,13 @@
 </div>
 <div class="section" id="find-final-temperature-and-pressure">
 <h2>Find final temperature and pressure<a class="headerlink" href="#find-final-temperature-and-pressure" title="Permalink to this headline">¶</a></h2>
-<p>Due to conservation of mass, since the mass and volume of the system are fixed, the specific volume and density must be constant:
-\begin{align}
-v_2 &amp;= v_1 \
-\rho_2 &amp;= \rho_1
-\end{align}
-Therefore the final state is fixed by the density and quality, where <span class="math notranslate nohighlight">\(x_2 = 1\)</span>:</p>
+<p>Due to conservation of mass, since the mass and volume of the system are fixed, the specific volume and density must be constant:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+v_2 = v_1 \\
+\rho_2 = \rho_1
+\end{split}\]</div>
+<p>Therefore the final state is fixed by the density and quality, where <span class="math notranslate nohighlight">\(x_2 = 1\)</span>:</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state_final</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Water</span><span class="p">()</span>
@@ -383,12 +384,13 @@ W_{\text{in}} = m (u_2 - u_1)
 </div>
 <div class="section" id="find-entropy-change">
 <h2>Find entropy change<a class="headerlink" href="#find-entropy-change" title="Permalink to this headline">¶</a></h2>
-<p>The total entropy change is the change in entropy of the system plus that of the surroundings:
-\begin{align}
-\Delta S_{\text{total}} &amp;= \Delta S_{\text{system}} + \Delta S_{\text{surr}} \
-\Delta S_{\text{total}} &amp;= \Delta S_{\text{system}} = m (s_2 - s_1)
-\end{align}
-since the entropy change of the surroundings is zero.</p>
+<p>The total entropy change is the change in entropy of the system plus that of the surroundings:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\Delta S_{\text{total}} = \Delta S_{\text{system}} + \Delta S_{\text{surr}} \\
+\Delta S_{\text{total}} = \Delta S_{\text{system}} = m (s_2 - s_1)
+\end{split}\]</div>
+<p>since the entropy change of the surroundings is zero.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">entropy_change</span> <span class="o">=</span> <span class="n">mass</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="n">state_final</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Q_</span><span class="p">(</span><span class="n">state_initial</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">))</span>

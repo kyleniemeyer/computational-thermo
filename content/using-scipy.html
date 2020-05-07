@@ -185,7 +185,7 @@
 
         
     </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
+    <div class="d-none d-md-block col-md-2 bd-toc ">
 <div class="tocsection onthispage pt-5 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
@@ -265,7 +265,10 @@
   <div class="section" id="using-numpy-and-scipy-modules">
 <h1>Using NumPy and SciPy modules<a class="headerlink" href="#using-numpy-and-scipy-modules" title="Permalink to this headline">¶</a></h1>
 <p>In addition to using Cantera and Pint to help solve thermodynamics problems, we will need to use some additional packages in the scientific Python ecosystem to make plots, solve systems of equations, integrate ordinary differential equations, and more.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
 <p>The <a class="reference external" href="https://scipy-lectures.org"><em>SciPy Lecture Notes</em></a> are excellent, detailed resources on all these topics, and Python programming in general <a class="bibtex reference internal" href="zbibliography.html#scipylecture" id="id1">[VGVdeBuyl20]</a>.</p>
+</div>
 <p>The examples contained in this electronic book will integrate these techniques as needed, but this notebook contains some specific examples.</p>
 <div class="section" id="index">
 <h2>Index<a class="headerlink" href="#index" title="Permalink to this headline">¶</a></h2>
@@ -406,17 +409,18 @@ Function evaluated at root: 1.1102230246251565e-16
 <h3>Systems of equations / vector functions<a class="headerlink" href="#systems-of-equations-vector-functions" title="Permalink to this headline">¶</a></h3>
 <p>We can also solve systems of equations in a similar fashion using the SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root.html"><code class="docutils literal notranslate"><span class="pre">root()</span></code></a> functino, where we find the roots <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> that satisfy <span class="math notranslate nohighlight">\(\mathbf{f} (\mathbf{x}) = 0\)</span>.</p>
 <p>For example, let’s try to find the values of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> that satisfy these equations:
-\begin{align}
-x \ln (x) &amp;= y^3 \
-\sqrt(x) &amp;= \frac{1}{y}
-\end{align}
-We have two equations and two unknowns, so we should be able to find the roots.</p>
-<p>To solve, we create a function that evaluates these equations when made equal to zero, or
-\begin{align}
-x \ln (x) - y^3 &amp;= 0 \
-\sqrt(x) - \frac{1}{y} &amp;= 0
-\end{align}
-then we call <code class="docutils literal notranslate"><span class="pre">root</span></code> specifying this function and two initial guesses for <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<span class="math notranslate nohighlight">\($
+x \ln (x) = y^3 \\
+\sqrt{x} = \frac{1}{y}
+$\)</span></p>
+<p>We have two equations and two unknowns, so we should be able to find the roots.</p>
+<p>To solve, we create a function that evaluates these equations when made equal to zero, or</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x \ln (x) - y^3 = 0 \\
+\sqrt{x} - \frac{1}{y} = 0
+\end{split}\]</div>
+<p>then we call <code class="docutils literal notranslate"><span class="pre">root</span></code> specifying this function and two initial guesses for <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -618,35 +622,40 @@ We’ll use the <a class="reference external" href="https://docs.scipy.org/doc/s
 \frac{d \mathbf{y}}{dt} = \mathbf{f} (t, \mathbf{y})
 \end{equation}
 where <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the vector of state variables, for which we should have the initial values (<span class="math notranslate nohighlight">\(\mathbf{y}(t=0)\)</span>). In this case, we can use the SciPy function <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html"><code class="docutils literal notranslate"><span class="pre">solve_ivp()</span></code> function</a>, part of the <code class="docutils literal notranslate"><span class="pre">integrate</span></code> module.</p>
-<p>For example, let’s consider a problem where we want to find the volume of water, volume of air, and pressure in a tank as a function of time, as the tank releases water to an environment. The volumetric flow rate through the tank’s valve is based on its instantaneous pressure:
-\begin{equation}
-\dot{V}<em>f = \frac{P - P</em>{\text{atm}}}{R_v} ;,
-\end{equation}
-where <span class="math notranslate nohighlight">\(P_{\text{atm}}\)</span> is atmospheric pressure and <span class="math notranslate nohighlight">\(R_v = 10\)</span> psi/gpm is the valve resistance parameter. The tank has volume 50 gal, and is initially filled with water (volume fraction <span class="math notranslate nohighlight">\(f\)</span> = 0.8); the air in the tank is initially at 100 psi. We will treat the air as an ideal gas, and the water as an incompressible substance.</p>
-<p>We have the initial air pressure, and we can calculate the initial volumes of water and air:
-\begin{align}
-V_{f,0} &amp;= f , V \
-V_{g,0} &amp;= (1 - f) V \
-\end{align}</p>
-<p>We can perform a mass balance on the water in the tank to obtain a rate equation for the volume of water:
-\begin{align}
-0 &amp;= \dot{m}_f + \frac{d m_f}{dt} = \dot{V}_f \rho_f + \rho_f \frac{d V_f}{dt} \
-0 &amp;= \dot{V}<em>f + \frac{dV_f}{dt} \
-\therefore \frac{dV_f}{dt} &amp;= -\frac{(P - P</em>{\text{atm}})}{R_v}
-\end{align}</p>
-<p>Since the overall volume of the tank is constant, we can obtain the rate of change of the volume of air:
-\begin{align}
-V &amp;= V_g + V_f \
-\frac{dV_g}{dt} + \frac{dV_f}{dt} &amp;= 0 \
-\therefore \frac{dV_g}{dt} &amp;= -\frac{dV_f}{dt}
-\end{align}</p>
-<p>Finally, a mass balance on the air in the tank allows us to find the rate of change of pressure:
-\begin{align}
-0 &amp;= \frac{dm_a}{dt} \
-0 &amp;= \frac{d}{dt} \left( \frac{P V_g}{R T} \right) \
-0 &amp;= V_g \frac{dP}{dt} + P \frac{dV_g}{dt} \
-\therefore \frac{dP}{dt} &amp;= -\frac{P}{V_g} \frac{dV_g}{dt}
-\end{align}</p>
+<p>For example, let’s consider a problem where we want to find the volume of water, volume of air, and pressure in a tank as a function of time, as the tank releases water to an environment. The volumetric flow rate through the tank’s valve is based on its instantaneous pressure:</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{V}_f = \frac{P - P_{\text{atm}}}{R_v} \;,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(P_{\text{atm}}\)</span> is atmospheric pressure and <span class="math notranslate nohighlight">\(R_v = 10\)</span> psi/gpm is the valve resistance parameter. The tank has volume 50 gal, and is initially filled with water (volume fraction <span class="math notranslate nohighlight">\(f\)</span> = 0.8); the air in the tank is initially at 100 psi. We will treat the air as an ideal gas, and the water as an incompressible substance.</p>
+<p>We have the initial air pressure, and we can calculate the initial volumes of water and air:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+V_{f,0} = f \, V \\
+V_{g,0} = (1 - f) V \\
+\end{split}\]</div>
+<p>We can perform a mass balance on the water in the tank to obtain a rate equation for the volume of water:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+0 = \dot{m}_f + \frac{d m_f}{dt} = \dot{V}_f \rho_f + \rho_f \frac{d V_f}{dt} \\
+0 = \dot{V}_f + \frac{dV_f}{dt} \\
+\therefore \frac{dV_f}{dt} &amp;= -\frac{(P - P_{\text{atm}})}{R_v}
+\end{split}\]</div>
+<p>Since the overall volume of the tank is constant, we can obtain the rate of change of the volume of air:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+V = V_g + V_f \\
+\frac{dV_g}{dt} + \frac{dV_f}{dt} = 0 \\
+\therefore \frac{dV_g}{dt} = -\frac{dV_f}{dt}
+\end{split}\]</div>
+<p>Finally, a mass balance on the air in the tank allows us to find the rate of change of pressure:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+0 = \frac{dm_a}{dt} \\
+0 = \frac{d}{dt} \left( \frac{P V_g}{R T} \right) \\
+0 = V_g \frac{dP}{dt} + P \frac{dV_g}{dt} \\
+\therefore \frac{dP}{dt} = -\frac{P}{V_g} \frac{dV_g}{dt}
+\end{split}\]</div>
 <p>Now, we can integrate this system of ODEs:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

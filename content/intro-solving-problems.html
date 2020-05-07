@@ -185,7 +185,7 @@
 
         
     </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
+    <div class="d-none d-md-block col-md-2 bd-toc ">
 <div class="tocsection onthispage pt-5 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
@@ -199,6 +199,10 @@
     
         <li class="nav-item toc-entry toc-h2">
             <a href="#using-cantera-for-thermodynamic-properties" class="nav-link">Using Cantera for thermodynamic properties</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#convenience-function-to-get-values-in-si-units" class="nav-link">Convenience function to get values in SI units</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -470,6 +474,62 @@ critical density:  511.95 kg/m^3
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Specific volume:  0.1332 m^3/kg
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="convenience-function-to-get-values-in-si-units">
+<h2>Convenience function to get values in SI units<a class="headerlink" href="#convenience-function-to-get-values-in-si-units" title="Permalink to this headline">¶</a></h2>
+<p>It can be a pain (and requires more writing) to constantly convert to SI units and extract the magnitude, when using Pint quantities in combination with Cantera and CoolProp.</p>
+<p>We can define a handy convenience function to make this easier:</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>Hat tip to <a class="reference external" href="https://bryanwweber.com">Dr. Bryan Weber</a> for suggesting this shortcut!</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for convenience:</span>
+<span class="k">def</span> <span class="nf">to_si</span><span class="p">(</span><span class="n">quant</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Converts a Pint Quantity to magnitude at base SI units.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">quant</span><span class="o">.</span><span class="n">to_base_units</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You’ll need to define this function in any Python code or Jupyter notebook when you want to use it, but then it makes things much easier. For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Water</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">TP</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>
+  water:
+
+       temperature          303.15  K
+          pressure          101325  Pa
+           density         995.726  kg/m^3
+  mean mol. weight          18.016  amu
+    vapor fraction               0
+
+                          1 kg            1 kmol
+                       -----------      ------------
+          enthalpy    -1.58449e+07       -2.855e+08     J
+   internal energy     -1.5845e+07       -2.855e+08     J
+           entropy         3956.83        7.129e+04     J/K
+    Gibbs function    -1.70445e+07       -3.071e+08     J
+ heat capacity c_p         4178.61        7.528e+04     J/K
+ heat capacity c_v         4116.12        7.416e+04     J/K
+
 </pre></div>
 </div>
 </div>

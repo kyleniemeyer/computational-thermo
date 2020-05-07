@@ -63,16 +63,20 @@
     "## van der Waals equation of state\n",
     "\n",
     "The van der Waals equation of state is\n",
-    "\\begin{equation}\n",
+    "\n",
+    "$$\n",
     "P = \\frac{RT}{v - b} - \\frac{a}{v^2} \\;,\n",
-    "\\end{equation}\n",
+    "$$\n",
+    "\n",
     "where $a$ and $b$ are substance-specific constants.\n",
     "\n",
     "We can find these constants by applying the contraints on equations of state along the critical isotherms:\n",
-    "\\begin{align}\n",
-    "\\left( \\frac{\\partial P}{\\partial v} \\right)_T &= 0 \\\\\n",
-    "\\left( \\frac{\\partial^2 P}{\\partial v^2} \\right)_T &= 0 \\;,\n",
-    "\\end{align}\n",
+    "\n",
+    "$$\n",
+    "\\left( \\frac{\\partial P}{\\partial v} \\right)_T = 0 \\\\\n",
+    "\\left( \\frac{\\partial^2 P}{\\partial v^2} \\right)_T = 0 \\;,\n",
+    "$$\n",
+    "\n",
     "which both apply at the critical point. These will give us closed-form expressions for $a$ and $b$ based on the critical properties.\n",
     "\n",
     "Let's use SymPy to help us find these expressions, by taking these derivatives and applying the constraints at the critical point:"
@@ -176,9 +180,11 @@
     "This gives us the coefficients $a$ and $b$ as a function of $T_{\\text{crit}}$, $P_{\\text{crit}}$, and $R$. However, while the critical temperature can be measured experimentally *relatively* easily, the critical specific volume is harder to measure accurately.\n",
     "\n",
     "So, we can introduce the equation of state applied at the critical point, \n",
-    "\\begin{equation}\n",
+    "\n",
+    "$$\n",
     "P_{\\text{crit}} = \\frac{R T_{\\text{crit}}}{v_{\\text{crit}} - b} - \\frac{a}{v_{\\text{crit}}^2} \\;,\n",
-    "\\end{equation}\n",
+    "$$\n",
+    "\n",
     "and then solve the system of three equations for $a$, $b$, and $v_{\\text{crit}}$ to eliminate the critical specific volume:"
    ]
   },
@@ -324,13 +330,6 @@
    "source": [
     "In this case, we need to apply some additional knowledge to understand these roots and identify any non-physical values, such as considering the sign of $\\frac{\\partial P_r}{\\partial v_r}$ for these points."
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {
@@ -349,7 +348,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.6"
+   "version": "3.6.10"
   }
  },
  "nbformat": 4,

@@ -253,17 +253,19 @@ Critical compressibility factor:  0.29
 </div>
 <div class="section" id="van-der-waals-equation-of-state">
 <h2>van der Waals equation of state<a class="headerlink" href="#van-der-waals-equation-of-state" title="Permalink to this headline">¶</a></h2>
-<p>The van der Waals equation of state is
-\begin{equation}
-P = \frac{RT}{v - b} - \frac{a}{v^2} ;,
-\end{equation}
-where <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are substance-specific constants.</p>
-<p>We can find these constants by applying the contraints on equations of state along the critical isotherms:
-\begin{align}
-\left( \frac{\partial P}{\partial v} \right)_T &amp;= 0 \
-\left( \frac{\partial^2 P}{\partial v^2} \right)_T &amp;= 0 ;,
-\end{align}
-which both apply at the critical point. These will give us closed-form expressions for <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> based on the critical properties.</p>
+<p>The van der Waals equation of state is</p>
+<div class="math notranslate nohighlight">
+\[
+P = \frac{RT}{v - b} - \frac{a}{v^2} \;,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are substance-specific constants.</p>
+<p>We can find these constants by applying the contraints on equations of state along the critical isotherms:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left( \frac{\partial P}{\partial v} \right)_T = 0 \\
+\left( \frac{\partial^2 P}{\partial v^2} \right)_T = 0 \;,
+\end{split}\]</div>
+<p>which both apply at the critical point. These will give us closed-form expressions for <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> based on the critical properties.</p>
 <p>Let’s use SymPy to help us find these expressions, by taking these derivatives and applying the constraints at the critical point:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -311,11 +313,12 @@ which both apply at the critical point. These will give us closed-form expressio
 </div>
 </div>
 <p>This gives us the coefficients <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> as a function of <span class="math notranslate nohighlight">\(T_{\text{crit}}\)</span>, <span class="math notranslate nohighlight">\(P_{\text{crit}}\)</span>, and <span class="math notranslate nohighlight">\(R\)</span>. However, while the critical temperature can be measured experimentally <em>relatively</em> easily, the critical specific volume is harder to measure accurately.</p>
-<p>So, we can introduce the equation of state applied at the critical point,
-\begin{equation}
-P_{\text{crit}} = \frac{R T_{\text{crit}}}{v_{\text{crit}} - b} - \frac{a}{v_{\text{crit}}^2} ;,
-\end{equation}
-and then solve the system of three equations for <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, and <span class="math notranslate nohighlight">\(v_{\text{crit}}\)</span> to eliminate the critical specific volume:</p>
+<p>So, we can introduce the equation of state applied at the critical point,</p>
+<div class="math notranslate nohighlight">
+\[
+P_{\text{crit}} = \frac{R T_{\text{crit}}}{v_{\text{crit}} - b} - \frac{a}{v_{\text{crit}}^2} \;,
+\]</div>
+<p>and then solve the system of three equations for <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, and <span class="math notranslate nohighlight">\(v_{\text{crit}}\)</span> to eliminate the critical specific volume:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">solve</span><span class="p">((</span>

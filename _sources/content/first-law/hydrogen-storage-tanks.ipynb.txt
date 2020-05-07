@@ -94,10 +94,11 @@
     "which provide the governing equations for how this system evolves.\n",
     "\n",
     "We can use mass ($m$) and total internal energy ($U$) as our state variables, and construct an ODE system for these variables. We need to be able to convert between internal system properties and these:\n",
-    "\\begin{align}\n",
-    "m &= \\frac{ N_{\\text{tank}} V_{\\text{tank}} }{v} \\\\\n",
-    "U &= u \\, m \\;.\n",
-    "\\end{align}\n",
+    "\n",
+    "$$\n",
+    "m = \\frac{ N_{\\text{tank}} V_{\\text{tank}} }{v} \\\\\n",
+    "U = u \\, m \\;.\n",
+    "$$\n",
     "\n",
     "We need to define a function that evaluates the time derivative system:"
    ]

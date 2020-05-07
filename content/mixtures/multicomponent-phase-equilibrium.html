@@ -250,19 +250,21 @@ where <span class="math notranslate nohighlight">\(x_i\)</span> is the mole frac
 </div>
 </div>
 </div>
-<p>We then write a function for the system of equations we need to solve to find our unknowns: the equilibrium temperature, and the two mole fractions of the components in the vapor phase. So, we need three equations:
-\begin{align}
-x_1 + x_2 &amp;= 1 \
-x_{f,1} P_{\text{sat}, 1} &amp;= x_1 P \
-x_{f,2} P_{\text{sat}, 2} &amp;= x_2 P
-\end{align}
-which come from conservation of mass and Raoult’s Law.</p>
-<p>We’ll use the <code class="docutils literal notranslate"><span class="pre">root()</span></code> function, which finds the values of our unknowns that make our equations equal to zero (i.e., the roots). To use this, we need to make our equations all equal zero, such that the correct values of the unknowns satisfy them:
-\begin{align}
-x_1 + x_2 - 1 &amp;= 0 \
-x_{f,1} P_{\text{sat}, 1} - x_1 P &amp;= 0 \
-x_{f,2} P_{\text{sat}, 2} - x_2 P &amp;= 0
-\end{align}</p>
+<p>We then write a function for the system of equations we need to solve to find our unknowns: the equilibrium temperature, and the two mole fractions of the components in the vapor phase. So, we need three equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x_1 + x_2 = 1 \\
+x_{f,1} P_{\text{sat}, 1} = x_1 P \\
+x_{f,2} P_{\text{sat}, 2} = x_2 P \;,
+\end{split}\]</div>
+<p>which come from conservation of mass and Raoult’s Law.</p>
+<p>We’ll use the <code class="docutils literal notranslate"><span class="pre">root()</span></code> function, which finds the values of our unknowns that make our equations equal to zero (i.e., the roots). To use this, we need to make our equations all equal zero, such that the correct values of the unknowns satisfy them:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x_1 + x_2 - 1 = 0 \\
+x_{f,1} P_{\text{sat}, 1} - x_1 P = 0 \\
+x_{f,2} P_{\text{sat}, 2} - x_2 P = 0
+\end{split}\]</div>
 <p>Now, we can define the function, then solve for the roots:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -390,15 +392,17 @@ Gas mole fraction of butane:  0.167
 <p>The line formed by the temperature and liquid mole fraction is the <em>bubble point line</em> and the line of temperature and vapor mole fraction is the <em>dew point line</em>.</p>
 <p>The region between the lines shows the temperatures where the liquid and vapor phases can coexist; below the bubble point line, the mixture will always be in a liquid phase, and above the dew point line, the mixture will always in a vapor phase.</p>
 <p>This plot can be used to examine the behavior of a two-phase mixture undergoing a heating process. For example, consider a mixture that starts at 250 K and a liquid mole fraction of propane of 0.6, as it is heated. Note that the total mole fraction of propane, 0.6, should remain constant through this process.</p>
+<p>One useful quantity to calculate is the quality of mixture, the ratio of the moles of vapor to the total moles, can be found here using the information about propane:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Q = \frac{n_g}{n} = \frac{n_g}{n_g + n_f} \\
+Q = \frac{z_1 - x_1}{x_{f,1} - x_1} \;,
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(z_1\)</span> is the total mole fraction of propane (<span class="math notranslate nohighlight">\(n_1 / n\)</span>), which remains constant through this process.</p>
 <ol class="simple">
 <li><p>Initially the mixture is entirely liquid, and the liquid mole fractions remain constant as the mixture is heated.</p></li>
 <li><p>With increasing temperature, eventually we reach the bubble point line, at a temperature of about 259 K. The first bubbles appear, with a propane mole fraction of 0.89 in the vapor phase found via the <em>tie line</em> (the horizontal line connecting to the dew point line at this temperature).</p></li>
-<li><p>As the mixture is heated more and the temperature increases, it forms a two-phase mixture. The liquid and vapor mole fractions of propane are found via the horizontal tie lines connecting to the bubble and dew point lines. For example, at about 265 K, the propane mole fractions are about 0.44 and 0.79 in the liquid and vapor phases, respectively. The quality of mixture, the ratio of the moles of vapor to the total moles, can be found here using the information about propane:
-\begin{align}
-Q &amp;= \frac{n_g}{n} = \frac{n_g}{n_g + n_f} \
-Q &amp;= \frac{z_1 - x_1}{x_{f,1} - x_1} ;,
-\end{align}
-where <span class="math notranslate nohighlight">\(z_1\)</span> is the total mole fraction of propane (<span class="math notranslate nohighlight">\(n_1 / n\)</span>), which remains constant through this process. At this state, the quality is about 0.45.</p></li>
+<li><p>As the mixture is heated more and the temperature increases, it forms a two-phase mixture. The liquid and vapor mole fractions of propane are found via the horizontal tie lines connecting to the bubble and dew point lines. For example, at about 265 K, the propane mole fractions are about 0.44 and 0.79 in the liquid and vapor phases, respectively. At this state, the quality is about 0.45.</p></li>
 <li><p>Finally, with more heating, the temperature continues to rise until the mixture reaches the dew point line, where the quality is 1 and the mole fraction of propane in the vapor phase is 0.6. This occurs at about 274 K, and the last liquid droplet will have a propane mole fraction of about 0.24.</p></li>
 <li><p>Further heating will bring the mixture fully into the vapor phase, with a propane mole fraction of 0.6.</p></li>
 </ol>

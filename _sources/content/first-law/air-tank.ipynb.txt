@@ -80,10 +80,12 @@
     "\\end{equation}\n",
     "\n",
     "We can perform an energy balance on the system that contains both the tank and air:\n",
-    "\\begin{align}\n",
-    "0 &= m_t ( u_{t,2} - u_{t,1} ) + m_a ( u_{a,2} - u_{a,1} ) \\\\\n",
-    "0 &= m_t c_{\\text{steel}} (T_{t,2} - T_{t,1}) - m_a ( u_{a,2} - u_{a,1} )\n",
-    "\\end{align}\n",
+    "\n",
+    "$$\n",
+    "0 = m_t ( u_{t,2} - u_{t,1} ) + m_a ( u_{a,2} - u_{a,1} ) \\\\\n",
+    "0 = m_t c_{\\text{steel}} (T_{t,2} - T_{t,1}) - m_a ( u_{a,2} - u_{a,1} )\n",
+    "$$\n",
+    "\n",
     "and we know that at equilibrium the temperatures are the same: $T_{t,2} = T_{a,2}$.\n",
     "\n",
     "So, we fundamentally have **one** unknown, the final temperature, which we can solve using the final version of the energy balance:"
@@ -162,11 +164,13 @@
     "## Alternate solution\n",
     "\n",
     "If we wanted, we could also solve this problem with a larger number of equations and unknowns, although as seen above this is not necessary. For example, we can treat $v_{a,2}$, $T_{a,2}$, $T_{t,2}$, and $u_{a,2}$ as the four unknowns, with the equations\n",
-    "\\begin{align}\n",
-    "v_{a,2} &= v_{a,1} \\\\\n",
-    "T_{a,2} &= T_{t,2} \\\\\n",
-    "u_{a,2} &= f \\left( T_{a,2}, v_{a,2} \\right)\n",
-    "\\end{align}\n",
+    "\n",
+    "$$\n",
+    "v_{a,2} = v_{a,1} \\\\\n",
+    "T_{a,2} = T_{t,2} \\\\\n",
+    "u_{a,2} = f \\left( T_{a,2}, v_{a,2} \\right)\n",
+    "$$\n",
+    "\n",
     "being added to the one used above."
    ]
   },
@@ -269,7 +273,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.6"
+   "version": "3.6.10"
   }
  },
  "nbformat": 4,

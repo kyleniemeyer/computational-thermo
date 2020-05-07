@@ -25,10 +25,12 @@
    "metadata": {},
    "source": [
     "The second law efficiency is\n",
-    "\\begin{align}\n",
-    "\\eta_2 &= \\frac{\\text{exergy of desired output}}{\\text{exergy supplied}} \\\\\n",
-    "\\eta_2 &= \\frac{\\dot{W}}{\\dot{X}_{Q_{HT}} + \\dot{X}_{Q_{MT}}} \\;,\n",
-    "\\end{align}\n",
+    "\n",
+    "$$\n",
+    "\\eta_2 = \\frac{\\text{exergy of desired output}}{\\text{exergy supplied}} \\\\\n",
+    "\\eta_2 = \\frac{\\dot{W}}{\\dot{X}_{Q_{HT}} + \\dot{X}_{Q_{MT}}} \\;,\n",
+    "$$\n",
+    "\n",
     "where the exergy input due to heat transfer is\n",
     "\\begin{equation}\n",
     "\\dot{X}_{Q_i} = \\dot{Q}_i \\left( 1 - \\frac{T_0}{T_i} \\right)\n",
@@ -79,9 +81,10 @@
    "metadata": {},
    "source": [
     "Let's compare to the first-law efficiency:\n",
-    "\\begin{equation}\n",
+    "\n",
+    "$$\n",
     "\\eta = \\frac{\\dot{W}}{\\dot{Q}_{HT} + \\dot{Q}_{MT}}\n",
-    "\\end{equation}"
+    "$$"
    ]
   },
   {

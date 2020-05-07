@@ -108,13 +108,17 @@
    "metadata": {},
    "source": [
     "Then, we can do an energy balance for the reversible turbine, which is also steady state and adiabatic:\n",
-    "\\begin{equation}\n",
+    "\n",
+    "$$\n",
     "\\dot{m} h_1 = \\dot{m} h_{s,2} + \\dot{W}_{s,t}\n",
-    "\\end{equation}\n",
+    "$$\n",
+    "\n",
     "Then, recall that the isentropic efficiency is defined as\n",
-    "\\begin{equation}\n",
+    "\n",
+    "$$\n",
     "\\eta_t = \\frac{\\dot{W}_t}{\\dot{W}_{s,t}} \\;,\n",
-    "\\end{equation}\n",
+    "$$\n",
+    "\n",
     "so we can obtain the actual turbine work using $\\dot{W}_t = \\eta_t \\dot{W}_{s,t}$ :"
    ]
   },
@@ -144,9 +148,11 @@
    "metadata": {},
    "source": [
     "Then, we can perform an energy balance on the actual turbine:\n",
-    "\\begin{equation}\n",
+    "\n",
+    "$$\n",
     "\\dot{m} h_1 = \\dot{m} h_2 + \\dot{W}_t \\;,\n",
-    "\\end{equation}\n",
+    "$$\n",
+    "\n",
     "which we can use with the exit pressure to fix state 2."
    ]
   },
@@ -193,9 +199,11 @@
    "metadata": {},
    "source": [
     "Finally, we can perform an entropy balance on the actual turbine:\n",
-    "\\begin{equation}\n",
+    "\n",
+    "$$\n",
     "\\dot{m} s_1 + \\dot{S}_{\\text{gen}} = \\dot{m} s_2 \\;,\n",
-    "\\end{equation}\n",
+    "$$\n",
+    "\n",
     "which allows us to find the rate of entropy generation."
    ]
   },
@@ -218,13 +226,6 @@
     "    )\n",
     "print(f'rate of entropy generation: {entropy_gen.to(\"kW/K\"): .2f}')"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {

@@ -43,11 +43,12 @@
    "metadata": {},
    "source": [
     "First, we can find the temperature at the cold outlet by performing an energy balance on the device:\n",
-    "\\begin{align}\n",
-    "\\dot{m}_1 u_1 &= \\dot{m}_3 u_3 + \\dot{m}_2 u_2 \\\\\n",
-    "\\dot{m} c_p T_1 &= f \\dot{m} c_p T_3 + (1-f) \\dot{m} c_p T_2 \\\\\n",
-    "T_3 &= \\frac{T_1 - (1-f) T_2}{f}\n",
-    "\\end{align}"
+    "\n",
+    "$$\n",
+    "\\dot{m}_1 u_1 = \\dot{m}_3 u_3 + \\dot{m}_2 u_2 \\\\\n",
+    "\\dot{m} c_p T_1 = f \\dot{m} c_p T_3 + (1-f) \\dot{m} c_p T_2 \\\\\n",
+    "T_3 = \\frac{T_1 - (1-f) T_2}{f}\n",
+    "$$"
    ]
   },
   {
@@ -73,10 +74,11 @@
    "metadata": {},
    "source": [
     "Now, examine whether the device is physically possible by performing an entropy balance:\n",
-    "\\begin{align}\n",
-    "\\dot{m} s_1 + \\dot{S}_{\\text{gen}} &= f \\dot{m} s_3 + (1-f) \\dot{m} s_2 \\\\\n",
-    "\\frac{\\dot{S}_{\\text{gen}}}{\\dot{m}} &= f s_3 + (1-f) s_2 = f(s_3 - s_2) + (s_2 - s_1)\n",
-    "\\end{align}\n",
+    "\n",
+    "$$\n",
+    "\\dot{m} s_1 + \\dot{S}_{\\text{gen}} = f \\dot{m} s_3 + (1-f) \\dot{m} s_2 \\\\\n",
+    "\\frac{\\dot{S}_{\\text{gen}}}{\\dot{m}} = f s_3 + (1-f) s_2 = f(s_3 - s_2) + (s_2 - s_1) \\;.\n",
+    "$$\n",
     "\n",
     "We can obtain the $\\Delta s$ values by using the relationship for an ideal gas with constant specific heat:\n",
     "\\begin{equation}\n",

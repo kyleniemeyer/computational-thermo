@@ -218,12 +218,13 @@
 </div>
 </div>
 </div>
-<p>The second law efficiency is
-\begin{align}
-\eta_2 &amp;= \frac{\text{exergy of desired output}}{\text{exergy supplied}} \
-\eta_2 &amp;= \frac{\dot{W}}{\dot{X}<em>{Q</em>{HT}} + \dot{X}<em>{Q</em>{MT}}} ;,
-\end{align}
-where the exergy input due to heat transfer is
+<p>The second law efficiency is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\eta_2 = \frac{\text{exergy of desired output}}{\text{exergy supplied}} \\
+\eta_2 = \frac{\dot{W}}{\dot{X}_{Q_{HT}} + \dot{X}_{Q_{MT}}} \;,
+\end{split}\]</div>
+<p>where the exergy input due to heat transfer is
 \begin{equation}
 \dot{X}_{Q_i} = \dot{Q}_i \left( 1 - \frac{T_0}{T_i} \right)
 \end{equation}</p>
@@ -259,10 +260,11 @@ where the exergy input due to heat transfer is
 </div>
 </div>
 </div>
-<p>Let’s compare to the first-law efficiency:
-\begin{equation}
-\eta = \frac{\dot{W}}{\dot{Q}<em>{HT} + \dot{Q}</em>{MT}}
-\end{equation}</p>
+<p>Let’s compare to the first-law efficiency:</p>
+<div class="math notranslate nohighlight">
+\[
+\eta = \frac{\dot{W}}{\dot{Q}_{HT} + \dot{Q}_{MT}}
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eta</span> <span class="o">=</span> <span class="n">work_out</span> <span class="o">/</span> <span class="p">(</span><span class="n">heat_in_hot</span> <span class="o">+</span> <span class="n">heat_in_med</span><span class="p">)</span>
