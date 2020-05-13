@@ -43,6 +43,10 @@
     - file: content/combustion/adiabatic-flame-temperature
 
 - file: content/chemical-equilibrium/chemical-equilibrium
+  sections:
+    - file: content/chemical-equilibrium/equilibrium-constant
+    - file: content/chemical-equilibrium/equilibrium-alternative-methods
+    - file: content/chemical-equilibrium/adiabatic-flame-temperature
 
 - file: content/stat-thermo/stat-thermo
 
