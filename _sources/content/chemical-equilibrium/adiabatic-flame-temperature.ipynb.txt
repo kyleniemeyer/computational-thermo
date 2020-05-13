@@ -1,0 +1,266 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Adiabatic flame temperature\n",
+    "\n",
+    "Consider a mixture of hydrogen and oxygen initially at 1000 K and 10 bar, which is ignited by a spark. This mixture reacts according to\n",
+    "\n",
+    "$$\n",
+    "\\text{H}_2 + 0.5 \\text{O}_2 \\leftrightarrow \\text{H}_2 \\text{O}\n",
+    "$$\n",
+    "and proceeds to equilibrium at a constant pressure, adiabatic process. \n",
+    "Initially the mixture has twice as much oxygen than hydrogen (by mole) and no water.\n",
+    "Assume the mixture follows the ideal gas law.\n",
+    "\n",
+    "**Problem:** Find the equilibrium composition and temperature, using the Lagrange multiplier method."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import cantera as ct\n",
+    "from scipy.optimize import root\n",
+    "\n",
+    "from pint import UnitRegistry\n",
+    "ureg = UnitRegistry()\n",
+    "Q_ = ureg.Quantity"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# for convenience:\n",
+    "def to_si(quant):\n",
+    "    '''Converts a Pint Quantity to magnitude at base SI units.\n",
+    "    '''\n",
+    "    return quant.to_base_units().magnitude"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "After importing the necessary modules, we should specify the knowns:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "temperature_in = Q_(1000, 'K')\n",
+    "pressure = Q_(10, 'bar')\n",
+    "\n",
+    "components = ['H2', 'O2', 'H2O']\n",
+    "\n",
+    "moles_initial = np.array([1.0, 2.0, 0.0]) * Q_('kmol')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The system of equations we solve will include the element balances and equations involving the multiplier, and also a constraint of constant enthalpy ($H_1 = H_2$):\n",
+    "\n",
+    "$$\n",
+    "\\sum_{i=1}^C n_i e_{i,j} - \\sum_{i=1}^C n_{0,i} e_{i,j} = 0 \\quad \\text{for } j=1, \\ldots, E \\;, \\\\\n",
+    "\\mu_i + \\sum_{j=1}^E \\lambda_j e_{i,j} = 0 \\quad \\text{for } i=1, \\ldots, C \\;, \\\\\n",
+    "\\sum_{i=1}^C n_{0,i} \\overline{h}_{i, T_{0}} = \\sum_{i=1}^C n_{i} \\overline{h}_{i, T_f} \\;,\n",
+    "$$\n",
+    "\n",
+    "where the unknowns are the numbers of moles for each compound $n_i$, the multipliers for each element $\\lambda_j$, and the final temperature $T_f$. \n",
+    "In this system, $e_{i,j}$ is the number of moles of element $j$ in component $i$, $n_{0,i}$ is the initial number of moles of component $i$, $\\mu_i$ is the chemical potential of component $i$, $\\overline{h}_{i, T}$ is the molar specific enthalpy of component $i$ evaluated at temperature $T$,\n",
+    "$E$ is the number of elements, and $C$ is the number of components (chemical species)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def lagrange_system(x, pressure, components, gas, temperature_initial, moles_init):\n",
+    "    '''System of equations for reaction coordinate and equilibrium composition.\n",
+    "    '''\n",
+    "    moles = np.array([x[0], x[1], x[2]]) * Q_('kmol')\n",
+    "    multipliers = np.array([x[3], x[4]]) * Q_('J/kmol')\n",
+    "    temperature = Q_(x[5], 'K')\n",
+    "    \n",
+    "    mole_fractions = to_si(moles / np.sum(moles))\n",
+    "    \n",
+    "    # get standard-state Gibbs free energy and enthalpy of each component\n",
+    "    gibbs = np.zeros(len(components))\n",
+    "    enthalpies_final = np.zeros(len(components))\n",
+    "    enthalpies_initial = np.zeros(len(components))\n",
+    "    for idx, comp in enumerate(components):\n",
+    "        gas.TPX = (\n",
+    "            to_si(temperature), to_si(Q_(1, 'atm')),\n",
+    "            f'{comp}:1.0'\n",
+    "            )\n",
+    "        gibbs[idx] = gas.gibbs_mole\n",
+    "        enthalpies_final[idx] = gas.enthalpy_mole\n",
+    "        \n",
+    "        gas.TPX = (\n",
+    "            to_si(temperature_initial), to_si(Q_(1, 'atm')),\n",
+    "            f'{comp}:1.0'\n",
+    "            )\n",
+    "        enthalpies_initial[idx] = gas.enthalpy_mole\n",
+    "        \n",
+    "    gibbs *= Q_('J/kmol')\n",
+    "    enthalpies_final *= Q_('J/kmol')\n",
+    "    enthalpies_initial *= Q_('J/kmol')\n",
+    "    \n",
+    "    # Calculate the chemical potentials at current pressure and temperature\n",
+    "    gas_constant = Q_(ct.gas_constant, 'J/(kmol*K)')\n",
+    "    chemical_potentials = (\n",
+    "        gibbs + gas_constant * temperature * np.log(\n",
+    "            mole_fractions * pressure / Q_(1.0, 'atm')\n",
+    "            )\n",
+    "        )\n",
+    "    \n",
+    "    moles_initial_H = 2*moles_init[0] + 2*moles_init[2]\n",
+    "    moles_initial_O = 2*moles_init[1] + moles_init[2]\n",
+    "    \n",
+    "    moles_H = 2*moles[0] + 2*moles[2]\n",
+    "    moles_O = 2*moles[1] + moles[2]\n",
+    "    \n",
+    "    enthalpy_initial = np.sum(moles_init * enthalpies_initial)\n",
+    "    enthalpy_final = np.sum(moles * enthalpies_final)\n",
+    "    \n",
+    "    return [\n",
+    "        to_si(moles_H - moles_initial_H),\n",
+    "        to_si(moles_O - moles_initial_O),\n",
+    "        to_si(chemical_potentials[0] + np.sum(multipliers * [2, 0])),\n",
+    "        to_si(chemical_potentials[1] + np.sum(multipliers * [0, 2])),\n",
+    "        to_si(chemical_potentials[2] + np.sum(multipliers * [2, 1])),\n",
+    "        to_si(enthalpy_final - enthalpy_initial)\n",
+    "        ]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Function evaluation (should be near zero): \n",
+      "0.0000e+00, 0.0000e+00, -2.3842e-10, -1.1921e-10, -1.1921e-10, 3.7253e-08\n",
+      "Mole fractions at equilibrium:\n",
+      "H2:  0.0136\n",
+      "O2:  0.6027\n",
+      "H2O:  0.3837\n",
+      "Temperature at equilibrium: 3208.46 kelvin\n"
+     ]
+    }
+   ],
+   "source": [
+    "gas = ct.Solution('gri30.cti')\n",
+    "\n",
+    "x0 = [1.0, 1.0, 1.0, 1e6, 1e6, 2000]\n",
+    "sol = root(\n",
+    "    lagrange_system, x0, method='lm',\n",
+    "    args=(pressure, components, gas, temperature_in, moles_initial)\n",
+    "    )\n",
+    "\n",
+    "print('Function evaluation (should be near zero): \\n' +\n",
+    "      ', '.join([f'{val:.4e}' for val in sol.fun])\n",
+    "      )\n",
+    "\n",
+    "moles = sol.x[:3]\n",
+    "mole_fractions = moles / np.sum(moles)\n",
+    "print(f'Mole fractions at equilibrium:')\n",
+    "for idx, comp in enumerate(components):\n",
+    "    print(f'{comp}: {mole_fractions[idx]: .4f}')\n",
+    "    \n",
+    "temperature_final = Q_(sol.x[-1], 'K')\n",
+    "print(f'Temperature at equilibrium: {temperature_final: .2f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Compare to Cantera equilibrium\n",
+    "\n",
+    "We can compare this approach to the built-in equilibrium solver in Cantera, which uses  a different (but related) [element potential method](https://cantera.org/tutorials/python-tutorial.html#chemical-equilibrium):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Adiabatic flame temperature:  3208.46 K\n",
+      "Mole fractions at equilibrium:\n",
+      "H2     0.0136\n",
+      "O2     0.6027\n",
+      "H2O    0.3837\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Get all of the Species objects defined in the GRI 3.0 mechanism\n",
+    "species = {S.name: S for S in ct.Species.listFromFile('gri30.cti')}\n",
+    "\n",
+    "# Create an IdealGas object with species representing complete combustion\n",
+    "complete_species = [species[S] for S in ('H2', 'O2', 'H2O')]\n",
+    "gas = ct.Solution(thermo='IdealGas', species=complete_species)\n",
+    "\n",
+    "gas.TPX = to_si(temperature_in), to_si(pressure), 'O2:2.0, H2:1.0'\n",
+    "gas.equilibrate('HP')\n",
+    "\n",
+    "print(f'Adiabatic flame temperature: {gas.T: .2f} K')\n",
+    "\n",
+    "print('Mole fractions at equilibrium:')\n",
+    "for sp, mole_fraction in zip(gas.species_names, gas.X):\n",
+    "    print(f'{sp:4}  {mole_fraction: .4f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Both methods produce exactly the same values!"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

@@ -1,0 +1,518 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Equilibrium via equilibrium constant\n",
+    "\n",
+    "Consider that you have a mixture with 1 kilomole of carbon monoxide (CO) that reacts with 0.5 kmol of oxygen (O$_2$) to form a mixture of CO, CO$_2$, and O$_2$, with the equilibrium conditions of 2500 K and (a) 1 atm (b) 10 atm. Find the equilibrium composition in terms of the mole fraction.\n",
+    "\n",
+    "Assume the mixture behaves as an ideal gas.\n",
+    "\n",
+    "We will compare three solution methods based on the law of mass action and the equilibrium constant:\n",
+    "\n",
+    "1. Using a tabulated equilibrium constant\n",
+    "2. Calculating the equilibrium constant\n",
+    "3. Using a reaction coordinate\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import cantera as ct\n",
+    "from scipy.optimize import root, root_scalar\n",
+    "\n",
+    "from pint import UnitRegistry\n",
+    "ureg = UnitRegistry()\n",
+    "Q_ = ureg.Quantity"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# for convenience:\n",
+    "def to_si(quant):\n",
+    "    '''Converts a Pint Quantity to magnitude at base SI units.\n",
+    "    '''\n",
+    "    return quant.to_base_units().magnitude"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Solution via tabulated equilibrium constant\n",
+    "\n",
+    "With the pressure and temperature known, we can find the composition of the mixture by using a reaction equilibrium constant if tabulated with respect to temperature. \n",
+    "The primary reaction involved is\n",
+    "\n",
+    "$$\n",
+    "\\text{CO}_2 \\leftrightarrow \\text{CO} + \\frac{1}{2} \\text{O}_2\n",
+    "$$\n",
+    "\n",
+    "where the equilibrium constant is\n",
+    "\n",
+    "$$\n",
+    "K(T) = \\frac{y_{\\text{CO}}^{\\nu_{\\text{CO}}} y_{\\text{O}_2}^{\\nu_{\\text{O}_2}}}{y_{\\text{CO}_2}^{\\nu_{\\text{CO}_2}}} \\left(\\frac{P}{P_{\\text{ref}}} \\right)^{ \\nu_{\\text{CO}} + \\nu_{\\text{O}_2} - \\nu_{\\text{CO}_2} } = \\frac{y_{\\text{CO}} y_{\\text{O}_2}^{1/2}}{y_{\\text{CO}_2}} \\left(\\frac{P}{P_{\\text{ref}}} \\right)^{1/2}\n",
+    "$$\n",
+    "\n",
+    "We can apply conservation of mass to find the overall balanced chemical reaction:\n",
+    "$$\n",
+    "1\\text{CO} + \\frac{1}{2} \\text{O}_2 \\text{CO}_2 \\rightarrow z \\text{CO} + \\frac{z}{2} \\text{O}_2 + (1-z) \\text{CO}_2\n",
+    "$$\n",
+    "where $z$ is the amount of CO in kmol at equilibrium ($0 \\leq z \\leq 1$).\n",
+    "Then, the total number of moles $n$ in the mixture at equilibrium is:\n",
+    "\n",
+    "$$\n",
+    "n = z + \\frac{z}{2} + (1-z) = \\frac{2+z}{2}\n",
+    "$$\n",
+    "\n",
+    "so the mole fractions of each component at equilibrium are:\n",
+    "\n",
+    "$$\n",
+    "y_{\\text{CO}} = \\frac{2z}{2 + z} \\\\\n",
+    "y_{\\text{O}_2} = \\frac{z}{2+z} \\\\\n",
+    "y_{\\text{CO}_2} = \\frac{2(1-z)}{2+z}\n",
+    "$$\n",
+    "\n",
+    "Therefore, we can express the equilibrium constant as\n",
+    "\n",
+    "$$\n",
+    "K(T) = \\frac{z}{1-z} \\left(\\frac{z}{2+z}\\right)^{1/2} \\left(\\frac{P}{P_{\\text{ref}}}\\right)^{1/2}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def solve_equilibrium_constant(z, pressure, equil_constant):\n",
+    "    pressure_ref = Q_(1, 'atm')\n",
+    "    K = (\n",
+    "        (z / (1.0 - z)) * np.sqrt(z / (2.0 + z)) *\n",
+    "        np.sqrt(to_si(pressure / pressure_ref))\n",
+    "        )\n",
+    "    \n",
+    "    return (equil_constant - K)\n",
+    "\n",
+    "def get_mole_fractions(z):\n",
+    "    mole_frac_CO = 2 * z / (2 + z)\n",
+    "    mole_frac_O2 = z / (2 + z)\n",
+    "    mole_frac_CO2 = 2 * (1 - z) / (2 + z)\n",
+    "    return {'CO': mole_frac_CO, 'O2': mole_frac_O2, 'CO2': mole_frac_CO2}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tabulated equilibrium constant:  0.0363\n"
+     ]
+    }
+   ],
+   "source": [
+    "# tabulated value of equilibrium constant at 2500 K\n",
+    "log10K = -1.440\n",
+    "equilibrium_constant = 10.0**log10K\n",
+    "\n",
+    "print(f'Tabulated equilibrium constant: {equilibrium_constant: .4f}')\n",
+    "\n",
+    "components = ['CO', 'O2', 'CO2']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Mole fractions at 1.0 standard_atmosphere\n",
+      "CO:  0.121\n",
+      "O2:  0.060\n",
+      "CO2:  0.819\n"
+     ]
+    }
+   ],
+   "source": [
+    "# first, 1 atm\n",
+    "pressure = Q_(1, 'atm')\n",
+    "sol = root_scalar(\n",
+    "    solve_equilibrium_constant, x0=0.4, x1=0.5,\n",
+    "    args=(pressure, equilibrium_constant)\n",
+    "    )\n",
+    "mole_fractions = get_mole_fractions(sol.root)\n",
+    "\n",
+    "print(f'Mole fractions at {pressure: .1f}')\n",
+    "for comp in components:\n",
+    "    print(f'{comp}: {mole_fractions[comp]: .3f}')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Mole fractions at 10.0 standard_atmosphere\n",
+      "CO:  0.060\n",
+      "O2:  0.030\n",
+      "CO2:  0.910\n"
+     ]
+    }
+   ],
+   "source": [
+    "# now evaluate composition at 10 atm\n",
+    "pressure = Q_(10, 'atm')\n",
+    "sol = root_scalar(\n",
+    "    solve_equilibrium_constant, x0=0.4, x1=0.5,\n",
+    "    args=(pressure, equilibrium_constant)\n",
+    "    )\n",
+    "mole_fractions = get_mole_fractions(sol.root)\n",
+    "\n",
+    "print(f'Mole fractions at {pressure: .1f}')\n",
+    "for comp in components:\n",
+    "    print(f'{comp}: {mole_fractions[comp]: .3f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "At 1 atm, the equilibrium composition has just 82% CO$_2$ by mole, \n",
+    "while at 10 atm the mixture is 91% CO$_2$ at equilibrium."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Calculating equilibrium constant\n",
+    "\n",
+    "Determining the equilibrium composition using this method is limited by having the tabulated equilibrium constant. However, this can be calculated by using the **law of mass action** and chemical species property information:\n",
+    "\n",
+    "$$\n",
+    "\\Delta G^{\\circ} = -R_{\\text{univ}} T \\ln K\n",
+    "$$\n",
+    "where $\\Delta G^{\\circ}$ is the standard-state Gibbs free energy change of reaction and $R_{\\text{univ}}$ is the universal gas constant.\n",
+    "We can calculate $\\Delta G^{\\circ}$ for the above reaction:\n",
+    "\n",
+    "$$\n",
+    "\\Delta G^{\\circ} (T) = \\nu_{\\text{CO}} \\overline{g^{\\circ}}_{\\text{CO}} + \\nu_{\\text{O}_2} \\overline{g^{\\circ}}_{\\text{O}_2} - \\nu_{\\text{CO}_2} \\overline{g^{\\circ}}_{\\text{CO}_2}\\\\ \n",
+    "= \\overline{g^{\\circ}}_{\\text{CO}} + \\frac{1}{2} \\overline{g^{\\circ}}_{\\text{O}_2} - \\overline{g^{\\circ}}_{\\text{CO}_2}\n",
+    "$$\n",
+    "\n",
+    "where $\\overline{g^{\\circ}}_{i}$ is the molar-specific Gibbs free energy of substance $i$ at temperature $T$ and the reference pressure (1 atm)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Calculated equilibrium constant:  0.0368\n"
+     ]
+    }
+   ],
+   "source": [
+    "gas = ct.Solution('gri30.cti')\n",
+    "\n",
+    "temperature = Q_(2500, 'K')\n",
+    "pressure = Q_(1, 'atm')\n",
+    "\n",
+    "gas.TPX = to_si(temperature), to_si(pressure), 'CO2:1.0'\n",
+    "gibbs_CO2 = Q_(gas.gibbs_mole, 'J/kmol')\n",
+    "\n",
+    "gas.TPX = to_si(temperature), to_si(pressure), 'CO:1.0'\n",
+    "gibbs_CO = Q_(gas.gibbs_mole, 'J/kmol')\n",
+    "\n",
+    "gas.TPX = to_si(temperature), to_si(pressure), 'O2:1.0'\n",
+    "gibbs_O2 = Q_(gas.gibbs_mole, 'J/kmol')\n",
+    "\n",
+    "gibbs_change_reaction = gibbs_CO + 0.5*gibbs_O2 - gibbs_CO2\n",
+    "\n",
+    "equilibrium_constant = np.exp(\n",
+    "    -gibbs_change_reaction / \n",
+    "    (Q_(ct.gas_constant, 'J/(kmol*K)') * temperature)\n",
+    "    )\n",
+    "print(f'Calculated equilibrium constant: {to_si(equilibrium_constant): .4f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This is very close to the value shown above obtained from tabulated data."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Mole fractions at 1.0 standard_atmosphere:\n",
+      "CO:  0.122\n",
+      "O2:  0.061\n",
+      "CO2:  0.817\n",
+      "\n",
+      "Mole fractions at 10.0 standard_atmosphere:\n",
+      "CO:  0.061\n",
+      "O2:  0.030\n",
+      "CO2:  0.909\n"
+     ]
+    }
+   ],
+   "source": [
+    "pressure = Q_(1, 'atm')\n",
+    "sol = root_scalar(\n",
+    "    solve_equilibrium_constant, x0=0.4, x1=0.5,\n",
+    "    args=(pressure, to_si(equilibrium_constant))\n",
+    "    )\n",
+    "mole_fractions = get_mole_fractions(sol.root)\n",
+    "\n",
+    "print(f'Mole fractions at {pressure: .1f}:')\n",
+    "for comp in components:\n",
+    "    print(f'{comp}: {mole_fractions[comp]: .3f}')\n",
+    "\n",
+    "print()\n",
+    "    \n",
+    "pressure = Q_(10, 'atm')\n",
+    "sol = root_scalar(\n",
+    "    solve_equilibrium_constant, x0=0.4, x1=0.5,\n",
+    "    args=(pressure, to_si(equilibrium_constant))\n",
+    "    )\n",
+    "mole_fractions = get_mole_fractions(sol.root)\n",
+    "\n",
+    "print(f'Mole fractions at {pressure: .1f}:')\n",
+    "for comp in components:\n",
+    "    print(f'{comp}: {mole_fractions[comp]: .3f}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Solution via reaction coordinate and law of mass action"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "components = ['CO', 'O2', 'CO2']\n",
+    "moles_initial = np.array([1.0, 0.5, 0.0])\n",
+    "stoich_coefficients = np.array([1.0, 0.5, -1.0])\n",
+    "\n",
+    "temperature = Q_(2500, 'K')\n",
+    "pressures = [1, 10] * Q_('atm')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def find_equilibrium_root(\n",
+    "    x, temperature, pressure, components, \n",
+    "    moles_initial, stoich_coefficients, gas\n",
+    "    ):\n",
+    "    '''System of equations for reaction coordinate and equilibrium composition.\n",
+    "    '''\n",
+    "    epsilon = x[0]\n",
+    "    moles = np.array(x[1:])\n",
+    "    \n",
+    "    total_moles = np.sum(moles)\n",
+    "    mole_fractions = moles / total_moles\n",
+    "    \n",
+    "    # get standard-state Gibbs free energy of each component\n",
+    "    gibbs = np.zeros(len(components))\n",
+    "    for idx, comp in enumerate(components):\n",
+    "        gas.TPX = (\n",
+    "            to_si(temperature), to_si(Q_(1, 'atm')),\n",
+    "            f'{comp}:1.0'\n",
+    "            )\n",
+    "        gibbs[idx] = gas.gibbs_mole\n",
+    "        \n",
+    "    gibbs *= Q_('J/kmol')\n",
+    "        \n",
+    "    equil_constant = (\n",
+    "        np.prod([y**nu for y, nu in \n",
+    "                 zip(mole_fractions, stoich_coefficients)\n",
+    "                ]) * \n",
+    "        (pressure / Q_(1, 'atm'))**(np.sum(stoich_coefficients))\n",
+    "        )\n",
+    "    \n",
+    "    return [\n",
+    "        to_si(-np.sum(stoich_coefficients * gibbs) / \n",
+    "            (Q_(ct.gas_constant, 'J/(kmol*K)') * temperature) - \n",
+    "            np.log(equil_constant)\n",
+    "            ),\n",
+    "        moles[0] - (moles_initial[0] + stoich_coefficients[0] * epsilon),\n",
+    "        moles[1] - (moles_initial[1] + stoich_coefficients[1] * epsilon),\n",
+    "        moles[2] - (moles_initial[2] + stoich_coefficients[2] * epsilon),\n",
+    "        ]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Root-finding success: True\n",
+      "\n",
+      "Mole fractions at 1.0 standard_atmosphere:\n",
+      "CO:  0.122\n",
+      "O2:  0.061\n",
+      "CO2:  0.817\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/usr/local/miniconda3/envs/jupyterbook/lib/python3.6/site-packages/ipykernel_launcher.py:25: RuntimeWarning: invalid value encountered in double_scalars\n"
+     ]
+    }
+   ],
+   "source": [
+    "pressure = pressures[0]\n",
+    "x0 = [-0.5, 0.5, 0.5, 0.5]\n",
+    "gas = ct.Solution('gri30.cti')\n",
+    "\n",
+    "sol = root(\n",
+    "    find_equilibrium_root, x0, method='lm',\n",
+    "    args=(temperature, pressure, components, moles_initial, stoich_coefficients, gas)\n",
+    "    )\n",
+    "\n",
+    "print(f'Root-finding success: {sol.success}\\n')\n",
+    "\n",
+    "epsilon = sol.x[0]\n",
+    "moles = sol.x[1:]\n",
+    "\n",
+    "mole_fractions = moles / np.sum(moles)\n",
+    "\n",
+    "\n",
+    "# Check constraints:\n",
+    "for idx, mole in enumerate(moles):\n",
+    "    if mole < 0:\n",
+    "        print(f'Error: moles of {components[idx]} below zero.')\n",
+    "        break\n",
+    "else:\n",
+    "    print(f'Mole fractions at {pressure: .1f}:')\n",
+    "    for idx, comp in enumerate(components):\n",
+    "        print(f'{comp}: {mole_fractions[idx]: .3f}')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Root-finding success: True\n",
+      "\n",
+      "Mole fractions at 10.0 standard_atmosphere:\n",
+      "CO:  0.061\n",
+      "O2:  0.030\n",
+      "CO2:  0.909\n"
+     ]
+    }
+   ],
+   "source": [
+    "pressure = pressures[1]\n",
+    "x0 = [-0.5, 0.1, 0.1, 0.9]\n",
+    "gas = ct.Solution('gri30.cti')\n",
+    "\n",
+    "sol = root(\n",
+    "    find_equilibrium_root, x0, method='lm',\n",
+    "    args=(temperature, pressure, components, moles_initial, stoich_coefficients, gas)\n",
+    "    )\n",
+    "\n",
+    "print(f'Root-finding success: {sol.success}\\n')\n",
+    "\n",
+    "epsilon = sol.x[0]\n",
+    "moles = sol.x[1:]\n",
+    "\n",
+    "mole_fractions = moles / np.sum(moles)\n",
+    "\n",
+    "# Check constraints:\n",
+    "for idx, mole in enumerate(moles):\n",
+    "    if mole < 0:\n",
+    "        print(f'Error: moles of {components[idx]} below zero.')\n",
+    "        break\n",
+    "else:\n",
+    "    print(f'Mole fractions at {pressure: .1f}:')\n",
+    "    for idx, comp in enumerate(components):\n",
+    "        print(f'{comp}: {mole_fractions[idx]: .3f}')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

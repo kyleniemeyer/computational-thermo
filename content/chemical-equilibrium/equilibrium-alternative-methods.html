@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Alternative methods for chemical equilibrium &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Adiabatic flame temperature" href="adiabatic-flame-temperature.html" />
+    <link rel="prev" title="Equilibrium via equilibrium constant" href="equilibrium-constant.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="../intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="">
+    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
+  </li>
+  <li class="">
+    <a href="../mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="">
+    <a href="../combustion/combustion.html">Combustion</a>
+  </li>
+  <li class="active">
+    <a href="chemical-equilibrium.html">Chemical Equilibrium</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="equilibrium-constant.html">Equilibrium via equilibrium constant</a>
+    </li>
+    <li class="active">
+      <a href="">Alternative methods for chemical equilibrium</a>
+    </li>
+    <li class="">
+      <a href="adiabatic-flame-temperature.html">Adiabatic flame temperature</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="../zbibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="../contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/content/chemical-equilibrium/equilibrium-alternative-methods.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/chemical-equilibrium/equilibrium-alternative-methods.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#solution-via-direct-minimization-of-gibbs-free-energy" class="nav-link">Solution via direct minimization of Gibbs free energy</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#solution-via-lagrange-method-of-undetermined-multipliers" class="nav-link">Solution via Lagrange method of undetermined multipliers</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="alternative-methods-for-chemical-equilibrium">
+<h1>Alternative methods for chemical equilibrium<a class="headerlink" href="#alternative-methods-for-chemical-equilibrium" title="Permalink to this headline">¶</a></h1>
+<p>The methods previously examined for determining the equilibrium composition rely on knowing the chemical reaction(s) occurring, and can involve highly nonlinear equations.</p>
+<p>Fortunately, we have methods that do not require knowing what reaction(s) are occurring.
+We will compare two such solution methods:</p>
+<ol class="simple">
+<li><p>Direct minimization of Gibbs free energy</p></li>
+<li><p>Lagrange’s method of undetermined multipliers</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span><span class="p">,</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">basinhopping</span>
+
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for convenience:</span>
+<span class="k">def</span> <span class="nf">to_si</span><span class="p">(</span><span class="n">quant</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Converts a Pint Quantity to magnitude at base SI units.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">quant</span><span class="o">.</span><span class="n">to_base_units</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="solution-via-direct-minimization-of-gibbs-free-energy">
+<h2>Solution via direct minimization of Gibbs free energy<a class="headerlink" href="#solution-via-direct-minimization-of-gibbs-free-energy" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_total_gibbs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;System of equations for reaction coordinate and equilibrium composition.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">total_moles</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    
+    <span class="n">moles</span> <span class="o">=</span> <span class="n">mole_fractions</span> <span class="o">*</span> <span class="n">total_moles</span>
+    
+    <span class="c1"># get standard-state Gibbs free energy of each component</span>
+    <span class="n">gibbs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+        <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)),</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">:1.0&#39;</span>
+            <span class="p">)</span>
+        <span class="n">gibbs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span>
+        
+    <span class="n">gibbs</span> <span class="o">*=</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+    
+    <span class="n">gas_constant</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span><span class="p">,</span> <span class="s1">&#39;J/(kmol*K)&#39;</span><span class="p">)</span>
+    <span class="n">chemical_potentials</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">gibbs</span> <span class="o">+</span> <span class="n">gas_constant</span> <span class="o">*</span> <span class="n">temperature</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">mole_fractions</span> <span class="o">*</span> <span class="n">pressure</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">to_si</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span> <span class="o">*</span> <span class="n">chemical_potentials</span><span class="p">))</span>
+
+
+<span class="n">bounds</span> <span class="o">=</span> <span class="n">Bounds</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">keep_feasible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># inequality_cons = {</span>
+<span class="c1">#     &#39;type&#39;: &#39;ineq&#39;,</span>
+<span class="c1">#     &#39;fun&#39; : lambda x: np.array([1 - x[0] - 2*x[1],</span>
+<span class="c1">#                                 1 - x[0]**2 - x[1],</span>
+<span class="c1">#                                 1 - x[0]**2 + x[1]]</span>
+<span class="c1">#                                ),</span>
+<span class="c1">#     &#39;jac&#39; : lambda x: np.array([[-1.0, -2.0],</span>
+<span class="c1">#                                 [-2*x[0], -1.0],</span>
+<span class="c1">#                                 [-2*x[0], 1.0]</span>
+<span class="c1">#                                 ])</span>
+<span class="c1">#     }</span>
+
+<span class="k">def</span> <span class="nf">equality_cons</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
+    <span class="n">total_moles_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles_init</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">-</span> 
+        <span class="p">(</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+        <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">equality_cons_jac</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
+    <span class="n">total_moles_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles_init</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="p">])</span>
+
+<span class="c1"># equality_cons = {</span>
+<span class="c1">#     &#39;type&#39;: &#39;eq&#39;,</span>
+<span class="c1">#     &#39;fun&#39; : lambda x: np.array([2*x[0] + x[1] - 1]),</span>
+<span class="c1">#     &#39;jac&#39; : lambda x: np.array([2.0, 1.0])</span>
+<span class="c1">#     }</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
+<span class="n">moles_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="n">stoich_coefficients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="n">pressures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+
+
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">])</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+    <span class="n">calc_total_gibbs</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;SLSQP&#39;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">),</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">equality_cons</span><span class="p">,</span>
+        <span class="s1">&#39;jac&#39;</span><span class="p">:</span> <span class="n">equality_cons_jac</span><span class="p">,</span>
+        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">,)</span>
+        <span class="p">},</span>
+    <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">}</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>     fun: -1337050.6738625919
+     jac: array([-1114208.90625 ,  -875713.96875 ,  -770404.421875, -1272223.453125])
+ message: &#39;Positive directional derivative for linesearch&#39;
+    nfev: 6
+     nit: 5
+    njev: 1
+  status: 8
+ success: False
+       x: array([1.2, 0.1, 0.1, 0.9])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">minimizer_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;SLSQP&#39;</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">,),</span>
+    <span class="s1">&#39;constraints&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">equality_cons</span><span class="p">,</span>
+        <span class="s1">&#39;jac&#39;</span><span class="p">:</span> <span class="n">equality_cons_jac</span><span class="p">,</span>
+        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">,)</span>
+        <span class="p">},</span>
+    <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="n">bounds</span>
+    <span class="p">}</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span>
+    <span class="n">calc_total_gibbs</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">minimizer_kwargs</span><span class="o">=</span><span class="n">minimizer_kwargs</span><span class="p">,</span>
+    <span class="n">niter</span><span class="o">=</span><span class="mi">5000</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="stderr docutils container">
+<pre class="stderr literal-block">/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/pint/numpy_func.py:289: RuntimeWarning: divide by zero encountered in log
+  result_magnitude = func(*stripped_args, **stripped_kwargs)
+/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/pint/numpy_func.py:289: RuntimeWarning: invalid value encountered in multiply
+  result_magnitude = func(*stripped_args, **stripped_kwargs)
+</pre>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                        fun: -11981980.877038557
+ lowest_optimization_result:      fun: -11981980.877038557
+     jac: array([-2396396.125, -3409498.75 , -2970709.   , -5289980.875])
+ message: &#39;Positive directional derivative for linesearch&#39;
+    nfev: 6
+     nit: 5
+    njev: 1
+  status: 8
+ success: False
+       x: array([5., 1., 1., 1.])
+                    message: [&#39;requested number of basinhopping iterations completed successfully&#39;]
+      minimization_failures: 4716
+                       nfev: 233234
+                        nit: 5000
+                       njev: 20931
+                          x: array([5., 1., 1., 1.])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="solution-via-lagrange-method-of-undetermined-multipliers">
+<h2>Solution via Lagrange method of undetermined multipliers<a class="headerlink" href="#solution-via-lagrange-method-of-undetermined-multipliers" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lagrange_system</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;System of equations for reaction coordinate and equilibrium composition.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">moles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+    <span class="n">multipliers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+    
+    <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+    
+    <span class="c1"># get standard-state Gibbs free energy of each component</span>
+    <span class="n">gibbs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+        <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)),</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">:1.0&#39;</span>
+            <span class="p">)</span>
+        <span class="n">gibbs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span>
+        
+    <span class="n">gibbs</span> <span class="o">*=</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+    
+    <span class="n">gas_constant</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span><span class="p">,</span> <span class="s1">&#39;J/(kmol*K)&#39;</span><span class="p">)</span>
+    <span class="n">chemical_potentials</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">gibbs</span> <span class="o">+</span> <span class="n">gas_constant</span> <span class="o">*</span> <span class="n">temperature</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">mole_fractions</span> <span class="o">*</span> <span class="n">pressure</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    
+    <span class="n">moles_initial_C</span> <span class="o">=</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">moles_initial_O</span> <span class="o">=</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="n">moles_C</span> <span class="o">=</span> <span class="n">moles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">moles_O</span> <span class="o">=</span> <span class="n">moles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">moles_C</span> <span class="o">-</span> <span class="n">moles_initial_C</span><span class="p">,</span>
+        <span class="n">moles_O</span> <span class="o">-</span> <span class="n">moles_initial_O</span><span class="p">,</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])),</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
+<span class="n">moles_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="n">pressures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">]</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
+    <span class="n">lagrange_system</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Function evaluation (should be near zero): </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">fun</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Function evaluation (should be near zero): [0. 0. 0. 0. 0.]
+Mole fractions at 1.0 standard_atmosphere:
+CO:  0.122
+O2:  0.061
+CO2:  0.817
+</pre></div>
+</div>
+<div class="stderr docutils container">
+<pre class="stderr literal-block">/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/pint/numpy_func.py:289: RuntimeWarning: invalid value encountered in log
+  result_magnitude = func(*stripped_args, **stripped_kwargs)
+</pre>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">]</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
+    <span class="n">lagrange_system</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">},</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Function evaluation (should be near zero): </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">fun</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Function evaluation (should be near zero): [0. 0. 0. 0. 0.]
+Mole fractions at 10.0 standard_atmosphere:
+CO:  0.061
+O2:  0.030
+CO2:  0.909
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content/chemical-equilibrium"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="equilibrium-constant.html" title="previous page">Equilibrium via equilibrium constant</a>
+    <a class='right-next' id="next-link" href="adiabatic-flame-temperature.html" title="next page">Adiabatic flame temperature</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kyle Niemeyer<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

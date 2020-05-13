@@ -1,0 +1,353 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Alternative methods for chemical equilibrium\n",
+    "\n",
+    "The methods previously examined for determining the equilibrium composition rely on knowing the chemical reaction(s) occurring, and can involve highly nonlinear equations.\n",
+    "\n",
+    "Fortunately, we have methods that do not require knowing what reaction(s) are occurring.\n",
+    "We will compare two such solution methods:\n",
+    "\n",
+    "1. Direct minimization of Gibbs free energy\n",
+    "2. Lagrange's method of undetermined multipliers\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import cantera as ct\n",
+    "from scipy.optimize import root, Bounds, minimize, basinhopping\n",
+    "\n",
+    "from pint import UnitRegistry\n",
+    "ureg = UnitRegistry()\n",
+    "Q_ = ureg.Quantity"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# for convenience:\n",
+    "def to_si(quant):\n",
+    "    '''Converts a Pint Quantity to magnitude at base SI units.\n",
+    "    '''\n",
+    "    return quant.to_base_units().magnitude"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Solution via direct minimization of Gibbs free energy"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def calc_total_gibbs(x, temperature, pressure, components, gas, moles_init):\n",
+    "    '''System of equations for reaction coordinate and equilibrium composition.\n",
+    "    '''\n",
+    "    total_moles = x[0]\n",
+    "    mole_fractions = np.array(x[1:])\n",
+    "    \n",
+    "    moles = mole_fractions * total_moles\n",
+    "    \n",
+    "    # get standard-state Gibbs free energy of each component\n",
+    "    gibbs = np.zeros(len(components))\n",
+    "    for idx, comp in enumerate(components):\n",
+    "        gas.TPX = (\n",
+    "            to_si(temperature), to_si(Q_(1, 'atm')),\n",
+    "            f'{comp}:1.0'\n",
+    "            )\n",
+    "        gibbs[idx] = gas.gibbs_mole\n",
+    "        \n",
+    "    gibbs *= Q_('J/kmol')\n",
+    "    \n",
+    "    gas_constant = Q_(ct.gas_constant, 'J/(kmol*K)')\n",
+    "    chemical_potentials = (\n",
+    "        gibbs + gas_constant * temperature * np.log(\n",
+    "            mole_fractions * pressure / Q_(1.0, 'atm')\n",
+    "            )\n",
+    "        )\n",
+    "    \n",
+    "    return to_si(np.sum(moles * chemical_potentials))\n",
+    "\n",
+    "\n",
+    "bounds = Bounds([0, 0, 0, 0], [5.0, 1.0, 1.0, 1.0], keep_feasible=True)\n",
+    "\n",
+    "# inequality_cons = {\n",
+    "#     'type': 'ineq',\n",
+    "#     'fun' : lambda x: np.array([1 - x[0] - 2*x[1],\n",
+    "#                                 1 - x[0]**2 - x[1],\n",
+    "#                                 1 - x[0]**2 + x[1]]\n",
+    "#                                ),\n",
+    "#     'jac' : lambda x: np.array([[-1.0, -2.0],\n",
+    "#                                 [-2*x[0], -1.0],\n",
+    "#                                 [-2*x[0], 1.0]\n",
+    "#                                 ])\n",
+    "#     }\n",
+    "\n",
+    "def equality_cons(x, temperature, pressure, components, gas, moles_init):\n",
+    "    total_moles_init = np.sum(moles_init)\n",
+    "    return np.array([\n",
+    "        x[0] * (x[1] + 2*x[2] + 2*x[3]) - \n",
+    "        (moles_init[0] + 2*moles_init[1] + 2*moles_init[2]),\n",
+    "        x[0] * (x[1] + x[3]) - (moles_init[0] + moles_init[2])\n",
+    "        ])\n",
+    "\n",
+    "def equality_cons_jac(x, temperature, pressure, components, gas, moles_init):\n",
+    "    total_moles_init = np.sum(moles_init)\n",
+    "    return np.array([\n",
+    "        [x[1], x[0], 2*x[0], 2*x[0]],\n",
+    "        [x[1], x[0], 0.0, x[0]]\n",
+    "        ])\n",
+    "\n",
+    "# equality_cons = {\n",
+    "#     'type': 'eq',\n",
+    "#     'fun' : lambda x: np.array([2*x[0] + x[1] - 1]),\n",
+    "#     'jac' : lambda x: np.array([2.0, 1.0])\n",
+    "#     }"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "components = ['CO', 'O2', 'CO2']\n",
+    "moles_initial = np.array([1.0, 0.5, 0.0])\n",
+    "stoich_coefficients = np.array([1.0, 0.5, -1.0])\n",
+    "\n",
+    "temperature = Q_(2500, 'K')\n",
+    "pressures = [1, 10] * Q_('atm')\n",
+    "\n",
+    "\n",
+    "pressure = pressures[0]\n",
+    "gas = ct.Solution('gri30.cti')\n",
+    "\n",
+    "x0 = np.array([1.2, 0.1, 0.1, 0.9])\n",
+    "sol = minimize(\n",
+    "    calc_total_gibbs, x0, method='SLSQP',\n",
+    "    args=(temperature, pressure, components, gas, moles_initial),\n",
+    "    constraints={\n",
+    "        'type': 'eq',\n",
+    "        'fun': equality_cons,\n",
+    "        'jac': equality_cons_jac,\n",
+    "        'args': (temperature, pressure, components, gas, moles_initial,)\n",
+    "        },\n",
+    "    bounds=bounds,\n",
+    "    options={'maxiter': 10000}\n",
+    "    )\n",
+    "\n",
+    "print(sol)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "minimizer_kwargs = {\n",
+    "    'method': 'SLSQP', 'args': (temperature, pressure, components, gas, moles_initial,),\n",
+    "    'constraints': {\n",
+    "        'type': 'eq',\n",
+    "        'fun': equality_cons,\n",
+    "        'jac': equality_cons_jac,\n",
+    "        'args': (temperature, pressure, components, gas, moles_initial,)\n",
+    "        },\n",
+    "    'bounds': bounds\n",
+    "    }\n",
+    "\n",
+    "x0 = np.array([1.1, 0.1, 0.1, 0.8])\n",
+    "\n",
+    "sol = basinhopping(\n",
+    "    calc_total_gibbs, x0, minimizer_kwargs=minimizer_kwargs,\n",
+    "    niter=5000\n",
+    "    )\n",
+    "print(sol)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Solution via Lagrange method of undetermined multipliers\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def lagrange_system(x, temperature, pressure, components, gas, moles_init):\n",
+    "    '''System of equations for reaction coordinate and equilibrium composition.\n",
+    "    '''\n",
+    "    moles = np.array([x[0], x[1], x[2]])\n",
+    "    multipliers = np.array([x[3], x[4]]) * Q_('J/kmol')\n",
+    "    \n",
+    "    mole_fractions = moles / np.sum(moles)\n",
+    "    \n",
+    "    # get standard-state Gibbs free energy of each component\n",
+    "    gibbs = np.zeros(len(components))\n",
+    "    for idx, comp in enumerate(components):\n",
+    "        gas.TPX = (\n",
+    "            to_si(temperature), to_si(Q_(1, 'atm')),\n",
+    "            f'{comp}:1.0'\n",
+    "            )\n",
+    "        gibbs[idx] = gas.gibbs_mole\n",
+    "        \n",
+    "    gibbs *= Q_('J/kmol')\n",
+    "    \n",
+    "    gas_constant = Q_(ct.gas_constant, 'J/(kmol*K)')\n",
+    "    chemical_potentials = (\n",
+    "        gibbs + gas_constant * temperature * np.log(\n",
+    "            mole_fractions * pressure / Q_(1.0, 'atm')\n",
+    "            )\n",
+    "        )\n",
+    "    \n",
+    "    moles_initial_C = moles_init[0] + moles_init[2]\n",
+    "    moles_initial_O = moles_init[0] + 2*moles_init[1] + 2*moles_init[2]\n",
+    "    \n",
+    "    moles_C = moles[0] + moles[2]\n",
+    "    moles_O = moles[0] + 2*moles[1] + 2*moles[2]\n",
+    "    \n",
+    "    return [\n",
+    "        moles_C - moles_initial_C,\n",
+    "        moles_O - moles_initial_O,\n",
+    "        to_si(chemical_potentials[0] + np.sum(multipliers * [1, 1])),\n",
+    "        to_si(chemical_potentials[1] + np.sum(multipliers * [0, 2])),\n",
+    "        to_si(chemical_potentials[2] + np.sum(multipliers * [1, 2])),\n",
+    "        ]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Function evaluation (should be near zero): [0. 0. 0. 0. 0.]\n",
+      "Mole fractions at 1.0 standard_atmosphere:\n",
+      "CO:  0.122\n",
+      "O2:  0.061\n",
+      "CO2:  0.817\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/usr/local/miniconda3/envs/jupyterbook/lib/python3.6/site-packages/pint/numpy_func.py:289: RuntimeWarning: invalid value encountered in log\n",
+      "  result_magnitude = func(*stripped_args, **stripped_kwargs)\n"
+     ]
+    }
+   ],
+   "source": [
+    "components = ['CO', 'O2', 'CO2']\n",
+    "moles_initial = np.array([1.0, 0.5, 0.0])\n",
+    "\n",
+    "temperature = Q_(2500, 'K')\n",
+    "pressures = [1, 10] * Q_('atm')\n",
+    "\n",
+    "pressure = pressures[0]\n",
+    "gas = ct.Solution('gri30.cti')\n",
+    "\n",
+    "x0 = [1.0, 1.0, 1.0, 1e6, 1e6]\n",
+    "sol = root(\n",
+    "    lagrange_system, x0, method='lm',\n",
+    "    args=(temperature, pressure, components, gas, moles_initial)\n",
+    "    )\n",
+    "\n",
+    "print(f'Function evaluation (should be near zero): {sol.fun}')\n",
+    "\n",
+    "moles = sol.x[:3]\n",
+    "mole_fractions = moles / np.sum(moles)\n",
+    "print(f'Mole fractions at {pressure: .1f}:')\n",
+    "for idx, comp in enumerate(components):\n",
+    "    print(f'{comp}: {mole_fractions[idx]: .3f}')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Function evaluation (should be near zero): [0. 0. 0. 0. 0.]\n",
+      "Mole fractions at 10.0 standard_atmosphere:\n",
+      "CO:  0.061\n",
+      "O2:  0.030\n",
+      "CO2:  0.909\n"
+     ]
+    }
+   ],
+   "source": [
+    "pressure = pressures[1]\n",
+    "gas = ct.Solution('gri30.cti')\n",
+    "\n",
+    "x0 = [1.0, 1.0, 1.0, 1e6, 1e6]\n",
+    "sol = root(\n",
+    "    lagrange_system, x0, method='lm', options={'maxiter': 5000},\n",
+    "    args=(temperature, pressure, components, gas, moles_initial)\n",
+    "    )\n",
+    "\n",
+    "print(f'Function evaluation (should be near zero): {sol.fun}')\n",
+    "\n",
+    "moles = sol.x[:3]\n",
+    "mole_fractions = moles / np.sum(moles)\n",
+    "print(f'Mole fractions at {pressure: .1f}:')\n",
+    "for idx, comp in enumerate(components):\n",
+    "    print(f'{comp}: {mole_fractions[idx]: .3f}')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

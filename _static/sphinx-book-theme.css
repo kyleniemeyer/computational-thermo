@@ -15,20 +15,6 @@ code {
 /*********************************************
 * Main body *
 *********************************************/
-@media (min-width: 1500px) {
-  .col-xxl-7 {
-    flex: 0 0 61% !important;
-    max-width: 61% !important;
-    position: relative !important;
-    width: 100% !important;
-    padding-right: 15px !important;
-    padding-left: 15px !important; } }
-
-@media (max-width: 1500px) {
-  div.bd-sidebar.collapse:not(.show) + main.bd-content {
-    flex: 0 0 100%;
-    max-width: 100%; } }
-
 main.bd-content {
   padding-top: 3em !important;
   padding-bottom: 0px !important; }
@@ -147,7 +133,11 @@ div.sidebar, div.margin, div.margin-caption p.caption, .cell.tag_popout, .cell.t
       div.cell.tag_popout p.sidebar-title, div.cell.tag_margin p.sidebar-title, div.margin p.sidebar-title, div.margin-caption p.caption p.sidebar-title {
         font-size: 1em; }
   div.cell.tag_margin .cell_output {
-    padding-left: 0; } }
+    padding-left: 0; }
+  div.sidebar:not(.margin) {
+    width: 60%;
+    margin-left: 1.5em;
+    margin-right: -28%; } }
 
 @media (min-width: 768px) {
   div.cell.tag_full-width, div.cell.tag_full_width, div.full_width, div.full-width {
@@ -304,11 +294,6 @@ button.topbarbtn img {
       color: #0071bc; }
     .bd-toc nav li.active > a.active {
       border-left: 2px solid #0071bc; }
-  @media (min-width: 1500px) {
-    .bd-toc {
-      height: auto !important; }
-      .bd-toc nav {
-        opacity: 1; } }
   .bd-toc:hover, .bd-toc.show {
     overflow-y: visible;
     height: auto; }

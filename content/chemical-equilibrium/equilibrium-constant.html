@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Equilibrium via equilibrium constant &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Alternative methods for chemical equilibrium" href="equilibrium-alternative-methods.html" />
+    <link rel="prev" title="Chemical Equilibrium" href="chemical-equilibrium.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="../intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="">
+    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
+  </li>
+  <li class="">
+    <a href="../mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="">
+    <a href="../combustion/combustion.html">Combustion</a>
+  </li>
+  <li class="active">
+    <a href="chemical-equilibrium.html">Chemical Equilibrium</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="">Equilibrium via equilibrium constant</a>
+    </li>
+    <li class="">
+      <a href="equilibrium-alternative-methods.html">Alternative methods for chemical equilibrium</a>
+    </li>
+    <li class="">
+      <a href="adiabatic-flame-temperature.html">Adiabatic flame temperature</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="../zbibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="../contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/content/chemical-equilibrium/equilibrium-constant.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/chemical-equilibrium/equilibrium-constant.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#solution-via-tabulated-equilibrium-constant" class="nav-link">Solution via tabulated equilibrium constant</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#calculating-equilibrium-constant" class="nav-link">Calculating equilibrium constant</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#solution-via-reaction-coordinate-and-law-of-mass-action" class="nav-link">Solution via reaction coordinate and law of mass action</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="equilibrium-via-equilibrium-constant">
+<h1>Equilibrium via equilibrium constant<a class="headerlink" href="#equilibrium-via-equilibrium-constant" title="Permalink to this headline">¶</a></h1>
+<p>Consider that you have a mixture with 1 kilomole of carbon monoxide (CO) that reacts with 0.5 kmol of oxygen (O<span class="math notranslate nohighlight">\(_2\)</span>) to form a mixture of CO, CO<span class="math notranslate nohighlight">\(_2\)</span>, and O<span class="math notranslate nohighlight">\(_2\)</span>, with the equilibrium conditions of 2500 K and (a) 1 atm (b) 10 atm. Find the equilibrium composition in terms of the mole fraction.</p>
+<p>Assume the mixture behaves as an ideal gas.</p>
+<p>We will compare three solution methods based on the law of mass action and the equilibrium constant:</p>
+<ol class="simple">
+<li><p>Using a tabulated equilibrium constant</p></li>
+<li><p>Calculating the equilibrium constant</p></li>
+<li><p>Using a reaction coordinate</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span><span class="p">,</span> <span class="n">root_scalar</span>
+
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for convenience:</span>
+<span class="k">def</span> <span class="nf">to_si</span><span class="p">(</span><span class="n">quant</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Converts a Pint Quantity to magnitude at base SI units.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">quant</span><span class="o">.</span><span class="n">to_base_units</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="solution-via-tabulated-equilibrium-constant">
+<h2>Solution via tabulated equilibrium constant<a class="headerlink" href="#solution-via-tabulated-equilibrium-constant" title="Permalink to this headline">¶</a></h2>
+<p>With the pressure and temperature known, we can find the composition of the mixture by using a reaction equilibrium constant if tabulated with respect to temperature.
+The primary reaction involved is</p>
+<div class="math notranslate nohighlight">
+\[
+\text{CO}_2 \leftrightarrow \text{CO} + \frac{1}{2} \text{O}_2
+\]</div>
+<p>where the equilibrium constant is</p>
+<div class="math notranslate nohighlight">
+\[
+K(T) = \frac{y_{\text{CO}}^{\nu_{\text{CO}}} y_{\text{O}_2}^{\nu_{\text{O}_2}}}{y_{\text{CO}_2}^{\nu_{\text{CO}_2}}} \left(\frac{P}{P_{\text{ref}}} \right)^{ \nu_{\text{CO}} + \nu_{\text{O}_2} - \nu_{\text{CO}_2} } = \frac{y_{\text{CO}} y_{\text{O}_2}^{1/2}}{y_{\text{CO}_2}} \left(\frac{P}{P_{\text{ref}}} \right)^{1/2}
+\]</div>
+<p>We can apply conservation of mass to find the overall balanced chemical reaction:
+<span class="math notranslate nohighlight">\($
+1\text{CO} + \frac{1}{2} \text{O}_2 \text{CO}_2 \rightarrow z \text{CO} + \frac{z}{2} \text{O}_2 + (1-z) \text{CO}_2
+$\)</span>
+where <span class="math notranslate nohighlight">\(z\)</span> is the amount of CO in kmol at equilibrium (<span class="math notranslate nohighlight">\(0 \leq z \leq 1\)</span>).
+Then, the total number of moles <span class="math notranslate nohighlight">\(n\)</span> in the mixture at equilibrium is:</p>
+<div class="math notranslate nohighlight">
+\[
+n = z + \frac{z}{2} + (1-z) = \frac{2+z}{2}
+\]</div>
+<p>so the mole fractions of each component at equilibrium are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+y_{\text{CO}} = \frac{2z}{2 + z} \\
+y_{\text{O}_2} = \frac{z}{2+z} \\
+y_{\text{CO}_2} = \frac{2(1-z)}{2+z}
+\end{split}\]</div>
+<p>Therefore, we can express the equilibrium constant as</p>
+<div class="math notranslate nohighlight">
+\[
+K(T) = \frac{z}{1-z} \left(\frac{z}{2+z}\right)^{1/2} \left(\frac{P}{P_{\text{ref}}}\right)^{1/2}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">solve_equilibrium_constant</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">equil_constant</span><span class="p">):</span>
+    <span class="n">pressure_ref</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">z</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">z</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">z</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">))</span> <span class="o">*</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span> <span class="o">/</span> <span class="n">pressure_ref</span><span class="p">))</span>
+        <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">equil_constant</span> <span class="o">-</span> <span class="n">K</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_mole_fractions</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="n">mole_frac_CO</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">z</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">mole_frac_O2</span> <span class="o">=</span> <span class="n">z</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">mole_frac_CO2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;CO&#39;</span><span class="p">:</span> <span class="n">mole_frac_CO</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">:</span> <span class="n">mole_frac_O2</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">:</span> <span class="n">mole_frac_CO2</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tabulated value of equilibrium constant at 2500 K</span>
+<span class="n">log10K</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.440</span>
+<span class="n">equilibrium_constant</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="n">log10K</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Tabulated equilibrium constant: </span><span class="si">{</span><span class="n">equilibrium_constant</span><span class="si">:</span><span class="s1"> .4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Tabulated equilibrium constant:  0.0363
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># first, 1 atm</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
+    <span class="n">solve_equilibrium_constant</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">equilibrium_constant</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">get_mole_fractions</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">comp</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Mole fractions at 1.0 standard_atmosphere
+CO:  0.121
+O2:  0.060
+CO2:  0.819
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># now evaluate composition at 10 atm</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
+    <span class="n">solve_equilibrium_constant</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">equilibrium_constant</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">get_mole_fractions</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">comp</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Mole fractions at 10.0 standard_atmosphere
+CO:  0.060
+O2:  0.030
+CO2:  0.910
+</pre></div>
+</div>
+</div>
+</div>
+<p>At 1 atm, the equilibrium composition has just 82% CO<span class="math notranslate nohighlight">\(_2\)</span> by mole,
+while at 10 atm the mixture is 91% CO<span class="math notranslate nohighlight">\(_2\)</span> at equilibrium.</p>
+</div>
+<div class="section" id="calculating-equilibrium-constant">
+<h2>Calculating equilibrium constant<a class="headerlink" href="#calculating-equilibrium-constant" title="Permalink to this headline">¶</a></h2>
+<p>Determining the equilibrium composition using this method is limited by having the tabulated equilibrium constant. However, this can be calculated by using the <strong>law of mass action</strong> and chemical species property information:</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta G^{\circ} = -R_{\text{univ}} T \ln K
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Delta G^{\circ}\)</span> is the standard-state Gibbs free energy change of reaction and <span class="math notranslate nohighlight">\(R_{\text{univ}}\)</span> is the universal gas constant.
+We can calculate <span class="math notranslate nohighlight">\(\Delta G^{\circ}\)</span> for the above reaction:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\Delta G^{\circ} (T) = \nu_{\text{CO}} \overline{g^{\circ}}_{\text{CO}} + \nu_{\text{O}_2} \overline{g^{\circ}}_{\text{O}_2} - \nu_{\text{CO}_2} \overline{g^{\circ}}_{\text{CO}_2}\\ 
+= \overline{g^{\circ}}_{\text{CO}} + \frac{1}{2} \overline{g^{\circ}}_{\text{O}_2} - \overline{g^{\circ}}_{\text{CO}_2}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\overline{g^{\circ}}_{i}\)</span> is the molar-specific Gibbs free energy of substance <span class="math notranslate nohighlight">\(i\)</span> at temperature <span class="math notranslate nohighlight">\(T\)</span> and the reference pressure (1 atm).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+
+<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;CO2:1.0&#39;</span>
+<span class="n">gibbs_CO2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span><span class="p">,</span> <span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+
+<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;CO:1.0&#39;</span>
+<span class="n">gibbs_CO</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span><span class="p">,</span> <span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+
+<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;O2:1.0&#39;</span>
+<span class="n">gibbs_O2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span><span class="p">,</span> <span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+
+<span class="n">gibbs_change_reaction</span> <span class="o">=</span> <span class="n">gibbs_CO</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">gibbs_O2</span> <span class="o">-</span> <span class="n">gibbs_CO2</span>
+
+<span class="n">equilibrium_constant</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+    <span class="o">-</span><span class="n">gibbs_change_reaction</span> <span class="o">/</span> 
+    <span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span><span class="p">,</span> <span class="s1">&#39;J/(kmol*K)&#39;</span><span class="p">)</span> <span class="o">*</span> <span class="n">temperature</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Calculated equilibrium constant: </span><span class="si">{</span><span class="n">to_si</span><span class="p">(</span><span class="n">equilibrium_constant</span><span class="p">)</span><span class="si">:</span><span class="s1"> .4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Calculated equilibrium constant:  0.0368
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is very close to the value shown above obtained from tabulated data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
+    <span class="n">solve_equilibrium_constant</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">equilibrium_constant</span><span class="p">))</span>
+    <span class="p">)</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">get_mole_fractions</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">comp</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+    
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
+    <span class="n">solve_equilibrium_constant</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">equilibrium_constant</span><span class="p">))</span>
+    <span class="p">)</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">get_mole_fractions</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">comp</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Mole fractions at 1.0 standard_atmosphere:
+CO:  0.122
+O2:  0.061
+CO2:  0.817
+
+Mole fractions at 10.0 standard_atmosphere:
+CO:  0.061
+O2:  0.030
+CO2:  0.909
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="solution-via-reaction-coordinate-and-law-of-mass-action">
+<h2>Solution via reaction coordinate and law of mass action<a class="headerlink" href="#solution-via-reaction-coordinate-and-law-of-mass-action" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
+<span class="n">moles_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="n">stoich_coefficients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="n">pressures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_equilibrium_root</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> 
+    <span class="n">moles_initial</span><span class="p">,</span> <span class="n">stoich_coefficients</span><span class="p">,</span> <span class="n">gas</span>
+    <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;System of equations for reaction coordinate and equilibrium composition.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">moles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    
+    <span class="n">total_moles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+    <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">total_moles</span>
+    
+    <span class="c1"># get standard-state Gibbs free energy of each component</span>
+    <span class="n">gibbs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+        <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)),</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">:1.0&#39;</span>
+            <span class="p">)</span>
+        <span class="n">gibbs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span>
+        
+    <span class="n">gibbs</span> <span class="o">*=</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+        
+    <span class="n">equil_constant</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">([</span><span class="n">y</span><span class="o">**</span><span class="n">nu</span> <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> 
+                 <span class="nb">zip</span><span class="p">(</span><span class="n">mole_fractions</span><span class="p">,</span> <span class="n">stoich_coefficients</span><span class="p">)</span>
+                <span class="p">])</span> <span class="o">*</span> 
+        <span class="p">(</span><span class="n">pressure</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">stoich_coefficients</span><span class="p">))</span>
+        <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">stoich_coefficients</span> <span class="o">*</span> <span class="n">gibbs</span><span class="p">)</span> <span class="o">/</span> 
+            <span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span><span class="p">,</span> <span class="s1">&#39;J/(kmol*K)&#39;</span><span class="p">)</span> <span class="o">*</span> <span class="n">temperature</span><span class="p">)</span> <span class="o">-</span> 
+            <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">equil_constant</span><span class="p">)</span>
+            <span class="p">),</span>
+        <span class="n">moles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">moles_initial</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">stoich_coefficients</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">epsilon</span><span class="p">),</span>
+        <span class="n">moles</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">moles_initial</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">stoich_coefficients</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">epsilon</span><span class="p">),</span>
+        <span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">moles_initial</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">stoich_coefficients</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">epsilon</span><span class="p">),</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
+    <span class="n">find_equilibrium_root</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">,</span> <span class="n">stoich_coefficients</span><span class="p">,</span> <span class="n">gas</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Root-finding success: </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">success</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+
+
+<span class="c1"># Check constraints:</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">mole</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">moles</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mole</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error: moles of </span><span class="si">{</span><span class="n">components</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s1"> below zero.&#39;</span><span class="p">)</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Root-finding success: True
+
+Mole fractions at 1.0 standard_atmosphere:
+CO:  0.122
+O2:  0.061
+CO2:  0.817
+</pre></div>
+</div>
+<div class="stderr docutils container">
+<pre class="stderr literal-block">/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/ipykernel_launcher.py:25: RuntimeWarning: invalid value encountered in double_scalars
+</pre>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
+    <span class="n">find_equilibrium_root</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">,</span> <span class="n">stoich_coefficients</span><span class="p">,</span> <span class="n">gas</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Root-finding success: </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">success</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+
+<span class="c1"># Check constraints:</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">mole</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">moles</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mole</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error: moles of </span><span class="si">{</span><span class="n">components</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s1"> below zero.&#39;</span><span class="p">)</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Root-finding success: True
+
+Mole fractions at 10.0 standard_atmosphere:
+CO:  0.061
+O2:  0.030
+CO2:  0.909
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content/chemical-equilibrium"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="chemical-equilibrium.html" title="previous page">Chemical Equilibrium</a>
+    <a class='right-next' id="next-link" href="equilibrium-alternative-methods.html" title="next page">Alternative methods for chemical equilibrium</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kyle Niemeyer<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

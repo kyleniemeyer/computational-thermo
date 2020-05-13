@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Adiabatic flame temperature &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Statistical Thermodynamics" href="../stat-thermo/stat-thermo.html" />
+    <link rel="prev" title="Alternative methods for chemical equilibrium" href="equilibrium-alternative-methods.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="../intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="">
+    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
+  </li>
+  <li class="">
+    <a href="../mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="">
+    <a href="../combustion/combustion.html">Combustion</a>
+  </li>
+  <li class="active">
+    <a href="chemical-equilibrium.html">Chemical Equilibrium</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="equilibrium-constant.html">Equilibrium via equilibrium constant</a>
+    </li>
+    <li class="">
+      <a href="equilibrium-alternative-methods.html">Alternative methods for chemical equilibrium</a>
+    </li>
+    <li class="active">
+      <a href="">Adiabatic flame temperature</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="../zbibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="../contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/content/chemical-equilibrium/adiabatic-flame-temperature.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/chemical-equilibrium/adiabatic-flame-temperature.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#compare-to-cantera-equilibrium" class="nav-link">Compare to Cantera equilibrium</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="adiabatic-flame-temperature">
+<h1>Adiabatic flame temperature<a class="headerlink" href="#adiabatic-flame-temperature" title="Permalink to this headline">¶</a></h1>
+<p>Consider a mixture of hydrogen and oxygen initially at 1000 K and 10 bar, which is ignited by a spark. This mixture reacts according to</p>
+<div class="math notranslate nohighlight">
+\[
+\text{H}_2 + 0.5 \text{O}_2 \leftrightarrow \text{H}_2 \text{O}
+\]</div>
+<p>and proceeds to equilibrium at a constant pressure, adiabatic process.
+Initially the mixture has twice as much oxygen than hydrogen (by mole) and no water.
+Assume the mixture follows the ideal gas law.</p>
+<p><strong>Problem:</strong> Find the equilibrium composition and temperature, using the Lagrange multiplier method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span>
+
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for convenience:</span>
+<span class="k">def</span> <span class="nf">to_si</span><span class="p">(</span><span class="n">quant</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Converts a Pint Quantity to magnitude at base SI units.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">quant</span><span class="o">.</span><span class="n">to_base_units</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After importing the necessary modules, we should specify the knowns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_in</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+
+<span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H2&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">]</span>
+
+<span class="n">moles_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;kmol&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The system of equations we solve will include the element balances and equations involving the multiplier, and also a constraint of constant enthalpy (<span class="math notranslate nohighlight">\(H_1 = H_2\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\sum_{i=1}^C n_i e_{i,j} - \sum_{i=1}^C n_{0,i} e_{i,j} = 0 \quad \text{for } j=1, \ldots, E \;, \\
+\mu_i + \sum_{j=1}^E \lambda_j e_{i,j} = 0 \quad \text{for } i=1, \ldots, C \;, \\
+\sum_{i=1}^C n_{0,i} \overline{h}_{i, T_{0}} = \sum_{i=1}^C n_{i} \overline{h}_{i, T_f} \;,
+\end{split}\]</div>
+<p>where the unknowns are the numbers of moles for each compound <span class="math notranslate nohighlight">\(n_i\)</span>, the multipliers for each element <span class="math notranslate nohighlight">\(\lambda_j\)</span>, and the final temperature <span class="math notranslate nohighlight">\(T_f\)</span>.
+In this system, <span class="math notranslate nohighlight">\(e_{i,j}\)</span> is the number of moles of element <span class="math notranslate nohighlight">\(j\)</span> in component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(n_{0,i}\)</span> is the initial number of moles of component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\mu_i\)</span> is the chemical potential of component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\overline{h}_{i, T}\)</span> is the molar specific enthalpy of component <span class="math notranslate nohighlight">\(i\)</span> evaluated at temperature <span class="math notranslate nohighlight">\(T\)</span>,
+<span class="math notranslate nohighlight">\(E\)</span> is the number of elements, and <span class="math notranslate nohighlight">\(C\)</span> is the number of components (chemical species).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lagrange_system</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">temperature_initial</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;System of equations for reaction coordinate and equilibrium composition.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">moles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;kmol&#39;</span><span class="p">)</span>
+    <span class="n">multipliers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    
+    <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">))</span>
+    
+    <span class="c1"># get standard-state Gibbs free energy and enthalpy of each component</span>
+    <span class="n">gibbs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">))</span>
+    <span class="n">enthalpies_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">))</span>
+    <span class="n">enthalpies_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+        <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)),</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">:1.0&#39;</span>
+            <span class="p">)</span>
+        <span class="n">gibbs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span>
+        <span class="n">enthalpies_final</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">enthalpy_mole</span>
+        
+        <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">to_si</span><span class="p">(</span><span class="n">temperature_initial</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)),</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">:1.0&#39;</span>
+            <span class="p">)</span>
+        <span class="n">enthalpies_initial</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">enthalpy_mole</span>
+        
+    <span class="n">gibbs</span> <span class="o">*=</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+    <span class="n">enthalpies_final</span> <span class="o">*=</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+    <span class="n">enthalpies_initial</span> <span class="o">*=</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Calculate the chemical potentials at current pressure and temperature</span>
+    <span class="n">gas_constant</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span><span class="p">,</span> <span class="s1">&#39;J/(kmol*K)&#39;</span><span class="p">)</span>
+    <span class="n">chemical_potentials</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">gibbs</span> <span class="o">+</span> <span class="n">gas_constant</span> <span class="o">*</span> <span class="n">temperature</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">mole_fractions</span> <span class="o">*</span> <span class="n">pressure</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    
+    <span class="n">moles_initial_H</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">moles_initial_O</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="n">moles_H</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">moles_O</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="n">enthalpy_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles_init</span> <span class="o">*</span> <span class="n">enthalpies_initial</span><span class="p">)</span>
+    <span class="n">enthalpy_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span> <span class="o">*</span> <span class="n">enthalpies_final</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">moles_H</span> <span class="o">-</span> <span class="n">moles_initial_H</span><span class="p">),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">moles_O</span> <span class="o">-</span> <span class="n">moles_initial_O</span><span class="p">),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">enthalpy_final</span> <span class="o">-</span> <span class="n">enthalpy_initial</span><span class="p">)</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mi">2000</span><span class="p">]</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
+    <span class="n">lagrange_system</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">temperature_in</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Function evaluation (should be near zero): </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+      <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">val</span><span class="si">:</span><span class="s1">.4e</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">sol</span><span class="o">.</span><span class="n">fun</span><span class="p">])</span>
+      <span class="p">)</span>
+
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at equilibrium:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+<span class="n">temperature_final</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Temperature at equilibrium: </span><span class="si">{</span><span class="n">temperature_final</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="stderr docutils container">
+<pre class="stderr literal-block">/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/pint/numpy_func.py:289: RuntimeWarning: invalid value encountered in log
+  result_magnitude = func(*stripped_args, **stripped_kwargs)
+</pre>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Function evaluation (should be near zero): 
+0.0000e+00, 0.0000e+00, -2.3842e-10, -1.1921e-10, -1.1921e-10, 3.7253e-08
+Mole fractions at equilibrium:
+H2:  0.0136
+O2:  0.6027
+H2O:  0.3837
+Temperature at equilibrium: 3208.46 kelvin
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="compare-to-cantera-equilibrium">
+<h2>Compare to Cantera equilibrium<a class="headerlink" href="#compare-to-cantera-equilibrium" title="Permalink to this headline">¶</a></h2>
+<p>We can compare this approach to the built-in equilibrium solver in Cantera, which uses  a different (but related) <a class="reference external" href="https://cantera.org/tutorials/python-tutorial.html#chemical-equilibrium">element potential method</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get all of the Species objects defined in the GRI 3.0 mechanism</span>
+<span class="n">species</span> <span class="o">=</span> <span class="p">{</span><span class="n">S</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">S</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">Species</span><span class="o">.</span><span class="n">listFromFile</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)}</span>
+
+<span class="c1"># Create an IdealGas object with species representing complete combustion</span>
+<span class="n">complete_species</span> <span class="o">=</span> <span class="p">[</span><span class="n">species</span><span class="p">[</span><span class="n">S</span><span class="p">]</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;H2&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">)]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="n">thermo</span><span class="o">=</span><span class="s1">&#39;IdealGas&#39;</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="n">complete_species</span><span class="p">)</span>
+
+<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature_in</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;O2:2.0, H2:1.0&#39;</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="s1">&#39;HP&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Adiabatic flame temperature: </span><span class="si">{</span><span class="n">gas</span><span class="o">.</span><span class="n">T</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> K&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mole fractions at equilibrium:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sp</span><span class="p">,</span> <span class="n">mole_fraction</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">species_names</span><span class="p">,</span> <span class="n">gas</span><span class="o">.</span><span class="n">X</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">sp</span><span class="si">:</span><span class="s1">4</span><span class="si">}</span><span class="s1">  </span><span class="si">{</span><span class="n">mole_fraction</span><span class="si">:</span><span class="s1"> .4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Adiabatic flame temperature:  3208.46 K
+Mole fractions at equilibrium:
+H2     0.0136
+O2     0.6027
+H2O    0.3837
+</pre></div>
+</div>
+</div>
+</div>
+<p>Both methods produce exactly the same values!</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content/chemical-equilibrium"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="equilibrium-alternative-methods.html" title="previous page">Alternative methods for chemical equilibrium</a>
+    <a class='right-next' id="next-link" href="../stat-thermo/stat-thermo.html" title="next page">Statistical Thermodynamics</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kyle Niemeyer<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
