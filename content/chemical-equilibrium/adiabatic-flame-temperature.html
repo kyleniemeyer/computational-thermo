@@ -257,17 +257,22 @@ Assume the mixture follows the ideal gas law.</p>
 <p>After importing the necessary modules, we should specify the knowns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_in</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_initial</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
 <span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 
 <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H2&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">]</span>
-
 <span class="n">moles_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;kmol&#39;</span><span class="p">)</span>
+
+<span class="c1"># Elemental makeup of components</span>
+<span class="n">elemental_comp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="c1"># hydrogen</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="c1"># oxygen</span>
+    <span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>The system of equations we solve will include the element balances and equations involving the multiplier, and also a constraint of constant enthalpy (<span class="math notranslate nohighlight">\(H_1 = H_2\)</span>):</p>
+<p>The system of equations we solve will include the element balances and equations involving the multipliers, and also a constraint of constant enthalpy (<span class="math notranslate nohighlight">\(H_1 = H_2\)</span>):</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \sum_{i=1}^C n_i e_{i,j} - \sum_{i=1}^C n_{0,i} e_{i,j} = 0 \quad \text{for } j=1, \ldots, E \;, \\
@@ -277,9 +282,23 @@ Assume the mixture follows the ideal gas law.</p>
 <p>where the unknowns are the numbers of moles for each compound <span class="math notranslate nohighlight">\(n_i\)</span>, the multipliers for each element <span class="math notranslate nohighlight">\(\lambda_j\)</span>, and the final temperature <span class="math notranslate nohighlight">\(T_f\)</span>.
 In this system, <span class="math notranslate nohighlight">\(e_{i,j}\)</span> is the number of moles of element <span class="math notranslate nohighlight">\(j\)</span> in component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(n_{0,i}\)</span> is the initial number of moles of component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\mu_i\)</span> is the chemical potential of component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\overline{h}_{i, T}\)</span> is the molar specific enthalpy of component <span class="math notranslate nohighlight">\(i\)</span> evaluated at temperature <span class="math notranslate nohighlight">\(T\)</span>,
 <span class="math notranslate nohighlight">\(E\)</span> is the number of elements, and <span class="math notranslate nohighlight">\(C\)</span> is the number of components (chemical species).</p>
+<p>The chemical potentials can be calculated for each component of an ideal gas:</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_i = \mu_i^{\circ} + R_{\text{univ}} T \ln \left( \frac{y_i P}{P^{\circ}} \right) \;,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_{\text{univ}}\)</span> is the universal gas constant, <span class="math notranslate nohighlight">\(P\)</span> is the mixture pressure,
+<span class="math notranslate nohighlight">\(P^{\circ}\)</span> is the (standard-state) reference pressure (usually 1 atm or 100 kPa),
+and <span class="math notranslate nohighlight">\(\mu_i^{\circ}\)</span> is the chemical potential of pure substance <span class="math notranslate nohighlight">\(i\)</span> at temperature <span class="math notranslate nohighlight">\(T\)</span> and reference pressure <span class="math notranslate nohighlight">\(P^{\circ}\)</span>, which is the same as the standard-state molar specific Gibbs free energy <span class="math notranslate nohighlight">\(\overline{g}_i^{\circ}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_i^{\circ} = \overline{g}_i^{\circ} = \overline{h}_i^{\circ} - T \overline{s}_i^{\circ} \;.
+\]</div>
+<p>We can evaluate the properties <span class="math notranslate nohighlight">\(\overline{h}_i (T)\)</span> and <span class="math notranslate nohighlight">\(\overline{g}_i^{\circ} (T)\)</span> using a Cantera <code class="docutils literal notranslate"><span class="pre">Solution</span></code> object and specifying the appropriate temperature, pressure (using the 1 atm reference), and composition of each component as a pure substance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lagrange_system</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">temperature_initial</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lagrange_system</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">elemental_comp</span><span class="p">,</span> 
+                    <span class="n">temperature_initial</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;System of equations for reaction coordinate and equilibrium composition.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">moles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;kmol&#39;</span><span class="p">)</span>
@@ -318,21 +337,24 @@ In this system, <span class="math notranslate nohighlight">\(e_{i,j}\)</span> is
             <span class="p">)</span>
         <span class="p">)</span>
     
-    <span class="n">moles_initial_H</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">moles_initial_O</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="c1"># initial molar amounts of each element</span>
+    <span class="c1"># base SI units are in mol, not kmol, after conversion</span>
+    <span class="n">initial_moles_elements</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">elemental_comp</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">moles_initial</span><span class="p">)),</span> <span class="s1">&#39;mol&#39;</span>
+        <span class="p">)</span>
+    <span class="n">moles_elements</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">elemental_comp</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">moles</span><span class="p">)),</span> <span class="s1">&#39;mol&#39;</span>
+        <span class="p">)</span>
     
-    <span class="n">moles_H</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">moles_O</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    
-    <span class="n">enthalpy_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles_init</span> <span class="o">*</span> <span class="n">enthalpies_initial</span><span class="p">)</span>
+    <span class="n">enthalpy_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles_initial</span> <span class="o">*</span> <span class="n">enthalpies_initial</span><span class="p">)</span>
     <span class="n">enthalpy_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span> <span class="o">*</span> <span class="n">enthalpies_final</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="p">[</span>
-        <span class="n">to_si</span><span class="p">(</span><span class="n">moles_H</span> <span class="o">-</span> <span class="n">moles_initial_H</span><span class="p">),</span>
-        <span class="n">to_si</span><span class="p">(</span><span class="n">moles_O</span> <span class="o">-</span> <span class="n">moles_initial_O</span><span class="p">),</span>
-        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])),</span>
-        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])),</span>
-        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">moles_elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">initial_moles_elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">moles_elements</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">initial_moles_elements</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="n">elemental_comp</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="n">elemental_comp</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])),</span>
+        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="n">elemental_comp</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])),</span>
         <span class="n">to_si</span><span class="p">(</span><span class="n">enthalpy_final</span> <span class="o">-</span> <span class="n">enthalpy_initial</span><span class="p">)</span>
         <span class="p">]</span>
 </pre></div>
@@ -346,18 +368,20 @@ In this system, <span class="math notranslate nohighlight">\(e_{i,j}\)</span> is
 <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mi">2000</span><span class="p">]</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
     <span class="n">lagrange_system</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span>
-    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">temperature_in</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">elemental_comp</span><span class="p">,</span> <span class="n">temperature_initial</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
     <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Function evaluation (should be near zero): </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Root-finding algorithm success: &#39;</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Function evaluation (should be small): </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
       <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">val</span><span class="si">:</span><span class="s1">.4e</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">sol</span><span class="o">.</span><span class="n">fun</span><span class="p">])</span>
       <span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
 
 <span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at equilibrium:&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">:</span><span class="s1">4</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     
 <span class="n">temperature_final</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Temperature at equilibrium: </span><span class="si">{</span><span class="n">temperature_final</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -370,12 +394,14 @@ In this system, <span class="math notranslate nohighlight">\(e_{i,j}\)</span> is
   result_magnitude = func(*stripped_args, **stripped_kwargs)
 </pre>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Function evaluation (should be near zero): 
-0.0000e+00, 0.0000e+00, -2.3842e-10, -1.1921e-10, -1.1921e-10, 3.7253e-08
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Root-finding algorithm success:  True
+Function evaluation (should be small): 
+0.0000e+00, 0.0000e+00, 1.1921e-10, 1.1921e-10, 2.3842e-10, 2.2352e-08
+
 Mole fractions at equilibrium:
-H2:  0.0136
-O2:  0.6027
-H2O:  0.3837
+H2  :  0.0136
+O2  :  0.6027
+H2O :  0.3837
 Temperature at equilibrium: 3208.46 kelvin
 </pre></div>
 </div>
@@ -393,28 +419,28 @@ Temperature at equilibrium: 3208.46 kelvin
 <span class="n">complete_species</span> <span class="o">=</span> <span class="p">[</span><span class="n">species</span><span class="p">[</span><span class="n">S</span><span class="p">]</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;H2&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">)]</span>
 <span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="n">thermo</span><span class="o">=</span><span class="s1">&#39;IdealGas&#39;</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="n">complete_species</span><span class="p">)</span>
 
-<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature_in</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;O2:2.0, H2:1.0&#39;</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature_initial</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;O2:2.0, H2:1.0&#39;</span>
 <span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="s1">&#39;HP&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Adiabatic flame temperature: </span><span class="si">{</span><span class="n">gas</span><span class="o">.</span><span class="n">T</span><span class="si">:</span><span class="s1"> .2f</span><span class="si">}</span><span class="s1"> K&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mole fractions at equilibrium:&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">sp</span><span class="p">,</span> <span class="n">mole_fraction</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">species_names</span><span class="p">,</span> <span class="n">gas</span><span class="o">.</span><span class="n">X</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">sp</span><span class="si">:</span><span class="s1">4</span><span class="si">}</span><span class="s1">  </span><span class="si">{</span><span class="n">mole_fraction</span><span class="si">:</span><span class="s1"> .4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">sp</span><span class="si">:</span><span class="s1">4</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fraction</span><span class="si">:</span><span class="s1"> .4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Adiabatic flame temperature:  3208.46 K
 Mole fractions at equilibrium:
-H2     0.0136
-O2     0.6027
-H2O    0.3837
+H2  :  0.0136
+O2  :  0.6027
+H2O :  0.3837
 </pre></div>
 </div>
 </div>
 </div>
-<p>Both methods produce exactly the same values!</p>
+<p>Both methods produce exactly the same values! 🔥</p>
 </div>
 </div>
 

@@ -205,11 +205,11 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#solution-via-direct-minimization-of-gibbs-free-energy" class="nav-link">Solution via direct minimization of Gibbs free energy</a>
+            <a href="#direct-minimization-of-gibbs-free-energy" class="nav-link">Direct minimization of Gibbs free energy</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#solution-via-lagrange-method-of-undetermined-multipliers" class="nav-link">Solution via Lagrange method of undetermined multipliers</a>
+            <a href="#lagrange-s-method-of-undetermined-multipliers" class="nav-link">Lagrange’s method of undetermined multipliers</a>
         </li>
     
     </ul>
@@ -229,14 +229,15 @@
 <p>Fortunately, we have methods that do not require knowing what reaction(s) are occurring.
 We will compare two such solution methods:</p>
 <ol class="simple">
-<li><p>Direct minimization of Gibbs free energy</p></li>
-<li><p>Lagrange’s method of undetermined multipliers</p></li>
+<li><p><a class="reference internal" href="#gibbs-minimization"><span class="std std-ref">Direct minimization of Gibbs free energy</span></a></p></li>
+<li><p><a class="reference internal" href="#lagrange-method"><span class="std std-ref">Lagrange’s method of undetermined multipliers</span></a></p></li>
 </ol>
+<p>This modules introduces these methods using the same example as <a class="reference internal" href="equilibrium-constant.html"><span class="doc">Equilibrium via equilibrium constant</span></a>: consider a mixture with 1 kilomole of carbon monoxide (CO) that reacts with 0.5 kmol of oxygen (O<span class="math notranslate nohighlight">\(_2\)</span>) to form a mixture of CO, CO<span class="math notranslate nohighlight">\(_2\)</span>, and O<span class="math notranslate nohighlight">\(_2\)</span>, with the equilibrium conditions of 2500 K and (a) 1 atm (b) 10 atm. Find the equilibrium composition in terms of the mole fraction. Assume the mixture behaves as an ideal gas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span><span class="p">,</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">basinhopping</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span><span class="p">,</span> <span class="n">minimize</span>
 
 <span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
 <span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
@@ -256,184 +257,85 @@ We will compare two such solution methods:</p>
 </div>
 </div>
 </div>
-<div class="section" id="solution-via-direct-minimization-of-gibbs-free-energy">
-<h2>Solution via direct minimization of Gibbs free energy<a class="headerlink" href="#solution-via-direct-minimization-of-gibbs-free-energy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="direct-minimization-of-gibbs-free-energy">
+<span id="gibbs-minimization"></span><h2>Direct minimization of Gibbs free energy<a class="headerlink" href="#direct-minimization-of-gibbs-free-energy" title="Permalink to this headline">¶</a></h2>
+<p>One method to finding the equilibrium composition is to directly minimize the Gibbs free energy of the mixture.</p>
+<p>The total Gibbs free energy of the mixture is</p>
+<div class="math notranslate nohighlight">
+\[
+G = \sum_{i=1}^C n_i \mu_i \;,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C\)</span> is the number of components (i.e., chemical species), <span class="math notranslate nohighlight">\(n_i\)</span> is the number of moles of component <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(\mu_i\)</span> is the chemical potential of component <span class="math notranslate nohighlight">\(i\)</span>.
+For an ideal gas in a mixture, the chemical potential can be calculated using</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_i = \mu_i^{\circ} + R_{\text{univ}} T \ln \left( \frac{y_i P}{P^{\circ}} \right) \;,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_{\text{univ}}\)</span> is the universal gas constant, <span class="math notranslate nohighlight">\(P\)</span> is the mixture pressure,
+<span class="math notranslate nohighlight">\(P^{\circ}\)</span> is the (standard-state) reference pressure (usually 1 atm or 100 kPa),
+and <span class="math notranslate nohighlight">\(\mu_i^{\circ}\)</span> is the chemical potential of pure substance <span class="math notranslate nohighlight">\(i\)</span> at temperature <span class="math notranslate nohighlight">\(T\)</span> and reference pressure <span class="math notranslate nohighlight">\(P^{\circ}\)</span>, which is the same as the standard-state molar specific Gibbs free energy <span class="math notranslate nohighlight">\(\overline{g}_i^{\circ}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_i^{\circ} = \overline{g}_i^{\circ} = \overline{h}_i^{\circ} - T \overline{s}_i^{\circ} \;.
+\]</div>
+<p>This method works by treating this as an optimization problem, where the objective is to minimize <span class="math notranslate nohighlight">\(G\)</span>, which is a function of the composition <span class="math notranslate nohighlight">\(n_i\)</span>.</p>
+<p><strong>Constraints:</strong> However, this problem is constrained because the amount of each element must be balanced:</p>
+<div class="math notranslate nohighlight">
+\[
+E_j = E_{0, j}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(E_j = \sum_{i=1}^C n_i e_{i,j}\)</span> is the number of moles of each element <span class="math notranslate nohighlight">\(j\)</span> (<span class="math notranslate nohighlight">\(E\)</span> is the total number of elements), <span class="math notranslate nohighlight">\(E_{0, j} = \sum_{i=1}^C n_{0,i} e_{i,j}\)</span> is the initial number of moles of each element, <span class="math notranslate nohighlight">\(n_{0,i}\)</span> is the initial number of moles of each component <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(e_{i,j}\)</span> is the number of moles of element <span class="math notranslate nohighlight">\(j\)</span> in component <span class="math notranslate nohighlight">\(i\)</span> (defined by the chemical formula).</p>
+<p>In addition, the number of moles of each component must remain non-negative:</p>
+<div class="math notranslate nohighlight">
+\[
+n_i \geq 0
+\]</div>
+<p>This is thus a <strong>constrained optimization</strong> problem—we can solve these for simpler problems, but they can become computationally expensive for a larger number of unknowns. For now, we can use the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.minimize-slsqp.html"><code class="docutils literal notranslate"><span class="pre">SLSQP</span></code></a> optimization method provided by the SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html"><code class="docutils literal notranslate"><span class="pre">minimize</span></code></a> function.</p>
+<p>The formal statement of our problem is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\min_{n_0, n_1, n_2} \left( n_0 \mu_0 + n_1 \mu_1 + n_2 \mu_2 \right) \\
+\text{subject to:} \quad \sum_{i} n_i e_{i,0} = \sum_{i} n_{0,i} e_{i,0} \\
+\phantom{subject to:} \quad \sum_{i} n_i e_{i,1} = \sum_{i} n_{1,i} e_{i,0} \\
+\phantom{subject to:} \quad n_0 \geq 0 \\
+\phantom{subject to:} \quad n_1 \geq 0 \\
+\phantom{subject to:} \quad n_2 \geq 0
+\end{split}\]</div>
+<p>We will need to define three functions:</p>
+<ol class="simple">
+<li><p>Evaluate the Gibbs free energy of the mixture,</p></li>
+<li><p>Evaluate the equality constraints on elemental balances</p></li>
+<li><p>Evaluate the inequality constraints on numbers of moles</p></li>
+</ol>
+<p>First, let’s input the known information:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_total_gibbs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;System of equations for reaction coordinate and equilibrium composition.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">total_moles</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-    
-    <span class="n">moles</span> <span class="o">=</span> <span class="n">mole_fractions</span> <span class="o">*</span> <span class="n">total_moles</span>
-    
-    <span class="c1"># get standard-state Gibbs free energy of each component</span>
-    <span class="n">gibbs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
-        <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)),</span>
-            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">:1.0&#39;</span>
-            <span class="p">)</span>
-        <span class="n">gibbs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span>
-        
-    <span class="n">gibbs</span> <span class="o">*=</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
-    
-    <span class="n">gas_constant</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span><span class="p">,</span> <span class="s1">&#39;J/(kmol*K)&#39;</span><span class="p">)</span>
-    <span class="n">chemical_potentials</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">gibbs</span> <span class="o">+</span> <span class="n">gas_constant</span> <span class="o">*</span> <span class="n">temperature</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
-            <span class="n">mole_fractions</span> <span class="o">*</span> <span class="n">pressure</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">to_si</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span> <span class="o">*</span> <span class="n">chemical_potentials</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Known information</span>
 
-
-<span class="n">bounds</span> <span class="o">=</span> <span class="n">Bounds</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">keep_feasible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># inequality_cons = {</span>
-<span class="c1">#     &#39;type&#39;: &#39;ineq&#39;,</span>
-<span class="c1">#     &#39;fun&#39; : lambda x: np.array([1 - x[0] - 2*x[1],</span>
-<span class="c1">#                                 1 - x[0]**2 - x[1],</span>
-<span class="c1">#                                 1 - x[0]**2 + x[1]]</span>
-<span class="c1">#                                ),</span>
-<span class="c1">#     &#39;jac&#39; : lambda x: np.array([[-1.0, -2.0],</span>
-<span class="c1">#                                 [-2*x[0], -1.0],</span>
-<span class="c1">#                                 [-2*x[0], 1.0]</span>
-<span class="c1">#                                 ])</span>
-<span class="c1">#     }</span>
-
-<span class="k">def</span> <span class="nf">equality_cons</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
-    <span class="n">total_moles_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles_init</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-        <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">-</span> 
-        <span class="p">(</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
-        <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-        <span class="p">])</span>
-
-<span class="k">def</span> <span class="nf">equality_cons_jac</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
-    <span class="n">total_moles_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles_init</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
-        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-        <span class="p">])</span>
-
-<span class="c1"># equality_cons = {</span>
-<span class="c1">#     &#39;type&#39;: &#39;eq&#39;,</span>
-<span class="c1">#     &#39;fun&#39; : lambda x: np.array([2*x[0] + x[1] - 1]),</span>
-<span class="c1">#     &#39;jac&#39; : lambda x: np.array([2.0, 1.0])</span>
-<span class="c1">#     }</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
+<span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
 <span class="n">moles_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="n">stoich_coefficients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
 
 <span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
 <span class="n">pressures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;atm&#39;</span><span class="p">)</span>
 
+<span class="c1"># elemental composition of species</span>
+<span class="n">elemental_comp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="c1"># carbon</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="c1"># oxygen</span>
+    <span class="p">])</span>
 
-<span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
-
-<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">])</span>
-<span class="n">sol</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
-    <span class="n">calc_total_gibbs</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;SLSQP&#39;</span><span class="p">,</span>
-    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">),</span>
-    <span class="n">constraints</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">equality_cons</span><span class="p">,</span>
-        <span class="s1">&#39;jac&#39;</span><span class="p">:</span> <span class="n">equality_cons_jac</span><span class="p">,</span>
-        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">,)</span>
-        <span class="p">},</span>
-    <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
-    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">}</span>
-    <span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>     fun: -1337050.6738625919
-     jac: array([-1114208.90625 ,  -875713.96875 ,  -770404.421875, -1272223.453125])
- message: &#39;Positive directional derivative for linesearch&#39;
-    nfev: 6
-     nit: 5
-    njev: 1
-  status: 8
- success: False
-       x: array([1.2, 0.1, 0.1, 0.9])
+<span class="c1"># initial molar amounts of each element</span>
+<span class="n">initial_elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">elemental_comp</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">minimizer_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;SLSQP&#39;</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">,),</span>
-    <span class="s1">&#39;constraints&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">equality_cons</span><span class="p">,</span>
-        <span class="s1">&#39;jac&#39;</span><span class="p">:</span> <span class="n">equality_cons_jac</span><span class="p">,</span>
-        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">,)</span>
-        <span class="p">},</span>
-    <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="n">bounds</span>
-    <span class="p">}</span>
-
-<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
-
-<span class="n">sol</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span>
-    <span class="n">calc_total_gibbs</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">minimizer_kwargs</span><span class="o">=</span><span class="n">minimizer_kwargs</span><span class="p">,</span>
-    <span class="n">niter</span><span class="o">=</span><span class="mi">5000</span>
-    <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="stderr docutils container">
-<pre class="stderr literal-block">/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/pint/numpy_func.py:289: RuntimeWarning: divide by zero encountered in log
-  result_magnitude = func(*stripped_args, **stripped_kwargs)
-/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/pint/numpy_func.py:289: RuntimeWarning: invalid value encountered in multiply
-  result_magnitude = func(*stripped_args, **stripped_kwargs)
-</pre>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                        fun: -11981980.877038557
- lowest_optimization_result:      fun: -11981980.877038557
-     jac: array([-2396396.125, -3409498.75 , -2970709.   , -5289980.875])
- message: &#39;Positive directional derivative for linesearch&#39;
-    nfev: 6
-     nit: 5
-    njev: 1
-  status: 8
- success: False
-       x: array([5., 1., 1., 1.])
-                    message: [&#39;requested number of basinhopping iterations completed successfully&#39;]
-      minimization_failures: 4716
-                       nfev: 233234
-                        nit: 5000
-                       njev: 20931
-                          x: array([5., 1., 1., 1.])
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="solution-via-lagrange-method-of-undetermined-multipliers">
-<h2>Solution via Lagrange method of undetermined multipliers<a class="headerlink" href="#solution-via-lagrange-method-of-undetermined-multipliers" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lagrange_system</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_init</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;System of equations for reaction coordinate and equilibrium composition.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_total_gibbs</span><span class="p">(</span><span class="n">moles</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Evaluate Gibbs free energy of mixture, based on component numbers of moles.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">moles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
-    <span class="n">multipliers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
-    
+    <span class="n">moles</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">moles</span><span class="p">,</span> <span class="s1">&#39;kmol&#39;</span><span class="p">)</span>
     <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
     
     <span class="c1"># get standard-state Gibbs free energy of each component</span>
@@ -454,43 +356,240 @@ We will compare two such solution methods:</p>
             <span class="p">)</span>
         <span class="p">)</span>
     
-    <span class="n">moles_initial_C</span> <span class="o">=</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">moles_initial_O</span> <span class="o">=</span> <span class="n">moles_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="c1"># scale this result down</span>
+    <span class="k">return</span> <span class="n">to_si</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span> <span class="o">*</span> <span class="n">chemical_potentials</span><span class="p">))</span> <span class="o">/</span> <span class="mf">1e6</span>
+
+
+<span class="c1"># We need to define functions for the constraints:</span>
+
+<span class="k">def</span> <span class="nf">inequality_cons</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Inequality constraint: all numbers of moles must be ≥ 0.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">x</span>
     
-    <span class="n">moles_C</span> <span class="o">=</span> <span class="n">moles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">moles_O</span> <span class="o">=</span> <span class="n">moles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">moles</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    
-    <span class="k">return</span> <span class="p">[</span>
-        <span class="n">moles_C</span> <span class="o">-</span> <span class="n">moles_initial_C</span><span class="p">,</span>
-        <span class="n">moles_O</span> <span class="o">-</span> <span class="n">moles_initial_O</span><span class="p">,</span>
-        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
-        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])),</span>
-        <span class="n">to_si</span><span class="p">(</span><span class="n">chemical_potentials</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">multipliers</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])),</span>
-        <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">equality_cons</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Equality constraint: Number of moles of each element remain constant.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">elemental_comp</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">initial_elements</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="margin sidebar">
+<p class="sidebar-title">Potential issues</p>
+<p>Notice that this function evaluating Gibbs free energy of the mixture scales the result down by <span class="math notranslate nohighlight">\(10^6\)</span>.
+I found this was necessary for the solver to converge. However, this means that the function does not return the Gibbs free energy in units of J, but instead MJ.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve for first pressure</span>
+
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+    <span class="n">calc_total_gibbs</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;SLSQP&#39;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">),</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span><span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">equality_cons</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ineq&#39;</span><span class="p">,</span><span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">inequality_cons</span><span class="p">}</span>
+        <span class="p">],</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span>
+    <span class="p">)</span>
+
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Successful convergence: &#39;</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+
+<span class="c1"># check constraints</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All moles non-negative: &#39;</span><span class="p">,</span> <span class="nb">all</span><span class="p">(</span><span class="n">moles</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All elements balanced: &#39;</span><span class="p">,</span> <span class="nb">all</span><span class="p">(</span><span class="n">equality_cons</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Successful convergence:  True
+All moles non-negative:  True
+All elements balanced:  True
+
+Mole fractions at 1.0 standard_atmosphere:
+CO:  0.122
+O2:  0.061
+CO2:  0.817
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now try next pressure</span>
+
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+    <span class="n">calc_total_gibbs</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;SLSQP&#39;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">),</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span><span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">equality_cons</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ineq&#39;</span><span class="p">,</span><span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">inequality_cons</span><span class="p">}</span>
+        <span class="p">],</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span>
+    <span class="p">)</span>
+
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span>
+<span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Successful convergence: &#39;</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+
+<span class="c1"># check constraints</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All moles non-negative: &#39;</span><span class="p">,</span> <span class="nb">all</span><span class="p">(</span><span class="n">moles</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All elements balanced: &#39;</span><span class="p">,</span> <span class="nb">all</span><span class="p">(</span><span class="n">equality_cons</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">mole_fractions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1"> .3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Successful convergence:  True
+All moles non-negative:  True
+All elements balanced:  True
+
+Mole fractions at 10.0 standard_atmosphere:
+CO:  0.061
+O2:  0.030
+CO2:  0.909
+</pre></div>
+</div>
+</div>
+</div>
+<p>These results match the values we found previously—whew! 😅</p>
+</div>
+<div class="section" id="lagrange-s-method-of-undetermined-multipliers">
+<span id="lagrange-method"></span><h2>Lagrange’s method of undetermined multipliers<a class="headerlink" href="#lagrange-s-method-of-undetermined-multipliers" title="Permalink to this headline">¶</a></h2>
+<p>This method converts the problem into a system of algebraic equations, where the number of equations equal the number of unknowns. It does this by introducing a set of unknown multipliers, <span class="math notranslate nohighlight">\(\lambda_j\)</span>, with one for each element in the system.</p>
+<p>Then, the system of equations we need to solve includes the element balances and equations involving the multipliers:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\sum_{i=1}^C n_i e_{i,j} - \sum_{i=1}^C n_{0,i} e_{i,j} = 0 \quad \text{for } j=1, \ldots, E \;, \\
+\mu_i + \sum_{j=1}^E \lambda_j e_{i,j} = 0 \quad \text{for } i=1, \ldots, C \;, \\
+\end{split}\]</div>
+<p>where the unknowns are the numbers of moles for each compound <span class="math notranslate nohighlight">\(n_i\)</span> where <span class="math notranslate nohighlight">\(i = 1, \ldots, C\)</span> and the multipliers for each element <span class="math notranslate nohighlight">\(\lambda_j\)</span> where <span class="math notranslate nohighlight">\(j = 1, \ldots, E\)</span>.
+In this system, <span class="math notranslate nohighlight">\(e_{i,j}\)</span> is the number of moles of element <span class="math notranslate nohighlight">\(j\)</span> in component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(n_{0,i}\)</span> is the initial number of moles of component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\mu_i\)</span> is the chemical potential of component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(E\)</span> is the number of elements, and <span class="math notranslate nohighlight">\(C\)</span> is the number of components (chemical species).</p>
+<p>The chemical potentials can be calculated for each component of an ideal gas:</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_i = \mu_i^{\circ} + R_{\text{univ}} T \ln \left( \frac{y_i P}{P^{\circ}} \right) \;,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_{\text{univ}}\)</span> is the universal gas constant, <span class="math notranslate nohighlight">\(P\)</span> is the mixture pressure,
+<span class="math notranslate nohighlight">\(P^{\circ}\)</span> is the (standard-state) reference pressure (usually 1 atm or 100 kPa),
+and <span class="math notranslate nohighlight">\(\mu_i^{\circ}\)</span> is the chemical potential of pure substance <span class="math notranslate nohighlight">\(i\)</span> at temperature <span class="math notranslate nohighlight">\(T\)</span> and reference pressure <span class="math notranslate nohighlight">\(P^{\circ}\)</span>, which is the same as the standard-state molar specific Gibbs free energy <span class="math notranslate nohighlight">\(\overline{g}_i^{\circ}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_i^{\circ} = \overline{g}_i^{\circ} = \overline{h}_i^{\circ} - T \overline{s}_i^{\circ} \;.
+\]</div>
+<p>We can evaluate <span class="math notranslate nohighlight">\(\overline{g}_i^{\circ} (T)\)</span> using a Cantera <code class="docutils literal notranslate"><span class="pre">Solution</span></code> object and specifying the temperature, pressure (using the 1 atm reference), and composition of each component as a pure substance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Known information</span>
+
+<span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
 <span class="n">moles_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="c1"># Elemental makeup of components</span>
+<span class="n">elemental_comp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="c1"># carbon</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="c1"># oxygen</span>
+    <span class="p">])</span>
 
 <span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
 <span class="n">pressures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lagrange_system</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> 
+                    <span class="n">gas</span><span class="p">,</span> <span class="n">elemental_comp</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;System of equations for Lagrange multiplier approach.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">moles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+    <span class="n">multipliers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
+    
+    <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
+    
+    <span class="c1"># get standard-state Gibbs free energy of each component</span>
+    <span class="n">gibbs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+        <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)),</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">comp</span><span class="si">}</span><span class="s1">:1.0&#39;</span>
+            <span class="p">)</span>
+        <span class="n">gibbs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">gibbs_mole</span>
+        
+    <span class="n">gibbs</span> <span class="o">*=</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+    
+    <span class="n">gas_constant</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">gas_constant</span><span class="p">,</span> <span class="s1">&#39;J/(kmol*K)&#39;</span><span class="p">)</span>
+    <span class="n">chemical_potentials</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">gibbs</span> <span class="o">+</span> <span class="n">gas_constant</span> <span class="o">*</span> <span class="n">temperature</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">mole_fractions</span> <span class="o">*</span> <span class="n">pressure</span> <span class="o">/</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="c1"># initial molar amounts of each element</span>
+    <span class="n">initial_moles_elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">elemental_comp</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
+    <span class="n">moles_elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">elemental_comp</span><span class="p">,</span> <span class="n">moles</span><span class="p">)</span>
+    
+    <span class="c1"># We can take advantage of element-wise operations with these arrays,</span>
+    <span class="c1"># and concisely evaluate all the equations</span>
+    <span class="n">element_equations</span> <span class="o">=</span> <span class="n">moles_elements</span> <span class="o">-</span> <span class="n">initial_moles_elements</span>
+    <span class="n">multiplier_equations</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span>
+        <span class="n">chemical_potentials</span> <span class="o">+</span> 
+        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">multipliers</span><span class="p">,</span> <span class="n">elemental_comp</span><span class="p">)</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+    
+    <span class="c1"># Return the set of equations joined together</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">element_equations</span><span class="p">,</span> <span class="n">multiplier_equations</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After setting up the function to evaluate the system of equations, we can solve for the equilibrium composition at the first pressure using the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root.html"><code class="docutils literal notranslate"><span class="pre">root</span></code></a> function, with the <code class="docutils literal notranslate"><span class="pre">lm</span></code> (Levenberg-Marquardt) method.</p>
+<p>We do need to specify some initial guess values for each of the unknowns; while guess values for the numbers of moles of each component may be straightforward (e.g., typically around one), the Lagrange multipliers are more abstract and may take some trial and error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve at first pressure</span>
 
 <span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
 
+<span class="c1"># initial guesses</span>
 <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">]</span>
+
 <span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
     <span class="n">lagrange_system</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span>
-    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">elemental_comp</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
     <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Function evaluation (should be near zero): </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">fun</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Root-finding algorithm success: &#39;</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Function evaluation (should be small): </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">fun</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of function evaluations: &#39;</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">nfev</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
 
-<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
@@ -499,7 +598,10 @@ We will compare two such solution methods:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Function evaluation (should be near zero): [0. 0. 0. 0. 0.]
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Root-finding algorithm success:  True
+Function evaluation (should be small): [0. 0. 0. 0. 0.]
+Number of function evaluations:  84
+
 Mole fractions at 1.0 standard_atmosphere:
 CO:  0.122
 O2:  0.061
@@ -520,13 +622,16 @@ CO2:  0.817
 
 <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">]</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">root</span><span class="p">(</span>
-    <span class="n">lagrange_system</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">},</span>
-    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
+    <span class="n">lagrange_system</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">elemental_comp</span><span class="p">,</span> <span class="n">moles_initial</span><span class="p">)</span>
     <span class="p">)</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Root-finding algorithm success: &#39;</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Function evaluation (should be near zero): </span><span class="si">{</span><span class="n">sol</span><span class="o">.</span><span class="n">fun</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of function evaluations: &#39;</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">nfev</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
 
-<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">moles</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">mole_fractions</span> <span class="o">=</span> <span class="n">moles</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">moles</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mole fractions at </span><span class="si">{</span><span class="n">pressure</span><span class="si">:</span><span class="s1"> .1f</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
@@ -535,7 +640,10 @@ CO2:  0.817
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Function evaluation (should be near zero): [0. 0. 0. 0. 0.]
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Root-finding algorithm success:  True
+Function evaluation (should be near zero): [0. 0. 0. 0. 0.]
+Number of function evaluations:  69
+
 Mole fractions at 10.0 standard_atmosphere:
 CO:  0.061
 O2:  0.030
@@ -544,6 +652,7 @@ CO2:  0.909
 </div>
 </div>
 </div>
+<p>As expected, this approach also produces the same equilibrium composition! 🎉</p>
 </div>
 </div>
 

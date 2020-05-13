@@ -89,14 +89,36 @@ main.bd-content {
       color: red; }
   main.bd-content #main-content dl.glossary dd {
     margin-left: 1.5em; }
-  main.bd-content #main-content div.contents p.topic-title {
-    font-size: 1.5em;
-    padding: .5em 0 0 1em; }
+  main.bd-content #main-content div.contents {
+    padding: 1em; }
+    main.bd-content #main-content div.contents p.topic-title {
+      font-size: 1.5em;
+      padding: .5em 0 0 1em; }
   main.bd-content #main-content p.centered {
     text-align: center; }
   main.bd-content #main-content div.sphinx-tabs > div.menu > a.item {
     width: auto;
     margin: 0; }
+  main.bd-content #main-content span.brackets:before, main.bd-content #main-content a.brackets:before {
+    content: "["; }
+  main.bd-content #main-content span.brackets:after, main.bd-content #main-content a.brackets:after {
+    content: "]"; }
+  main.bd-content #main-content .footnote-reference, main.bd-content #main-content a.bibtex.internal {
+    font-size: .8em;
+    vertical-align: top; }
+  main.bd-content #main-content dl.footnote span.fn-backref {
+    font-size: .8em;
+    vertical-align: top;
+    padding-left: .1em; }
+  main.bd-content #main-content dl.footnote dd {
+    font-size: .9em;
+    margin-left: 3em; }
+  main.bd-content #main-content dl.citation {
+    margin-left: 3em; }
+  main.bd-content #main-content dl.footnote dt.label {
+    float: left; }
+  main.bd-content #main-content dl.footnote dd p {
+    padding-left: 1.5em; }
 
 div.cell div.cell_output {
   padding-right: 0; }
@@ -161,20 +183,6 @@ blockquote {
 
 div.highlight {
   background: none; }
-
-dl.footnote dt.label {
-  float: left; }
-
-dl.footnote dd p {
-  padding-left: 1.5em; }
-
-dl.citation {
-  margin-left: 5%; }
-
-a.bibtex.internal {
-  /* margin-bottom: .1em; */
-  font-size: .8em;
-  vertical-align: top; }
 
 /*********************************************
 * Top Bar *
