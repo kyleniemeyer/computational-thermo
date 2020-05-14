@@ -160,7 +160,7 @@
                 <!-- ipynb file if we had a myst markdown file -->
                 
                 <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/content/combustion/combustion.md.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.md</button></a>
+                <a class="dropdown-buttons" href="../../_sources/content/combustion/combustion.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
                 <!-- Download PDF via print -->
                 <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
             </div>
@@ -175,13 +175,36 @@
 
         <!-- Launch buttons -->
         
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/combustion/combustion.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
 
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#built-in-models" class="nav-link">Built-in models</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#finding-other-models" class="nav-link">Finding other models</a>
+        </li>
     
     </ul>
 </nav>
@@ -196,7 +219,242 @@
                 
   <div class="section" id="combustion">
 <h1>Combustion<a class="headerlink" href="#combustion" title="Permalink to this headline">¶</a></h1>
+<p>Examining combustion problems (and chemical equilibrium problems) generally requires calculating thermodynamic properties of chemical species.</p>
+<p>Cantera makes it easy to both work with mixtures and pure components, and determine their thermodynamic properties, but it requires you to first load a model containing some model for these (typically represented as a set of coefficients for a high-order polynomial).</p>
+<div class="section" id="built-in-models">
+<h2>Built-in models<a class="headerlink" href="#built-in-models" title="Permalink to this headline">¶</a></h2>
+<p>Fortunately, Cantera comes with a few built-in models meant to be used for air, hydrogen/oxygen combustion, and natural gas combustion, which provide quick access to properties for many species:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">wrap</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Models built into Cantera with commonly used gas species</span>
+
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;air.cti&#39;</span><span class="p">,</span> <span class="s1">&#39;h2o2.cti&#39;</span><span class="p">,</span> <span class="s1">&#39;gri30.cti&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Species in &#39;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39; model:&quot;</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">species_names</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">break_long_words</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Species in &#39;air.cti&#39; model:
+O O2 N NO NO2 N2O N2 AR
+
+Species in &#39;h2o2.cti&#39; model:
+H2 H O O2 OH H2O HO2 H2O2 AR
+
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Species in &#39;gri30.cti&#39; model:
+H2 H O O2 OH H2O HO2 H2O2 C CH CH2 CH2(S) CH3 CH4 CO CO2 HCO
+CH2O CH2OH CH3O CH3OH C2H C2H2 C2H3 C2H4 C2H5 C2H6 HCCO
+CH2CO HCCOH N NH NH2 NH3 NNH NO NO2 N2O HNO CN HCN H2CN HCNN
+HCNO HOCN HNCO NCO N2 AR C3H7 C3H8 CH2CHO CH3CHO
+
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will frequently use the <code class="docutils literal notranslate"><span class="pre">gri30.cti</span></code> model, which is the GRI-Mech 3.0 model originally developed to model natural gas combustion <a class="bibtex reference internal" href="../zbibliography.html#gri30" id="id1">[SGF+99]</a>.</p>
+<p>Cantera also comes with a large database of thermodynamic properties for gases, which originally came from NASA <a class="bibtex reference internal" href="../zbibliography.html#gordon1971" id="id2">[GM71]</a><a class="bibtex reference internal" href="../zbibliography.html#mcbride1993" id="id3">[MGaMAR93]</a>.</p>
+<p>Due to the large number of components present, and the sometimes-unusual naming, it may be a bit challenging to easily find a compound you are looking for; the easiest way may be to search the <a class="reference external" href="https://github.com/Cantera/cantera/blob/master/data/inputs/nasa_gas.cti">full file available online</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="p">{</span><span class="n">S</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">S</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">Species</span><span class="o">.</span><span class="n">listFromFile</span><span class="p">(</span><span class="s1">&#39;nasa_gas.cti&#39;</span><span class="p">)}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of species: &#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">species</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Number of species:  748
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s say that we want to consider the complete combustion of gasoline in air. Gasoline is a very complex mixture of large hydrocarbons, without a fixed composition, but we can model it as a mixture of <em>n</em>-heptane (C<span class="math notranslate nohighlight">\(_{7}\)</span>H<span class="math notranslate nohighlight">\(_{16}\)</span>) and isooctane (C<span class="math notranslate nohighlight">\(_{8}\)</span>H<span class="math notranslate nohighlight">\(_{18}\)</span>). (These actually represent 0 and 100 on the octane rating.)</p>
+<p>After searching the NASA database, we find these species as <code class="docutils literal notranslate"><span class="pre">C7H16,n-heptane</span></code> and <code class="docutils literal notranslate"><span class="pre">C8H18,isooctane</span></code>, so we can extract them, the components of air, and the complete combustion products:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">complete_species</span> <span class="o">=</span> <span class="p">[</span><span class="n">species</span><span class="p">[</span><span class="n">S</span><span class="p">]</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="p">(</span>
+    <span class="s1">&#39;C7H16,n-heptane&#39;</span><span class="p">,</span> <span class="s1">&#39;C8H18,isooctane&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span>
+    <span class="p">)]</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="n">thermo</span><span class="o">=</span><span class="s1">&#39;IdealGas&#39;</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="n">complete_species</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, we can specify a stoichiometric mixture of 87% isooctane \ 13% <em>n</em>-heptane by mole, at standard conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gas</span><span class="o">.</span><span class="n">TP</span> <span class="o">=</span> <span class="mf">298.15</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">one_atm</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">set_equivalence_ratio</span><span class="p">(</span>
+    <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;C7H16,n-heptane: 0.13, C8H18,isooctane: 0.87&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;O2: 1.0, N2: 3.76&#39;</span>
+    <span class="p">)</span>
+<span class="n">gas</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>
+       temperature          298.15  K
+          pressure          101325  Pa
+           density         1.23658  kg/m^3
+  mean mol. weight         30.2534  amu
+
+                          1 kg            1 kmol
+                       -----------      ------------
+          enthalpy     -1.2168e+05       -3.681e+06     J
+   internal energy     -2.0362e+05        -6.16e+06     J
+           entropy          6718.8        2.033e+05     J/K
+    Gibbs function     -2.1249e+06       -6.429e+07     J
+ heat capacity c_p          1051.1         3.18e+04     J/K
+ heat capacity c_v          776.29        2.349e+04     J/K
+
+                           X                 Y          Chem. Pot. / RT
+                     -------------     ------------     ------------
+   C7H16,n-heptane     0.00218224       0.00722794         -133.372
+   C8H18,isooctane      0.0146042        0.0551428         -145.476
+                O2       0.206557         0.218475         -26.2508
+                N2       0.776656         0.719155          -23.298
+     [   +2 minor]              0                0
+
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, we can determine the equilibrium composition and adiabatic flame temperature, after complete combustion:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="s1">&#39;HP&#39;</span><span class="p">)</span>
+<span class="n">gas</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>
+       temperature         2403.07  K
+          pressure          101325  Pa
+           density        0.145059  kg/m^3
+  mean mol. weight          28.604  amu
+
+                          1 kg            1 kmol
+                       -----------      ------------
+          enthalpy     -1.2168e+05       -3.481e+06     J
+   internal energy     -8.2019e+05       -2.346e+07     J
+           entropy          9614.1         2.75e+05     J/K
+    Gibbs function     -2.3225e+07       -6.643e+08     J
+ heat capacity c_p          1474.8        4.219e+04     J/K
+ heat capacity c_v          1184.2        3.387e+04     J/K
+
+                           X                 Y          Chem. Pot. / RT
+                     -------------     ------------     ------------
+   C7H16,n-heptane    3.04893e-12      1.06809e-11         -131.471
+                O2    3.35655e-11      3.75492e-11         -53.5511
+                N2       0.734314         0.719155         -27.8845
+               CO2       0.124907         0.192181         -54.5083
+               H2O       0.140778        0.0886646         -42.3718
+     [   +1 minor]    2.18461e-15      8.72429e-15
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="finding-other-models">
+<h2>Finding other models<a class="headerlink" href="#finding-other-models" title="Permalink to this headline">¶</a></h2>
+<p>You might face a problem that requires thermodynamic properties for compounds not available in the built-in models. In that case, you might need to find an entire model that contains the compound(s) of interest, or at least the thermodynamic parameters for each species.</p>
+<p>You may find models for particular systems by searching the combustion/thermodynamics literature (i.e., Google Scholar). These models, either available as supplementary material for a journal article or via a research group’s website, typically come in the older Chemkin format, which needs to be <a class="reference external" href="https://cantera.org/tutorials/ck2cti-tutorial.html">converted to Cantera’s CTI format</a>.</p>
+<p>Another powerful source of thermodynamics information is the Reaction Mechanism Generator (RMG) <a class="reference external" href="https://rmg.mit.edu/molecule_search">Molecule Search</a> <a class="bibtex reference internal" href="../zbibliography.html#allen2012" id="id4">[AGG12]</a><a class="bibtex reference internal" href="../zbibliography.html#magoon2013" id="id5">[MG13]</a><a class="bibtex reference internal" href="../zbibliography.html#gao2016" id="id6">[GAGW16]</a>, which offers the ability to both search for information in its databases but also estimate properties for any molecule.</p>
+<p>For example, say we want to calculate thermodynamic properties for toluene (C<span class="math notranslate nohighlight">\(_6\)</span>H<span class="math notranslate nohighlight">\(_5\)</span>CH<span class="math notranslate nohighlight">\(_3\)</span>, or C<span class="math notranslate nohighlight">\(_7\)</span>H<span class="math notranslate nohighlight">\(_8\)</span>). You can go to the <a class="reference external" href="https://rmg.mit.edu/molecule_search">RMG Molecule Search</a>, enter <code class="docutils literal notranslate"><span class="pre">toluene</span></code> in the “Species Identifier” field and hit tab. Then, after the site responds, click “Search Thermochemistry”.
+This brings up multiple entries for this molecule.</p>
+<p>Let’s use the “USC-Mech_ii” result. This includes the CHEMKIN format NASA Polynomial:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! USC-Mech-ii
+C7H8                    C   7H   8          G   100.000  5000.000 1073.72      1
+ 9.30667130E+00 3.36713230E-02-1.41158452E-05 2.69973752E-09-1.93204076E-13    2
+ 5.79813528E+02-2.68610894E+01 2.05719474E+00 3.12152776E-02 3.04758250E-05    3
+-5.05435593E-08 1.81542493E-11 3.83493690E+03 1.65378111E+01                   4
+</pre></div>
+</div>
+<p>which contains the elemental composition (7 C and 8 H), the phase (<code class="docutils literal notranslate"><span class="pre">G</span></code>: gas), the temperature ranges for applicability of this model, and 14 polynomials used to obtain the standard-state specific heat, enthalpy, and entropy as a function of temperature. The first seven coefficients are for the upper temperature range (specified by the middle and high temperatures, 1073.72 and 5000 K here), and the next seven coefficients are for the lower temperature range (100 to 1073.72 K here).</p>
+<p>We can take this information and create a Cantera <code class="docutils literal notranslate"><span class="pre">Species</span></code> object, with the name <code class="docutils literal notranslate"><span class="pre">C6H5CH3</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">species_toluene</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Species</span><span class="o">.</span><span class="n">fromCti</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;species(name=&#39;C6H5CH3&#39;, atoms=&#39;C:7,H:8&#39;,</span>
+<span class="sd">    thermo=(NASA([100.00, 1073.72],</span>
+<span class="sd">                 [ 2.05719474E+00,  3.12152776E-02,  3.04758250E-05,</span>
+<span class="sd">                  -5.05435593E-08,  1.81542493E-11,  3.83493690E+03,</span>
+<span class="sd">                   1.65378111E+01]),</span>
+<span class="sd">            NASA([1073.72, 5000.00],</span>
+<span class="sd">                 [ 9.30667130E+00,  3.36713230E-02,  -1.41158452E-05,</span>
+<span class="sd">                   2.69973752E-09, -1.93204076E-13,   5.79813528E+02,</span>
+<span class="sd">                  -2.68610894E+01])))&#39;&#39;&#39;</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, we can create a new model that contains toluene (<code class="docutils literal notranslate"><span class="pre">C6H5CH3</span></code>), as well as the components of air and the complete combustion products:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">species</span> <span class="o">=</span> <span class="p">{</span><span class="n">S</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">S</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">Species</span><span class="o">.</span><span class="n">listFromFile</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)}</span>
+<span class="n">complete_species</span> <span class="o">=</span> <span class="p">[</span><span class="n">species</span><span class="p">[</span><span class="n">S</span><span class="p">]</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">)]</span>
+<span class="n">complete_species</span> <span class="o">+=</span> <span class="p">[</span><span class="n">species_toluene</span><span class="p">]</span>
+                                         
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="n">thermo</span><span class="o">=</span><span class="s1">&#39;IdealGas&#39;</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="n">complete_species</span><span class="p">)</span>
+
+<span class="n">gas</span><span class="o">.</span><span class="n">TP</span> <span class="o">=</span> <span class="mf">298.15</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">one_atm</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">set_equivalence_ratio</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;C6H5CH3: 1.0&#39;</span><span class="p">,</span> <span class="s1">&#39;O2: 1.0, N2: 3.76&#39;</span><span class="p">)</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">(</span><span class="s1">&#39;HP&#39;</span><span class="p">)</span>
+<span class="n">gas</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>
+       temperature         2502.69  K
+          pressure          101325  Pa
+           density        0.144226  kg/m^3
+  mean mol. weight         29.6188  amu
+
+                          1 kg            1 kmol
+                       -----------      ------------
+          enthalpy           37684        1.116e+06     J
+   internal energy     -6.6486e+05       -1.969e+07     J
+           entropy          9365.7        2.774e+05     J/K
+    Gibbs function     -2.3402e+07       -6.931e+08     J
+ heat capacity c_p          1422.6        4.214e+04     J/K
+ heat capacity c_v          1141.9        3.382e+04     J/K
+
+                           X                 Y          Chem. Pot. / RT
+                     -------------     ------------     ------------
+                O2     6.9353e-10      7.49259e-10         -50.6768
+                N2       0.754683         0.713781         -27.9926
+               CO2       0.156111         0.231961         -53.7422
+               H2O      0.0892061        0.0542586         -42.5388
+           C6H5CH3    7.70589e-11      2.39721e-10         -90.2593
+
+</pre></div>
+</div>
+</div>
+</div>
 <div class="toctree-wrapper compound">
+</div>
 </div>
 </div>
 

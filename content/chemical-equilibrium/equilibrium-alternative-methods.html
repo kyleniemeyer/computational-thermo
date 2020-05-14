@@ -294,9 +294,9 @@ n_i \geq 0
 <p>The formal statement of our problem is:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\min_{n_0, n_1, n_2} \left( n_0 \mu_0 + n_1 \mu_1 + n_2 \mu_2 \right) \\
-\text{subject to:} \quad \sum_{i} n_i e_{i,0} = \sum_{i} n_{0,i} e_{i,0} \\
-\phantom{subject to:} \quad \sum_{i} n_i e_{i,1} = \sum_{i} n_{1,i} e_{i,0} \\
+\min_{n_0, n_1, n_2} \left( n_0 \mu_0 (n_0, n_1, n_2) + n_1 \mu_1 (n_0, n_1, n_2) + n_2 \mu_2 (n_0, n_1, n_2) \right) \\
+\text{subject to:} \quad \sum_{i} n_i e_{i,0} - \sum_{i} n_{0,i} e_{i,0} = 0\\
+\phantom{subject to:} \quad \sum_{i} n_i e_{i,1} - \sum_{i} n_{1,i} e_{i,0} = 0\\
 \phantom{subject to:} \quad n_0 \geq 0 \\
 \phantom{subject to:} \quad n_1 \geq 0 \\
 \phantom{subject to:} \quad n_2 \geq 0
