@@ -18,14 +18,6 @@ code {
 main.bd-content {
   padding-top: 3em !important;
   padding-bottom: 0px !important; }
-  main.bd-content.single-page {
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto; }
-    main.bd-content.single-page div#main-content div.section:first-of-type > h1:first-of-type {
-      border-bottom: 1px solid #130654;
-      padding-bottom: .2em;
-      font-size: 3em; }
   main.bd-content #main-content a.headerlink {
     opacity: 0;
     margin-left: .2em; }
@@ -308,8 +300,16 @@ button.topbarbtn img {
   .bd-toc:hover nav, .bd-toc.show nav {
     max-height: 100vh;
     opacity: 1; }
+  .bd-toc:hover .tocsection:after, .bd-toc.show .tocsection:after {
+    opacity: 0; }
   .bd-toc .tocsection {
     padding: .5rem 0 .5rem 1rem !important; }
+    .bd-toc .tocsection:after {
+      content: "\f107";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      padding-left: .5em;
+      transition: opacity .3s ease; }
   .bd-toc .toc-entry a {
     padding: .125rem 1rem !important; }
   .bd-toc div.editthispage {

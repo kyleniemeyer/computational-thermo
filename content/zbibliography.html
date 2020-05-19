@@ -26,7 +26,8 @@
     <script src="../_static/mystnb.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script async="async" src="../_static/thebelab.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -48,9 +49,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../index.html">
   
   <img src="../_static/logo.png" class="logo" alt="logo">
@@ -63,7 +64,7 @@
 
 <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -147,6 +148,7 @@
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
 
@@ -169,8 +171,6 @@
         <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-        
-
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -195,11 +195,17 @@
 <dt class="bibtex label" id="allen2012"><span class="brackets">AGG12</span></dt>
 <dd><p>Joshua W. Allen, C. Franklin Goldsmith, and William H. Green. Automatic estimation of pressure-dependent rate coefficients. <em>Phys. Chem. Chem. Phys.</em>, 14(3):1131–1155, 2012. <a class="reference external" href="https://doi.org/10.1039/c1cp22765c">doi:10.1039/c1cp22765c</a>.</p>
 </dd>
+<dt class="bibtex label" id="bell2014"><span class="brackets">BWQL14</span></dt>
+<dd><p>Ian H. Bell, Jorrit Wronski, Sylvain Quoilin, and Vincent Lemort. Pure and pseudo-pure fluid thermophysical property evaluation and the open-source thermophysical property library CoolProp. <em>Industrial &amp; Engineering Chemistry Research</em>, 53(6):2498–2508, 2014. <a class="reference external" href="https://doi.org/10.1021/ie4033999">doi:10.1021/ie4033999</a>.</p>
+</dd>
 <dt class="bibtex label" id="gao2016"><span class="brackets">GAGW16</span></dt>
 <dd><p>Connie W. Gao, Joshua W. Allen, William H. Green, and Richard H. West. Reaction Mechanism Generator: automatic construction of chemical kinetic mechanisms. <em>Computer Physics Communications</em>, 203:212–225, 2016. <a class="reference external" href="https://doi.org/10.1016/j.cpc.2016.02.013">doi:10.1016/j.cpc.2016.02.013</a>.</p>
 </dd>
 <dt class="bibtex label" id="goodstein1985"><span class="brackets">Goo85</span></dt>
 <dd><p>David L. Goodstein. <em>States of Matter</em>. Dover Publications, Mineola, NY, 1985. ISBN 978-0-486-64927-6.</p>
+</dd>
+<dt class="bibtex label" id="cantera"><span class="brackets">GSMW18</span></dt>
+<dd><p>David G. Goodwin, Raymond L. Speth, Harry K. Moffat, and Bryan W. Weber. Cantera: an object-oriented software toolkit for chemical kinetics, thermodynamics, and transport processes. 2018. Version 2.4.0. URL: <a class="reference external" href="https://www.cantera.org">https://www.cantera.org</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.1174508">doi:10.5281/zenodo.1174508</a>.</p>
 </dd>
 <dt class="bibtex label" id="gordon1971"><span class="brackets">GM71</span></dt>
 <dd><p>Sanford Gordon and Bonnie J. McBride. Computer program for calculation of complex equilibrium compositions, rocket performance, incident and reflected shocks, and Chapman–Jouguet detonations. 1971. NASA SP-273. URL: <a class="reference external" href="https://ntrs.nasa.gov/search.jsp?R=19780009781">https://ntrs.nasa.gov/search.jsp?R=19780009781</a>.</p>
@@ -230,6 +236,9 @@
 </dd>
 <dt class="bibtex label" id="wagner2002"><span class="brackets">WPruss02</span></dt>
 <dd><p>W. Wagner and A. Pruß. The IAPWS formulation 1995 for the thermodynamic properties of ordinary water substance for general and scientific use. <em>Journal of Physical and Chemical Reference Data</em>, 31(2):387–535, June 2002. <a class="reference external" href="https://doi.org/10.1063/1.1461829">doi:10.1063/1.1461829</a>.</p>
+</dd>
+<dt class="bibtex label" id="scipy-nmeth"><span class="brackets">VirtanenGommersOliphant+20</span></dt>
+<dd><p>Pauli Virtanen, Ralf Gommers, Travis E. Oliphant, Matt Haberland, Tyler Reddy, David Cournapeau, Evgeni Burovski, Pearu Peterson, Warren Weckesser, Jonathan Bright, Stéfan J. van der Walt, Matthew Brett, Joshua Wilson, K. Jarrod Millman, Nikolay Mayorov, Andrew R. J. Nelson, Eric Jones, Robert Kern, Eric Larson, CJ Carey, İlhan Polat, Yu Feng, Eric W. Moore, Jake Vand erPlas, Denis Laxalde, Josef Perktold, Robert Cimrman, Ian Henriksen, E. A. Quintero, Charles R Harris, Anne M. Archibald, Antônio H. Ribeiro, Fabian Pedregosa, Paul van Mulbregt, and SciPy 1. 0 Contributors. SciPy 1.0: fundamental algorithms for scientific computing in Python. <em>Nature Methods</em>, 17:261–272, 2020. <a class="reference external" href="https://doi.org/10.1038/s41592-019-0686-2">doi:10.1038/s41592-019-0686-2</a>.</p>
 </dd>
 </dl>
 </p>

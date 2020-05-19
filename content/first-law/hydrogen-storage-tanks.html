@@ -26,7 +26,8 @@
     <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script async="async" src="../../_static/thebelab.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -48,9 +49,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../index.html">
   
   <img src="../../_static/logo.png" class="logo" alt="logo">
@@ -63,7 +64,7 @@
 
 <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -161,6 +162,7 @@
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
 
@@ -195,8 +197,6 @@
                 
             </div>
         </div>
-        
-
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -1173,7 +1173,7 @@ mpl.find_output_cell = function(html_output) {
 if (IPython.notebook.kernel != null) {
     IPython.notebook.kernel.comm_manager.register_target('matplotlib', mpl.mpl_figure_comm);
 }
-</script><div class="output text_html"><div id='f311d664-4c81-4254-8d93-8f43a1bb3380'></div></div></div>
+</script><div class="output text_html"><div id='e763e06f-8836-4d4a-81bd-7efb422b678f'></div></div></div>
 </div>
 <p>Now plot the mass of fuel added as a function of time:</p>
 <div class="cell docutils container">
@@ -1957,7 +1957,7 @@ mpl.find_output_cell = function(html_output) {
 if (IPython.notebook.kernel != null) {
     IPython.notebook.kernel.comm_manager.register_target('matplotlib', mpl.mpl_figure_comm);
 }
-</script><div class="output text_html"><div id='e935ac70-d387-4c4d-a9d6-fbf9ccfd395e'></div></div></div>
+</script><div class="output text_html"><div id='471c736d-cadb-40bd-a8cb-1d4c27eb00a6'></div></div></div>
 </div>
 </div>
 
