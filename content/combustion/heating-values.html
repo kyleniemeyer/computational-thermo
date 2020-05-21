@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Heating values &#8212; Computational Thermodynamics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Second Law efficiency of a furnace" href="furnace-efficiency.html" />
+    <link rel="prev" title="Adiabatic flame temperature" href="adiabatic-flame-temperature.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="../intro.html">Computational Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../getting-started.html">Getting started</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../setting-up-environment.html">Setting up your computing environment</a>
+    </li>
+    <li class="">
+      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
+    </li>
+    <li class="">
+      <a href="../intro-using-coolprop.html">Using CoolProp</a>
+    </li>
+    <li class="">
+      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Modules</p>
+</li>
+  <li class="">
+    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
+  </li>
+  <li class="">
+    <a href="../exergy/exergy.html">Exergy</a>
+  </li>
+  <li class="">
+    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
+  </li>
+  <li class="">
+    <a href="../mixtures/mixtures.html">Mixture properties</a>
+  </li>
+  <li class="active">
+    <a href="combustion.html">Combustion</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="adiabatic-flame-temperature.html">Adiabatic flame temperature</a>
+    </li>
+    <li class="active">
+      <a href="">Heating values</a>
+    </li>
+    <li class="">
+      <a href="furnace-efficiency.html">Second Law efficiency of a furnace</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="../chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
+  </li>
+  <li class="">
+    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Reference</p>
+</li>
+  <li class="">
+    <a href="../zbibliography.html">Bibliography</a>
+  </li>
+  <li class="">
+    <a href="../contributing.html">Contributing to this book</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/content/combustion/heating-values.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/combustion/heating-values.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#lower-heating-value" class="nav-link">Lower heating value</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#higher-heating-value" class="nav-link">Higher heating value</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#calculate-for-other-common-fuels" class="nav-link">Calculate for other common fuels</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="heating-values">
+<h1>Heating values<a class="headerlink" href="#heating-values" title="Permalink to this headline">¶</a></h1>
+<div class="margin sidebar">
+<p class="sidebar-title">Source</p>
+<p>This module is adapted from the <a class="reference external" href="https://cantera.org/examples/jupyter/thermo/heating_value.ipynb.html">example</a> provided on the Cantera website.</p>
+</div>
+<p>The <strong>heating value</strong> of a fuel is the heat of combustion (i.e., heat released during combustion) at the reference temperature, <span class="math notranslate nohighlight">\(T_{\text{ref}}\)</span> = 25°C, assuming complete combustion. This is a useful quantity, commonly used to represent the energy density of a fuel, or the thermal energy that can be obtained from a fuel.</p>
+<p>We can calculate the heating value using a steady-state energy balance on the stoichiometric reaction per 1 kmole of fuel, at constant temperature, and assuming complete combustion. The heating value is then</p>
+<div class="math notranslate nohighlight">
+\[
+HV = H_R - H_P \;,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(H_R\)</span> is the enthalpy of the reactants (per kmol of fuel) and <span class="math notranslate nohighlight">\(H_P\)</span> is the enthalpy of the products (per kmol of fuel).</p>
+<p>For example, let’s find the heating value of propane (C<span class="math notranslate nohighlight">\(_3\)</span>H<span class="math notranslate nohighlight">\(_8\)</span>). Its balanced overall chemical reaction is:</p>
+<div class="math notranslate nohighlight" id="equation-we-do-not-need-to-consider-nitrogen-or-worry-about-excess-air-because-the-nitrogen-and-unreacted-oxygen-would-have-the-same-state-in-the-reactants-and-products">
+<span class="eqno">(1)<a class="headerlink" href="#equation-we-do-not-need-to-consider-nitrogen-or-worry-about-excess-air-because-the-nitrogen-and-unreacted-oxygen-would-have-the-same-state-in-the-reactants-and-products" title="Permalink to this equation">¶</a></span>\[
+\text{C}_3 \text{H}_8 + 5 \text{O}_2 \rightarrow 3 \text{CO}_2 + 4 \text{H}_2 \text{O}
+\]</div>
+<p>There are two heating values:</p>
+<ul class="simple">
+<li><p>lower heating value: water in the products is vapor</p></li>
+<li><p>higher heating value: water in the products is liquid</p></li>
+</ul>
+<p>Let’s calculate the lower heating value first:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+<span class="n">Q_</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span>
+
+<span class="c1"># for convenience:</span>
+<span class="k">def</span> <span class="nf">to_si</span><span class="p">(</span><span class="n">quant</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Converts a Pint Quantity to magnitude at base SI units.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">quant</span><span class="o">.</span><span class="n">to_base_units</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># fixed information</span>
+
+<span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="lower-heating-value">
+<h2>Lower heating value<a class="headerlink" href="#lower-heating-value" title="Permalink to this headline">¶</a></h2>
+<p>To calculate the enthlapy of the reactants and products, we add up the specific molar enthalpy of each species:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+H &amp;= \sum_{i=1}^C n_i \overline{h}_{i} \left( T_{\text{ref}} \right)  \\
+ &amp;= n \sum_{i=1}^C y_i \overline{h}_{i} \left( T_{\text{ref}} \right) \;,
+\end{align}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(C\)</span> is the number of components in the reactants/products, <span class="math notranslate nohighlight">\(n_i\)</span> is the number of moles of component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\overline{h}_{i} (T)\)</span> is the molar specific enthalpy of component <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(n\)</span> is the total number of moles in the reactants/products, and <span class="math notranslate nohighlight">\(y_i\)</span> is the mole fraction of component <span class="math notranslate nohighlight">\(i\)</span> in the reactants/products.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Careful about X/Y</p>
+<p>In the reference textbook, <span class="math notranslate nohighlight">\(y_i\)</span> is the mole fraction of species <span class="math notranslate nohighlight">\(i\)</span>. However, in Cantera (and much of the combustion literature), <span class="math notranslate nohighlight">\(X_i\)</span> is the mole fraction of species <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(Y_i\)</span> is the mass fraction. As a result, Cantera uses <code class="docutils literal notranslate"><span class="pre">X</span></code> for mole fraction and <code class="docutils literal notranslate"><span class="pre">Y</span></code> for mass fraction. Be careful!</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+
+<span class="n">molecular_weight_propane</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">44.10</span><span class="p">,</span> <span class="s1">&#39;kg/kmol&#39;</span><span class="p">)</span>
+
+<span class="c1"># set state for reactants</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;C3H8:1, O2:5&#39;</span>
+<span class="n">moles_reactants</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">5</span> <span class="c1"># per mole of fuel</span>
+<span class="n">enthalpy_reactants</span> <span class="o">=</span> <span class="n">moles_reactants</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">enthalpy_mole</span><span class="p">,</span> <span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+
+<span class="c1"># product state</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;CO2:3, H2O:4&#39;</span>
+<span class="n">moles_products</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span> <span class="c1"># per mole of fuel</span>
+<span class="n">enthalpy_products</span> <span class="o">=</span> <span class="n">moles_products</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">enthalpy_mole</span><span class="p">,</span> <span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+
+<span class="n">heating_value_lower</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">enthalpy_reactants</span> <span class="o">-</span> <span class="n">enthalpy_products</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">molecular_weight_propane</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Lower heating value: </span><span class="si">{</span><span class="n">heating_value_lower</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kJ/kg&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .0f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Lower heating value: 46348 kilojoule / kilogram
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="higher-heating-value">
+<h2>Higher heating value<a class="headerlink" href="#higher-heating-value" title="Permalink to this headline">¶</a></h2>
+<p>The higher heating value represents the case where all the water in the products is in the liquid phase. We can calculate this by adding the difference between the enthalpies of saturated water vapor and saturated liquid water at the reference temperature (times the number of moles of water):</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta \overline{h}_{fg} = \overline{h}_g \left( T_{\text{ref}} \right) - \overline{h}_f \left( T_{\text{ref}} \right) \;,
+\]</div>
+<p>which is the specific enthalpy change of vaporization.</p>
+<p>We can obtain this value by finding the molar specific enthalpy of saturated liquid water and saturated water vapor, by specifying the temperature and vapor fractions of 0 and 1 (e.g., with <code class="docutils literal notranslate"><span class="pre">TX</span></code>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">water</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Water</span><span class="p">()</span>
+
+<span class="c1"># liquid water</span>
+<span class="n">water</span><span class="o">.</span><span class="n">TX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="mf">0.0</span>
+<span class="n">enthalpy_liquid</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">water</span><span class="o">.</span><span class="n">enthalpy_mole</span><span class="p">,</span> <span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+
+<span class="c1"># water vapor</span>
+<span class="n">water</span><span class="o">.</span><span class="n">TX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="mf">1.0</span>
+<span class="n">enthalpy_vapor</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">water</span><span class="o">.</span><span class="n">enthalpy_mole</span><span class="p">,</span> <span class="s1">&#39;J/kmol&#39;</span><span class="p">)</span>
+
+<span class="c1"># moles of water in the products, per mole of fuel</span>
+<span class="n">moles_water</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">heating_value_higher</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">enthalpy_reactants</span> <span class="o">-</span> <span class="n">enthalpy_products</span> <span class="o">+</span> 
+    <span class="p">(</span><span class="n">enthalpy_vapor</span> <span class="o">-</span> <span class="n">enthalpy_liquid</span><span class="p">)</span> <span class="o">*</span> <span class="n">moles_water</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">molecular_weight_propane</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Higher heating value: </span><span class="si">{</span><span class="n">heating_value_higher</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kJ/kg&quot;</span><span class="p">)</span><span class="si">:</span><span class="s1"> .0f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Higher heating value: 50339 kilojoule / kilogram
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="calculate-for-other-common-fuels">
+<h2>Calculate for other common fuels<a class="headerlink" href="#calculate-for-other-common-fuels" title="Permalink to this headline">¶</a></h2>
+<p>We can generalize the above calculations and find the higher and lower heating values for various common fuels.</p>
+<p>In this case, we need to determine the composition of the complete combustion products automatically. We can do this by recognizing that all carbon from the fuel ends up as CO<span class="math notranslate nohighlight">\(_2\)</span>, all hydrogen as H<span class="math notranslate nohighlight">\(_2\)</span>O, and all nitrogen as N<span class="math notranslate nohighlight">\(_2\)</span> (if any in the fuel).
+The <code class="docutils literal notranslate"><span class="pre">elemental_mole_fraction</span></code> function provides this for the reactant mixture.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_heating_values</span><span class="p">(</span><span class="n">fuel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns lower and higher heating values for fuel</span>
+<span class="sd">    </span>
+<span class="sd">    Arguments:</span>
+<span class="sd">    fuel -- species name for fuel (str)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">    lower heating value, higher heating value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+    
+    <span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+    <span class="n">gas</span><span class="o">.</span><span class="n">TP</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">)</span>
+    <span class="n">gas</span><span class="o">.</span><span class="n">set_equivalence_ratio</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">fuel</span><span class="p">,</span> <span class="s1">&#39;O2:1.0&#39;</span><span class="p">)</span>
+    
+    <span class="n">enthalpy_reactants</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">enthalpy_mass</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span>
+    <span class="n">mass_fraction_fuel</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">mass_fraction_dict</span><span class="p">()[</span><span class="n">fuel</span><span class="p">]</span>
+    
+    <span class="n">mass_fractions_products</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;CO2&#39;</span><span class="p">:</span> <span class="n">gas</span><span class="o">.</span><span class="n">elemental_mole_fraction</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;H2O&#39;</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">gas</span><span class="o">.</span><span class="n">elemental_mole_fraction</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;N2&#39;</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">gas</span><span class="o">.</span><span class="n">elemental_mole_fraction</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+    
+    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="n">mass_fractions_products</span>
+    <span class="n">mass_fraction_water</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">mass_fraction_dict</span><span class="p">()[</span><span class="s1">&#39;H2O&#39;</span><span class="p">]</span>
+    <span class="n">enthalpy_products</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">enthalpy_mass</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span>
+    
+    <span class="n">heating_value_lower</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">enthalpy_reactants</span> <span class="o">-</span> <span class="n">enthalpy_products</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="n">mass_fraction_fuel</span>
+    
+    <span class="n">water</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Water</span><span class="p">()</span>
+
+    <span class="c1"># liquid water</span>
+    <span class="n">water</span><span class="o">.</span><span class="n">TX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="mf">0.0</span>
+    <span class="n">enthalpy_liquid</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">water</span><span class="o">.</span><span class="n">enthalpy_mass</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span>
+
+    <span class="c1"># water vapor</span>
+    <span class="n">water</span><span class="o">.</span><span class="n">TX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="mf">1.0</span>
+    <span class="n">enthalpy_vapor</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">water</span><span class="o">.</span><span class="n">enthalpy_mass</span><span class="p">,</span> <span class="s1">&#39;J/kg&#39;</span><span class="p">)</span>
+    
+    <span class="n">heating_value_higher</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">enthalpy_reactants</span> <span class="o">-</span> <span class="n">enthalpy_products</span> <span class="o">+</span> 
+        <span class="p">(</span><span class="n">enthalpy_vapor</span> <span class="o">-</span> <span class="n">enthalpy_liquid</span><span class="p">)</span> <span class="o">*</span> <span class="n">mass_fraction_water</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="n">mass_fraction_fuel</span>
+    
+    <span class="k">return</span> <span class="n">heating_value_lower</span><span class="p">,</span> <span class="n">heating_value_higher</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fuels</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;H2&#39;</span><span class="p">:</span> <span class="s1">&#39;hydrogen&#39;</span><span class="p">,</span> <span class="s1">&#39;NH3&#39;</span><span class="p">:</span> <span class="s1">&#39;ammonia&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CH4&#39;</span><span class="p">:</span> <span class="s1">&#39;methane&#39;</span><span class="p">,</span> <span class="s1">&#39;C2H6&#39;</span><span class="p">:</span> <span class="s1">&#39;ethane&#39;</span><span class="p">,</span> <span class="s1">&#39;C2H4&#39;</span><span class="p">:</span> <span class="s1">&#39;ethylene&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;C2H2&#39;</span><span class="p">:</span> <span class="s1">&#39;acetylene&#39;</span><span class="p">,</span> <span class="s1">&#39;C3H8&#39;</span><span class="p">:</span> <span class="s1">&#39;propane&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[],</span> 
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Lower heating value (kJ/kg)&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;Higher heating value (kJ/kg)&#39;</span>
+            <span class="p">],</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">fuels</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">fuel</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">fuels</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">LHV</span><span class="p">,</span> <span class="n">HHV</span> <span class="o">=</span> <span class="n">get_heating_values</span><span class="p">(</span><span class="n">fuel</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">][</span><span class="n">fuel</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lower heating value (kJ/kg)&#39;</span><span class="p">][</span><span class="n">fuel</span><span class="p">]</span> <span class="o">=</span> <span class="n">LHV</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kJ/kg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Higher heating value (kJ/kg)&#39;</span><span class="p">][</span><span class="n">fuel</span><span class="p">]</span> <span class="o">=</span> <span class="n">HHV</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kJ/kg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">({</span>
+    <span class="s1">&#39;Lower heating value (kJ/kg)&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:,.0f}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Higher heating value (kJ/kg)&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:,.0f}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Name</th>        <th class="col_heading level0 col1" >Lower heating value (kJ/kg)</th>        <th class="col_heading level0 col2" >Higher heating value (kJ/kg)</th>    </tr></thead><tbody>
+                <tr>
+                        <th id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7level0_row0" class="row_heading level0 row0" >H2</th>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row0_col0" class="data row0 col0" >hydrogen</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row0_col1" class="data row0 col1" >119,960</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row0_col2" class="data row0 col2" >141,786</td>
+            </tr>
+            <tr>
+                        <th id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7level0_row1" class="row_heading level0 row1" >NH3</th>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row1_col0" class="data row1 col0" >ammonia</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row1_col1" class="data row1 col1" >18,604</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row1_col2" class="data row1 col2" >22,479</td>
+            </tr>
+            <tr>
+                        <th id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7level0_row2" class="row_heading level0 row2" >CH4</th>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row2_col0" class="data row2 col0" >methane</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row2_col1" class="data row2 col1" >50,026</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row2_col2" class="data row2 col2" >55,511</td>
+            </tr>
+            <tr>
+                        <th id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7level0_row3" class="row_heading level0 row3" >C2H6</th>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row3_col0" class="data row3 col0" >ethane</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row3_col1" class="data row3 col1" >47,511</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row3_col2" class="data row3 col2" >51,901</td>
+            </tr>
+            <tr>
+                        <th id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7level0_row4" class="row_heading level0 row4" >C2H4</th>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row4_col0" class="data row4 col0" >ethylene</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row4_col1" class="data row4 col1" >47,165</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row4_col2" class="data row4 col2" >50,302</td>
+            </tr>
+            <tr>
+                        <th id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7level0_row5" class="row_heading level0 row5" >C2H2</th>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row5_col0" class="data row5 col0" >acetylene</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row5_col1" class="data row5 col1" >48,277</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row5_col2" class="data row5 col2" >49,967</td>
+            </tr>
+            <tr>
+                        <th id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7level0_row6" class="row_heading level0 row6" >C3H8</th>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row6_col0" class="data row6 col0" >propane</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row6_col1" class="data row6 col1" >46,352</td>
+                        <td id="T_270d8a16_9ba8_11ea_abb6_000d3a8e28f7row6_col2" class="data row6 col2" >50,343</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "kyleniemeyer/computational-thermo",
+            ref: "newbackend",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "content/combustion"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="adiabatic-flame-temperature.html" title="previous page">Adiabatic flame temperature</a>
+    <a class='right-next' id="next-link" href="furnace-efficiency.html" title="next page">Second Law efficiency of a furnace</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kyle Niemeyer<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
