@@ -41,6 +41,7 @@
 - file: content/combustion/combustion
   sections: 
     - file: content/combustion/adiabatic-flame-temperature
+    - file: content/combustion/furnace-efficiency
 
 - file: content/chemical-equilibrium/chemical-equilibrium
   sections:
