@@ -142,7 +142,13 @@
   </li>
 </ul>
 </nav>
-<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -1101,7 +1107,7 @@ mpl.find_output_cell = function(html_output) {
 if (IPython.notebook.kernel != null) {
     IPython.notebook.kernel.comm_manager.register_target('matplotlib', mpl.mpl_figure_comm);
 }
-</script><div class="output text_html"><div id='e07196b0-372b-4ad5-9f98-23597fc92497'></div></div><div class="stderr docutils container">
+</script><div class="output text_html"><div id='077aa9c0-b622-4c4c-ab59-143020d98660'></div></div><div class="stderr docutils container">
 <pre class="stderr literal-block">/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/numpy/core/numeric.py:501: UnitStrippedWarning: The unit of the quantity is stripped when downcasting to ndarray.
   return array(a, dtype, copy=False, order=order)
 </pre>
