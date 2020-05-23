@@ -49,8 +49,12 @@
     - file: content/chemical-equilibrium/equilibrium-constant
     - file: content/chemical-equilibrium/equilibrium-alternative-methods
     - file: content/chemical-equilibrium/adiabatic-flame-temperature
+    - file: content/chemical-equilibrium/combustion-acetylene
 
 - file: content/stat-thermo/stat-thermo
+  sections:
+    - file: content/stat-thermo/monatomic-gas
+    - file: content/stat-thermo/diatomic-gases
 
 - header: Reference
 
