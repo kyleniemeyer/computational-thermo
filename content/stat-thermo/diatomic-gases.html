@@ -230,12 +230,12 @@
 \overline{c}_v = M \frac{R_{\text{univ}}}{2} \;.
 \]</div>
 <p>For monatomic gases, <span class="math notranslate nohighlight">\(M=3\)</span> for the three translational energy modes.
-Diatomic gases have two additional energy modes for rotation, so <span class="math notranslate nohighlight">\(M=5\)</span>, and at higher temperatures vibrational energy modes also become important.</p>
+Diatomic gases have two additional energy modes for rotation, so <span class="math notranslate nohighlight">\(M=5\)</span>, and at higher temperatures vibrational energy modes also become important (<span class="math notranslate nohighlight">\(M=7\)</span>).</p>
 <p>We can compare these relatively simple predictions of the molar specific heat capacity with calculations based on thermodynamic models.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="kn">from</span> <span class="nn">CoolProp.CoolProp</span> <span class="kn">import</span> <span class="n">PropsSI</span>
 <span class="kn">from</span> <span class="nn">scipy.constants</span> <span class="kn">import</span> <span class="n">physical_constants</span>
 
 <span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
@@ -273,11 +273,7 @@ Diatomic gases have two additional energy modes for rotation, so <span class="ma
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
-<span class="n">temperatures</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
-
-<span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">]</span>
-<span class="n">species_objects</span> <span class="o">=</span> <span class="p">{</span><span class="n">S</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">S</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">Species</span><span class="o">.</span><span class="n">listFromFile</span><span class="p">(</span><span class="s1">&#39;nasa_gas.cti&#39;</span><span class="p">)}</span>
-<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="n">thermo</span><span class="o">=</span><span class="s1">&#39;IdealGas&#39;</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="p">[</span><span class="n">species_objects</span><span class="p">[</span><span class="n">S</span><span class="p">]</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">species</span><span class="p">])</span>
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
 
 <span class="n">specific_heats_o2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temperatures</span><span class="p">))</span>
 <span class="n">specific_heats_n2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temperatures</span><span class="p">))</span>
@@ -291,11 +287,13 @@ Diatomic gases have two additional energy modes for rotation, so <span class="ma
     <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kJ/(kmol*K)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
 
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">temperature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">temperatures</span><span class="p">):</span>
-    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;O2:1.0&#39;</span>
-    <span class="n">specific_heats_o2</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">cv_mole</span> <span class="o">/</span> <span class="mf">1000.0</span>
-    
-    <span class="n">gas</span><span class="o">.</span><span class="n">TPX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;N2:1.0&#39;</span>
-    <span class="n">specific_heats_n2</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">cv_mole</span> <span class="o">/</span> <span class="mf">1000.0</span>
+    <span class="c1"># given in J/(mol*K)</span>
+    <span class="n">specific_heats_o2</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">PropsSI</span><span class="p">(</span>
+        <span class="s1">&#39;Cvmolar&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;oxygen&#39;</span>
+        <span class="p">)</span>
+    <span class="n">specific_heats_n2</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">PropsSI</span><span class="p">(</span>
+        <span class="s1">&#39;Cvmolar&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span> <span class="s1">&#39;nitrogen&#39;</span>
+        <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -311,8 +309,8 @@ Diatomic gases have two additional energy modes for rotation, so <span class="ma
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature (K)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Molar specific heat capacity (kJ/kmol*K)&#39;</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">4000</span><span class="p">)</span>
 
 <span class="c1"># text box properties</span>
 <span class="n">props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
@@ -341,8 +339,7 @@ Diatomic gases have two additional energy modes for rotation, so <span class="ma
 <img alt="../../_images/diatomic-gases_4_0.png" src="../../_images/diatomic-gases_4_0.png" />
 </div>
 </div>
-<p>At low temperatures, the prediction based on translational and rotational energy modes only matches the calculations fairly well, though as temperature increases the vibrational modes become more important.</p>
-<p>(At very low temperatures, the high-order polynomial fits used in the thermodynamic property models begin to break down.)</p>
+<p>At low temperatures, the prediction based on translational and rotational energy modes matches the calculations fairly well, though as temperature increases the vibrational modes become more important.</p>
 <p>Other sources for disagreement include intra-molecular forces, which the above statistical thermodynamics calculations neglect.</p>
 </div>
 
