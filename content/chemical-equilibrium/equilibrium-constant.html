@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Equilibrium via equilibrium constant &#8212; Computational Thermodynamics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -23,14 +25,17 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed-amd.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -68,79 +73,127 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
   <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../intro.html">Computational Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../getting-started.html">Getting started</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="../setting-up-environment.html">Setting up your computing environment</a>
-    </li>
-    <li class="">
-      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
-    </li>
-    <li class="">
-      <a href="../intro-using-coolprop.html">Using CoolProp</a>
-    </li>
-    <li class="">
-      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
-    </li>
-  </ul>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Modules</p>
-</li>
-  <li class="">
-    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../exergy/exergy.html">Exergy</a>
-  </li>
-  <li class="">
-    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
-  </li>
-  <li class="">
-    <a href="../mixtures/mixtures.html">Mixture properties</a>
-  </li>
-  <li class="">
-    <a href="../combustion/combustion.html">Combustion</a>
-  </li>
-  <li class="active">
-    <a href="chemical-equilibrium.html">Chemical Equilibrium</a>
-  <ul class="nav sidenav_l2">
-    <li class="active">
-      <a href="">Equilibrium via equilibrium constant</a>
-    </li>
-    <li class="">
-      <a href="equilibrium-alternative-methods.html">Alternative methods for chemical equilibrium</a>
-    </li>
-    <li class="">
-      <a href="adiabatic-flame-temperature.html">Adiabatic flame temperature</a>
-    </li>
-    <li class="">
-      <a href="combustion-acetylene.html">Adiabatic combustion of acetylene</a>
-    </li>
-  </ul>
-  </li>
-  <li class="">
-    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Reference</p>
-</li>
-  <li class="">
-    <a href="../zbibliography.html">Bibliography</a>
-  </li>
-  <li class="">
-    <a href="../contributing.html">Contributing to this book</a>
-  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Computational Thermodynamics
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Getting started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../setting-up-environment.html">
+   Setting up your computing environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-solving-problems.html">
+   Solving thermodynamics problems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-using-coolprop.html">
+   Using CoolProp
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../using-scipy.html">
+   Using NumPy and SciPy modules
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Modules
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../first-law/first-law.html">
+   First Law of Thermodynamics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../second-law/second-law.html">
+   Second Law of Thermodynamics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../exergy/exergy.html">
+   Exergy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../properties-pure/properties-pure.html">
+   Properties of Pure Fluids
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../mixtures/mixtures.html">
+   Mixture properties
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../combustion/combustion.html">
+   Combustion
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="chemical-equilibrium.html">
+   Chemical Equilibrium
+  </a>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Equilibrium via equilibrium constant
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="equilibrium-alternative-methods.html">
+     Alternative methods for chemical equilibrium
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="adiabatic-flame-temperature.html">
+     Adiabatic flame temperature
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="combustion-acetylene.html">
+     Adiabatic combustion of acetylene
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../stat-thermo/stat-thermo.html">
+   Statistical Thermodynamics
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zbibliography.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contributing.html">
+   Contributing to this book
+  </a>
+ </li>
+</ul>
+
 </nav>
 
  <!-- To handle the deprecated key -->
@@ -163,76 +216,110 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
         
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/content/chemical-equilibrium/equilibrium-constant.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
-
-        <!-- Edit this page -->
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
         
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/chemical-equilibrium/equilibrium-constant.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/kyleniemeyer/computational-thermo"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
         
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/chemical-equilibrium/equilibrium-constant.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
         
     </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
 </div>
 
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#using-a-tabulated-equilibrium-constant" class="nav-link">Using a tabulated equilibrium constant</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#calculating-equilibrium-constant" class="nav-link">Calculating equilibrium constant</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#using-a-reaction-coordinate" class="nav-link">Using a reaction coordinate</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#compare-to-cantera-equilibrium-solution" class="nav-link">Compare to Cantera equilibrium solution</a>
-        </li>
-    
-    </ul>
-</nav>
 
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/chemical-equilibrium/equilibrium-constant.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/newbackend/book/content/chemical-equilibrium/equilibrium-constant.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-a-tabulated-equilibrium-constant">
+   Using a tabulated equilibrium constant
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#calculating-equilibrium-constant">
+   Calculating equilibrium constant
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-a-reaction-coordinate">
+   Using a reaction coordinate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compare-to-cantera-equilibrium-solution">
+   Compare to Cantera equilibrium solution
+  </a>
+ </li>
+</ul>
+
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
@@ -254,7 +341,7 @@
 <p>First, import the necessary modules, then specify the known information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span><span class="p">,</span> <span class="n">root_scalar</span>
 
@@ -267,7 +354,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for convenience:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for convenience:</span>
 <span class="k">def</span> <span class="nf">to_si</span><span class="p">(</span><span class="n">quant</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Converts a Pint Quantity to magnitude at base SI units.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -278,7 +365,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
 <span class="n">pressures</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
 
 <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">]</span>
@@ -302,11 +389,11 @@ The primary reaction involved is</p>
 K(T) = \frac{y_{\text{CO}}^{\nu_{\text{CO}}} y_{\text{O}_2}^{\nu_{\text{O}_2}}}{y_{\text{CO}_2}^{\nu_{\text{CO}_2}}} \left(\frac{P}{P_{\text{ref}}} \right)^{ \nu_{\text{CO}} + \nu_{\text{O}_2} - \nu_{\text{CO}_2} } = \frac{y_{\text{CO}} y_{\text{O}_2}^{1/2}}{y_{\text{CO}_2}} \left(\frac{P}{P_{\text{ref}}} \right)^{1/2}
 \]</div>
 <p>We can apply conservation of mass to find the overall balanced chemical reaction:
-<span class="math notranslate nohighlight">\($
+$<span class="math notranslate nohighlight">\(
 1\text{CO} + \frac{1}{2} \text{O}_2 \text{CO}_2 \rightarrow z \text{CO} + \frac{z}{2} \text{O}_2 + (1-z) \text{CO}_2
-$\)</span>
-where <span class="math notranslate nohighlight">\(z\)</span> is the amount of CO in kmol at equilibrium (<span class="math notranslate nohighlight">\(0 \leq z \leq 1\)</span>).
-Then, the total number of moles <span class="math notranslate nohighlight">\(n\)</span> in the mixture at equilibrium is:</p>
+\)</span><span class="math notranslate nohighlight">\(
+where \)</span>z<span class="math notranslate nohighlight">\( is the amount of CO in kmol at equilibrium (\)</span>0 \leq z \leq 1<span class="math notranslate nohighlight">\().
+Then, the total number of moles \)</span>n$ in the mixture at equilibrium is:</p>
 <div class="math notranslate nohighlight">
 \[
 n = z + \frac{z}{2} + (1-z) = \frac{2+z}{2}
@@ -330,7 +417,7 @@ K(T) = \frac{z}{1-z} \left(\frac{z}{2+z}\right)^{1/2} \left(\frac{P}{P_{\text{re
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">solve_equilibrium_constant</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">equil_constant</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">solve_equilibrium_constant</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">equil_constant</span><span class="p">):</span>
     <span class="n">pressure_ref</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
     <span class="n">K</span> <span class="o">=</span> <span class="p">(</span>
         <span class="p">(</span><span class="n">z</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">z</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">z</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">))</span> <span class="o">*</span>
@@ -350,7 +437,7 @@ K(T) = \frac{z}{1-z} \left(\frac{z}{2+z}\right)^{1/2} \left(\frac{P}{P_{\text{re
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tabulated value of equilibrium constant at 2500 K</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># tabulated value of equilibrium constant at 2500 K</span>
 <span class="n">log10K</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.440</span>
 <span class="n">equilibrium_constant</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="n">log10K</span>
 
@@ -359,14 +446,14 @@ K(T) = \frac{z}{1-z} \left(\frac{z}{2+z}\right)^{1/2} \left(\frac{P}{P_{\text{re
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Tabulated equilibrium constant:  0.0363
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tabulated equilibrium constant:  0.0363
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># First pressure, 1 atm</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First pressure, 1 atm</span>
 <span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
@@ -382,7 +469,7 @@ K(T) = \frac{z}{1-z} \left(\frac{z}{2+z}\right)^{1/2} \left(\frac{P}{P_{\text{re
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Mole fractions at 1.0 standard_atmosphere
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mole fractions at 1.0 standard_atmosphere
 CO :  0.121
 O2 :  0.060
 CO2:  0.819
@@ -392,7 +479,7 @@ CO2:  0.819
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># now evaluate composition at 10 atm</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># now evaluate composition at 10 atm</span>
 <span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
@@ -408,7 +495,7 @@ CO2:  0.819
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Mole fractions at 10.0 standard_atmosphere
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mole fractions at 10.0 standard_atmosphere
 CO :  0.060
 O2 :  0.030
 CO2:  0.910
@@ -438,7 +525,7 @@ We can calculate <span class="math notranslate nohighlight">\(\Delta G^{\circ}\)
 We’ll evaluate each component separately, evaluating the property of each as a pure substance (i.e., with no other components present).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># Load Cantera model for species information</span>
 <span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
@@ -463,7 +550,7 @@ We’ll evaluate each component separately, evaluating the property of each as a
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Calculated equilibrium constant:  0.0368
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Calculated equilibrium constant:  0.0368
 </pre></div>
 </div>
 </div>
@@ -471,7 +558,7 @@ We’ll evaluate each component separately, evaluating the property of each as a
 <p>This is very close to the value shown above obtained from tabulated data. Let’s now use this value to determine the equilibrium composition:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pressure</span> <span class="ow">in</span> <span class="n">pressures</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pressure</span> <span class="ow">in</span> <span class="n">pressures</span><span class="p">:</span>
     <span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
         <span class="n">solve_equilibrium_constant</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
         <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">to_si</span><span class="p">(</span><span class="n">equilibrium_constant</span><span class="p">))</span>
@@ -487,7 +574,7 @@ We’ll evaluate each component separately, evaluating the property of each as a
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Mole fractions at 1.0 standard_atmosphere:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mole fractions at 1.0 standard_atmosphere:
 CO:  0.122
 O2:  0.061
 CO2:  0.817
@@ -496,7 +583,6 @@ Mole fractions at 10.0 standard_atmosphere:
 CO:  0.061
 O2:  0.030
 CO2:  0.909
-
 </pre></div>
 </div>
 </div>
@@ -530,7 +616,7 @@ n_i = n_{0,i} + \sum_{j=1}^R \nu_{i,j} \epsilon_j \quad \text{for } i = 1, \ldot
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_equilibrium_root</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_equilibrium_root</span><span class="p">(</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> 
     <span class="n">moles_initial</span><span class="p">,</span> <span class="n">stoich_coefficients</span><span class="p">,</span> <span class="n">gas</span>
     <span class="p">):</span>
@@ -575,7 +661,7 @@ n_i = n_{0,i} + \sum_{j=1}^R \nu_{i,j} \epsilon_j \quad \text{for } i = 1, \ldot
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
 <span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
 
@@ -604,7 +690,7 @@ n_i = n_{0,i} + \sum_{j=1}^R \nu_{i,j} \epsilon_j \quad \text{for } i = 1, \ldot
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Root-finding success: True
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Root-finding success: True
 
 Mole fractions at 1.0 standard_atmosphere:
 CO :  0.122
@@ -612,15 +698,14 @@ O2 :  0.061
 CO2:  0.817
 </pre></div>
 </div>
-<div class="stderr docutils container">
-<pre class="stderr literal-block">/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/ipykernel_launcher.py:25: RuntimeWarning: invalid value encountered in double_scalars
-</pre>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda/envs/thermo-env/lib/python3.7/site-packages/ipykernel_launcher.py:25: RuntimeWarning: invalid value encountered in double_scalars
+</pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressures</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
 <span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
@@ -649,10 +734,12 @@ CO2:  0.817
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Root-finding success: True
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Root-finding success: True
 
 Mole fractions at 10.0 standard_atmosphere:
-CO :  0.061
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CO :  0.061
 O2 :  0.030
 CO2:  0.909
 </pre></div>
@@ -667,7 +754,7 @@ CO2:  0.909
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">gri30.cti</span></code> model, but by default it contains many more species than we want to consider (53 in total). So, we need to extract the three species we want (CO, O<span class="math notranslate nohighlight">\(_2\)</span>, and CO<span class="math notranslate nohighlight">\(_2\)</span>), and construct a new <code class="docutils literal notranslate"><span class="pre">Solution</span></code> object with just those species.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">2500</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
 <span class="n">pressures</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
 
 <span class="c1"># Get all of the Species objects defined in the GRI 3.0 mechanism</span>
@@ -691,7 +778,7 @@ CO2:  0.909
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Mole fractions at 1.0 standard_atmosphere:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mole fractions at 1.0 standard_atmosphere:
 CO  :  0.122
 O2  :  0.061
 CO2 :  0.817
@@ -700,7 +787,6 @@ Mole fractions at 10.0 standard_atmosphere:
 CO  :  0.061
 O2  :  0.030
 CO2 :  0.909
-
 </pre></div>
 </div>
 </div>
@@ -713,8 +799,8 @@ CO2 :  0.909
     {
         requestKernel: true,
         binderOptions: {
-            repo: "kyleniemeyer/computational-thermo",
-            ref: "newbackend",
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
         },
         codeMirrorConfig: {
             theme: "abcdef",
@@ -722,8 +808,9 @@ CO2 :  0.909
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "content/chemical-equilibrium"
-        }
+            path: "./content/chemical-equilibrium"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>

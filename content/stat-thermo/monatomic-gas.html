@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Monatomic gases &#8212; Computational Thermodynamics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -23,14 +25,17 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed-amd.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -68,73 +73,117 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
   <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../intro.html">Computational Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../getting-started.html">Getting started</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="../setting-up-environment.html">Setting up your computing environment</a>
-    </li>
-    <li class="">
-      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
-    </li>
-    <li class="">
-      <a href="../intro-using-coolprop.html">Using CoolProp</a>
-    </li>
-    <li class="">
-      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
-    </li>
-  </ul>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Modules</p>
-</li>
-  <li class="">
-    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../exergy/exergy.html">Exergy</a>
-  </li>
-  <li class="">
-    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
-  </li>
-  <li class="">
-    <a href="../mixtures/mixtures.html">Mixture properties</a>
-  </li>
-  <li class="">
-    <a href="../combustion/combustion.html">Combustion</a>
-  </li>
-  <li class="">
-    <a href="../chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
-  </li>
-  <li class="active">
-    <a href="stat-thermo.html">Statistical Thermodynamics</a>
-  <ul class="nav sidenav_l2">
-    <li class="active">
-      <a href="">Monatomic gases</a>
-    </li>
-    <li class="">
-      <a href="diatomic-gases.html">Diatomic gases</a>
-    </li>
-  </ul>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Reference</p>
-</li>
-  <li class="">
-    <a href="../zbibliography.html">Bibliography</a>
-  </li>
-  <li class="">
-    <a href="../contributing.html">Contributing to this book</a>
-  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Computational Thermodynamics
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Getting started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../setting-up-environment.html">
+   Setting up your computing environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-solving-problems.html">
+   Solving thermodynamics problems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-using-coolprop.html">
+   Using CoolProp
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../using-scipy.html">
+   Using NumPy and SciPy modules
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Modules
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../first-law/first-law.html">
+   First Law of Thermodynamics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../second-law/second-law.html">
+   Second Law of Thermodynamics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../exergy/exergy.html">
+   Exergy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../properties-pure/properties-pure.html">
+   Properties of Pure Fluids
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../mixtures/mixtures.html">
+   Mixture properties
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../combustion/combustion.html">
+   Combustion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chemical-equilibrium/chemical-equilibrium.html">
+   Chemical Equilibrium
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="stat-thermo.html">
+   Statistical Thermodynamics
+  </a>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Monatomic gases
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="diatomic-gases.html">
+     Diatomic gases
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zbibliography.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contributing.html">
+   Contributing to this book
+  </a>
+ </li>
+</ul>
+
 </nav>
 
  <!-- To handle the deprecated key -->
@@ -157,57 +206,88 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
         
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/content/stat-thermo/monatomic-gas.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
-
-        <!-- Edit this page -->
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
         
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/stat-thermo/monatomic-gas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/kyleniemeyer/computational-thermo"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
         
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/stat-thermo/monatomic-gas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
         
     </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/stat-thermo/monatomic-gas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/newbackend/book/content/stat-thermo/monatomic-gas.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-    </ul>
-</nav>
-
-
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
@@ -240,7 +320,7 @@
 <p>We can compare this way of calculating entropy with values obtained from Cantera, which are based on the NASA thermochemical database.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
 <span class="kn">from</span> <span class="nn">scipy.constants</span> <span class="kn">import</span> <span class="n">physical_constants</span>
 
@@ -259,8 +339,8 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
 
 <span class="c1"># these are mostly for making the saved figures nicer</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
@@ -273,7 +353,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtain needed physical constants and their units</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtain needed physical constants and their units</span>
 
 <span class="n">planck_constant</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span>
    <span class="n">physical_constants</span><span class="p">[</span><span class="s1">&#39;Planck constant&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> 
@@ -301,7 +381,7 @@
 <p>Cantera includes the NASA thermochemical database <a class="bibtex reference internal" href="../zbibliography.html#gordon1971" id="id1">[GM71]</a><a class="bibtex reference internal" href="../zbibliography.html#mcbride1993" id="id2">[MGaMAR93]</a>, which contains fits for a large number of gases, including argon, helium, and monatomic oxygen.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract species from NASA thermochemical database</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract species from NASA thermochemical database</span>
 
 <span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ar&#39;</span><span class="p">,</span> <span class="s1">&#39;He&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">]</span>
 
@@ -313,7 +393,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_entropy</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_entropy</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculates entropy of species using Sackur-Tetrode equation&quot;&quot;&quot;</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">species_index</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
     <span class="n">molecular_weight</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">molecular_weights</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="s1">&#39;g/mol&#39;</span><span class="p">)</span>
@@ -334,7 +414,7 @@
 <p>Let’s calculate the entropy of these species over the range 200–1000 K and at 1 atm, comparing the two approaches:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
 
 <span class="c1"># range of temperatures in K</span>
 <span class="n">temperatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span> <span class="o">*</span> <span class="n">Q_</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
@@ -401,8 +481,8 @@
     {
         requestKernel: true,
         binderOptions: {
-            repo: "kyleniemeyer/computational-thermo",
-            ref: "newbackend",
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
         },
         codeMirrorConfig: {
             theme: "abcdef",
@@ -410,8 +490,9 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "content/stat-thermo"
-        }
+            path: "./content/stat-thermo"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>

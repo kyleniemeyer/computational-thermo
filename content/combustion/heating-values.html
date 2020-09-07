@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Heating values &#8212; Computational Thermodynamics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -23,14 +25,17 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed-amd.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -68,76 +73,122 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
   <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../intro.html">Computational Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../getting-started.html">Getting started</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="../setting-up-environment.html">Setting up your computing environment</a>
-    </li>
-    <li class="">
-      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
-    </li>
-    <li class="">
-      <a href="../intro-using-coolprop.html">Using CoolProp</a>
-    </li>
-    <li class="">
-      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
-    </li>
-  </ul>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Modules</p>
-</li>
-  <li class="">
-    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../exergy/exergy.html">Exergy</a>
-  </li>
-  <li class="">
-    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
-  </li>
-  <li class="">
-    <a href="../mixtures/mixtures.html">Mixture properties</a>
-  </li>
-  <li class="active">
-    <a href="combustion.html">Combustion</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="adiabatic-flame-temperature.html">Adiabatic flame temperature</a>
-    </li>
-    <li class="active">
-      <a href="">Heating values</a>
-    </li>
-    <li class="">
-      <a href="furnace-efficiency.html">Second Law efficiency of a furnace</a>
-    </li>
-  </ul>
-  </li>
-  <li class="">
-    <a href="../chemical-equilibrium/chemical-equilibrium.html">Chemical Equilibrium</a>
-  </li>
-  <li class="">
-    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Reference</p>
-</li>
-  <li class="">
-    <a href="../zbibliography.html">Bibliography</a>
-  </li>
-  <li class="">
-    <a href="../contributing.html">Contributing to this book</a>
-  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Computational Thermodynamics
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Getting started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../setting-up-environment.html">
+   Setting up your computing environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-solving-problems.html">
+   Solving thermodynamics problems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-using-coolprop.html">
+   Using CoolProp
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../using-scipy.html">
+   Using NumPy and SciPy modules
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Modules
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../first-law/first-law.html">
+   First Law of Thermodynamics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../second-law/second-law.html">
+   Second Law of Thermodynamics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../exergy/exergy.html">
+   Exergy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../properties-pure/properties-pure.html">
+   Properties of Pure Fluids
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../mixtures/mixtures.html">
+   Mixture properties
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="combustion.html">
+   Combustion
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="adiabatic-flame-temperature.html">
+     Adiabatic flame temperature
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Heating values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="furnace-efficiency.html">
+     Second Law efficiency of a furnace
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chemical-equilibrium/chemical-equilibrium.html">
+   Chemical Equilibrium
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../stat-thermo/stat-thermo.html">
+   Statistical Thermodynamics
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zbibliography.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contributing.html">
+   Contributing to this book
+  </a>
+ </li>
+</ul>
+
 </nav>
 
  <!-- To handle the deprecated key -->
@@ -160,72 +211,105 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
         
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/content/combustion/heating-values.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
-
-        <!-- Edit this page -->
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
         
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/combustion/heating-values.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/kyleniemeyer/computational-thermo"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
         
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/combustion/heating-values.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
         
     </div>
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
 </div>
 
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#lower-heating-value" class="nav-link">Lower heating value</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#higher-heating-value" class="nav-link">Higher heating value</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#calculate-for-other-common-fuels" class="nav-link">Calculate for other common fuels</a>
-        </li>
-    
-    </ul>
-</nav>
 
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/combustion/heating-values.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/newbackend/book/content/combustion/heating-values.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lower-heating-value">
+   Lower heating value
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#higher-heating-value">
+   Higher heating value
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#calculate-for-other-common-fuels">
+   Calculate for other common fuels
+  </a>
+ </li>
+</ul>
+
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
@@ -247,10 +331,11 @@ HV = H_R - H_P \;,
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(H_R\)</span> is the enthalpy of the reactants (per kmol of fuel) and <span class="math notranslate nohighlight">\(H_P\)</span> is the enthalpy of the products (per kmol of fuel).</p>
 <p>For example, let’s find the heating value of propane (C<span class="math notranslate nohighlight">\(_3\)</span>H<span class="math notranslate nohighlight">\(_8\)</span>). Its balanced overall chemical reaction is:</p>
-<div class="math notranslate nohighlight" id="equation-we-do-not-need-to-consider-nitrogen-or-worry-about-excess-air-because-the-nitrogen-and-unreacted-oxygen-would-have-the-same-state-in-the-reactants-and-products">
-<span class="eqno">(1)<a class="headerlink" href="#equation-we-do-not-need-to-consider-nitrogen-or-worry-about-excess-air-because-the-nitrogen-and-unreacted-oxygen-would-have-the-same-state-in-the-reactants-and-products" title="Permalink to this equation">¶</a></span>\[
+<div class="math notranslate nohighlight">
+\[
 \text{C}_3 \text{H}_8 + 5 \text{O}_2 \rightarrow 3 \text{CO}_2 + 4 \text{H}_2 \text{O}
 \]</div>
+<p>(We do not need to consider nitrogen, or worry about excess air, because the nitrogen and unreacted oxygen would have the same state in the reactants and products.)</p>
 <p>There are two heating values:</p>
 <ul class="simple">
 <li><p>lower heating value: water in the products is vapor</p></li>
@@ -259,7 +344,7 @@ HV = H_R - H_P \;,
 <p>Let’s calculate the lower heating value first:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cantera</span> <span class="k">as</span> <span class="nn">ct</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -278,7 +363,7 @@ HV = H_R - H_P \;,
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># fixed information</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fixed information</span>
 
 <span class="n">temperature</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
 <span class="n">pressure</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
@@ -303,7 +388,7 @@ H &amp;= \sum_{i=1}^C n_i \overline{h}_{i} \left( T_{\text{ref}} \right)  \\
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">)</span>
 
 <span class="n">molecular_weight_propane</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">44.10</span><span class="p">,</span> <span class="s1">&#39;kg/kmol&#39;</span><span class="p">)</span>
 
@@ -325,7 +410,7 @@ H &amp;= \sum_{i=1}^C n_i \overline{h}_{i} \left( T_{\text{ref}} \right)  \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Lower heating value: 46348 kilojoule / kilogram
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Lower heating value: 46348 kilojoule / kilogram
 </pre></div>
 </div>
 </div>
@@ -342,7 +427,7 @@ H &amp;= \sum_{i=1}^C n_i \overline{h}_{i} \left( T_{\text{ref}} \right)  \\
 <p>We can obtain this value by finding the molar specific enthalpy of saturated liquid water and saturated water vapor, by specifying the temperature and vapor fractions of 0 and 1 (e.g., with <code class="docutils literal notranslate"><span class="pre">TX</span></code>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">water</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Water</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">water</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Water</span><span class="p">()</span>
 
 <span class="c1"># liquid water</span>
 <span class="n">water</span><span class="o">.</span><span class="n">TX</span> <span class="o">=</span> <span class="n">to_si</span><span class="p">(</span><span class="n">temperature</span><span class="p">),</span> <span class="mf">0.0</span>
@@ -364,7 +449,7 @@ H &amp;= \sum_{i=1}^C n_i \overline{h}_{i} \left( T_{\text{ref}} \right)  \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Higher heating value: 50339 kilojoule / kilogram
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Higher heating value: 50339 kilojoule / kilogram
 </pre></div>
 </div>
 </div>
@@ -377,7 +462,7 @@ H &amp;= \sum_{i=1}^C n_i \overline{h}_{i} \left( T_{\text{ref}} \right)  \\
 The <code class="docutils literal notranslate"><span class="pre">elemental_mole_fraction</span></code> function provides this for the reactant mixture.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_heating_values</span><span class="p">(</span><span class="n">fuel</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_heating_values</span><span class="p">(</span><span class="n">fuel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns lower and higher heating values for fuel</span>
 <span class="sd">    </span>
 <span class="sd">    Arguments:</span>
@@ -432,7 +517,7 @@ The <code class="docutils literal notranslate"><span class="pre">elemental_mole_
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fuels</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fuels</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;H2&#39;</span><span class="p">:</span> <span class="s1">&#39;hydrogen&#39;</span><span class="p">,</span> <span class="s1">&#39;NH3&#39;</span><span class="p">:</span> <span class="s1">&#39;ammonia&#39;</span><span class="p">,</span>
     <span class="s1">&#39;CH4&#39;</span><span class="p">:</span> <span class="s1">&#39;methane&#39;</span><span class="p">,</span> <span class="s1">&#39;C2H6&#39;</span><span class="p">:</span> <span class="s1">&#39;ethane&#39;</span><span class="p">,</span> <span class="s1">&#39;C2H4&#39;</span><span class="p">:</span> <span class="s1">&#39;ethylene&#39;</span><span class="p">,</span> 
     <span class="s1">&#39;C2H2&#39;</span><span class="p">:</span> <span class="s1">&#39;acetylene&#39;</span><span class="p">,</span> <span class="s1">&#39;C3H8&#39;</span><span class="p">:</span> <span class="s1">&#39;propane&#39;</span><span class="p">,</span>
@@ -461,48 +546,48 @@ The <code class="docutils literal notranslate"><span class="pre">elemental_mole_
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6add" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Name</th>        <th class="col_heading level0 col1" >Lower heating value (kJ/kg)</th>        <th class="col_heading level0 col2" >Higher heating value (kJ/kg)</th>    </tr></thead><tbody>
+</style><table id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Name</th>        <th class="col_heading level0 col1" >Lower heating value (kJ/kg)</th>        <th class="col_heading level0 col2" >Higher heating value (kJ/kg)</th>    </tr></thead><tbody>
                 <tr>
-                        <th id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addlevel0_row0" class="row_heading level0 row0" >H2</th>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow0_col0" class="data row0 col0" >hydrogen</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow0_col1" class="data row0 col1" >119,960</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow0_col2" class="data row0 col2" >141,786</td>
+                        <th id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8level0_row0" class="row_heading level0 row0" >H2</th>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row0_col0" class="data row0 col0" >hydrogen</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row0_col1" class="data row0 col1" >119,960</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row0_col2" class="data row0 col2" >141,786</td>
             </tr>
             <tr>
-                        <th id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addlevel0_row1" class="row_heading level0 row1" >NH3</th>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow1_col0" class="data row1 col0" >ammonia</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow1_col1" class="data row1 col1" >18,604</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow1_col2" class="data row1 col2" >22,479</td>
+                        <th id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8level0_row1" class="row_heading level0 row1" >NH3</th>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row1_col0" class="data row1 col0" >ammonia</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row1_col1" class="data row1 col1" >18,604</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row1_col2" class="data row1 col2" >22,479</td>
             </tr>
             <tr>
-                        <th id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addlevel0_row2" class="row_heading level0 row2" >CH4</th>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow2_col0" class="data row2 col0" >methane</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow2_col1" class="data row2 col1" >50,026</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow2_col2" class="data row2 col2" >55,511</td>
+                        <th id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8level0_row2" class="row_heading level0 row2" >CH4</th>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row2_col0" class="data row2 col0" >methane</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row2_col1" class="data row2 col1" >50,026</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row2_col2" class="data row2 col2" >55,511</td>
             </tr>
             <tr>
-                        <th id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addlevel0_row3" class="row_heading level0 row3" >C2H6</th>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow3_col0" class="data row3 col0" >ethane</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow3_col1" class="data row3 col1" >47,511</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow3_col2" class="data row3 col2" >51,901</td>
+                        <th id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8level0_row3" class="row_heading level0 row3" >C2H6</th>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row3_col0" class="data row3 col0" >ethane</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row3_col1" class="data row3 col1" >47,511</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row3_col2" class="data row3 col2" >51,901</td>
             </tr>
             <tr>
-                        <th id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addlevel0_row4" class="row_heading level0 row4" >C2H4</th>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow4_col0" class="data row4 col0" >ethylene</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow4_col1" class="data row4 col1" >47,165</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow4_col2" class="data row4 col2" >50,302</td>
+                        <th id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8level0_row4" class="row_heading level0 row4" >C2H4</th>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row4_col0" class="data row4 col0" >ethylene</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row4_col1" class="data row4 col1" >47,165</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row4_col2" class="data row4 col2" >50,302</td>
             </tr>
             <tr>
-                        <th id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addlevel0_row5" class="row_heading level0 row5" >C2H2</th>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow5_col0" class="data row5 col0" >acetylene</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow5_col1" class="data row5 col1" >48,277</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow5_col2" class="data row5 col2" >49,967</td>
+                        <th id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8level0_row5" class="row_heading level0 row5" >C2H2</th>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row5_col0" class="data row5 col0" >acetylene</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row5_col1" class="data row5 col1" >48,277</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row5_col2" class="data row5 col2" >49,967</td>
             </tr>
             <tr>
-                        <th id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addlevel0_row6" class="row_heading level0 row6" >C3H8</th>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow6_col0" class="data row6 col0" >propane</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow6_col1" class="data row6 col1" >46,352</td>
-                        <td id="T_5f3995ae_a3a2_11ea_abc8_000d3a8c6addrow6_col2" class="data row6 col2" >50,343</td>
+                        <th id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8level0_row6" class="row_heading level0 row6" >C3H8</th>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row6_col0" class="data row6 col0" >propane</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row6_col1" class="data row6 col1" >46,352</td>
+                        <td id="T_17cf4d62_f12c_11ea_9061_000d3aa422d8row6_col2" class="data row6 col2" >50,343</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -513,8 +598,8 @@ The <code class="docutils literal notranslate"><span class="pre">elemental_mole_
     {
         requestKernel: true,
         binderOptions: {
-            repo: "kyleniemeyer/computational-thermo",
-            ref: "newbackend",
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
         },
         codeMirrorConfig: {
             theme: "abcdef",
@@ -522,8 +607,9 @@ The <code class="docutils literal notranslate"><span class="pre">elemental_mole_
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "content/combustion"
-        }
+            path: "./content/combustion"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>

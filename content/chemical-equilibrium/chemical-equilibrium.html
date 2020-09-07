@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chemical Equilibrium &#8212; Computational Thermodynamics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -23,14 +25,17 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0-alpha.0/dist/embed-amd.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -68,79 +73,127 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
   <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../intro.html">Computational Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../getting-started.html">Getting started</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="../setting-up-environment.html">Setting up your computing environment</a>
-    </li>
-    <li class="">
-      <a href="../intro-solving-problems.html">Solving thermodynamics problems</a>
-    </li>
-    <li class="">
-      <a href="../intro-using-coolprop.html">Using CoolProp</a>
-    </li>
-    <li class="">
-      <a href="../using-scipy.html">Using NumPy and SciPy modules</a>
-    </li>
-  </ul>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Modules</p>
-</li>
-  <li class="">
-    <a href="../first-law/first-law.html">First Law of Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../second-law/second-law.html">Second Law of Thermodynamics</a>
-  </li>
-  <li class="">
-    <a href="../exergy/exergy.html">Exergy</a>
-  </li>
-  <li class="">
-    <a href="../properties-pure/properties-pure.html">Properties of Pure Fluids</a>
-  </li>
-  <li class="">
-    <a href="../mixtures/mixtures.html">Mixture properties</a>
-  </li>
-  <li class="">
-    <a href="../combustion/combustion.html">Combustion</a>
-  </li>
-  <li class="active">
-    <a href="">Chemical Equilibrium</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="equilibrium-constant.html">Equilibrium via equilibrium constant</a>
-    </li>
-    <li class="">
-      <a href="equilibrium-alternative-methods.html">Alternative methods for chemical equilibrium</a>
-    </li>
-    <li class="">
-      <a href="adiabatic-flame-temperature.html">Adiabatic flame temperature</a>
-    </li>
-    <li class="">
-      <a href="combustion-acetylene.html">Adiabatic combustion of acetylene</a>
-    </li>
-  </ul>
-  </li>
-  <li class="">
-    <a href="../stat-thermo/stat-thermo.html">Statistical Thermodynamics</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Reference</p>
-</li>
-  <li class="">
-    <a href="../zbibliography.html">Bibliography</a>
-  </li>
-  <li class="">
-    <a href="../contributing.html">Contributing to this book</a>
-  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Computational Thermodynamics
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Getting started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../setting-up-environment.html">
+   Setting up your computing environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-solving-problems.html">
+   Solving thermodynamics problems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-using-coolprop.html">
+   Using CoolProp
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../using-scipy.html">
+   Using NumPy and SciPy modules
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Modules
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../first-law/first-law.html">
+   First Law of Thermodynamics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../second-law/second-law.html">
+   Second Law of Thermodynamics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../exergy/exergy.html">
+   Exergy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../properties-pure/properties-pure.html">
+   Properties of Pure Fluids
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../mixtures/mixtures.html">
+   Mixture properties
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../combustion/combustion.html">
+   Combustion
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Chemical Equilibrium
+  </a>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="equilibrium-constant.html">
+     Equilibrium via equilibrium constant
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="equilibrium-alternative-methods.html">
+     Alternative methods for chemical equilibrium
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="adiabatic-flame-temperature.html">
+     Adiabatic flame temperature
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="combustion-acetylene.html">
+     Adiabatic combustion of acetylene
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../stat-thermo/stat-thermo.html">
+   Statistical Thermodynamics
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zbibliography.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contributing.html">
+   Contributing to this book
+  </a>
+ </li>
+</ul>
+
 </nav>
 
  <!-- To handle the deprecated key -->
@@ -163,45 +216,66 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
         
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/content/chemical-equilibrium/chemical-equilibrium.md.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.md</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
-
-        <!-- Edit this page -->
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
         
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/chemical-equilibrium/chemical-equilibrium.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
-
-        <!-- Launch buttons -->
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/kyleniemeyer/computational-thermo"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
         
     </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-    </ul>
-</nav>
-
-
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
@@ -219,8 +293,8 @@
     {
         requestKernel: true,
         binderOptions: {
-            repo: "kyleniemeyer/computational-thermo",
-            ref: "newbackend",
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
         },
         codeMirrorConfig: {
             theme: "abcdef",
@@ -228,8 +302,9 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "content/chemical-equilibrium"
-        }
+            path: "./content/chemical-equilibrium"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>
