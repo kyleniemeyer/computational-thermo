@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 
 <html>
@@ -7,48 +6,63 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Solving thermodynamics problems &#8212; Computational Thermodynamics</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="../_static/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/sphinx-book-theme.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/intro-solving-problems.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Using CoolProp" href="intro-using-coolprop.html" />
     <link rel="prev" title="Setting up your computing environment" href="setting-up-environment.html" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
-
-
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -57,23 +71,24 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../index.html">
-  
-  <img src="../_static/logo.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
-  
-</a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Computational Thermodynamics</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <ul class="nav sidenav_l1">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
    Computational Thermodynamics
@@ -85,7 +100,7 @@
   Getting started
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="setting-up-environment.html">
    Setting up your computing environment
@@ -112,46 +127,202 @@
   Modules
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="first-law/first-law.html">
    First Law of Thermodynamics
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="first-law/steam-water-equilibrium.html">
+     Steam equilibrating with liquid water
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="first-law/portable-cooling-system.html">
+     Portable cooling system
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="first-law/hydrogen-storage-tanks.html">
+     Hydrogen storage tank
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="first-law/air-tank.html">
+     Air in a tank
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="second-law/second-law.html">
    Second Law of Thermodynamics
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="second-law/vortex-tube.html">
+     Vortex tube
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="second-law/heating-water.html">
+     Water heating
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="second-law/turbine-efficiency.html">
+     Turbine isentropic efficiency
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="second-law/solar-powered-pump.html">
+     Solar-powered pump
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="exergy/exergy.html">
    Exergy
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="exergy/second-law-efficiency.html">
+     Second Law Efficiency
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="properties-pure/properties-pure.html">
    Properties of Pure Fluids
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="properties-pure/reduced-helmholtz.html">
+     Reduced Helmholtz equation of state: carbon dioxide
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="mixtures/mixtures.html">
    Mixture properties
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mixtures/multicomponent-phase-equilibrium.html">
+     Multi-component phase equilibrium
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="combustion/combustion.html">
    Combustion
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="combustion/adiabatic-flame-temperature.html">
+     Adiabatic flame temperature
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="combustion/heating-values.html">
+     Heating values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="combustion/furnace-efficiency.html">
+     Second Law efficiency of a furnace
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="chemical-equilibrium/chemical-equilibrium.html">
    Chemical Equilibrium
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chemical-equilibrium/equilibrium-constant.html">
+     Equilibrium via equilibrium constant
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chemical-equilibrium/equilibrium-alternative-methods.html">
+     Alternative methods for chemical equilibrium
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chemical-equilibrium/adiabatic-flame-temperature.html">
+     Adiabatic flame temperature
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chemical-equilibrium/combustion-acetylene.html">
+     Adiabatic combustion of acetylene
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="stat-thermo/stat-thermo.html">
    Statistical Thermodynamics
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="stat-thermo/monatomic-gas.html">
+     Monatomic gases
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="stat-thermo/diatomic-gases.html">
+     Diatomic gases
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 <p class="caption">
@@ -159,22 +330,16 @@
   Reference
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="zbibliography.html">
    Bibliography
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="contributing.html">
-   Contributing to this book
-  </a>
- </li>
 </ul>
 
-</nav>
-
- <!-- To handle the deprecated key -->
+    </div>
+</nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
   Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
@@ -189,25 +354,25 @@
           
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        <div class="dropdown-buttons-trigger">
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
 
-    
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         
@@ -219,9 +384,9 @@
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
-    
 </div>
-        <!-- Source interaction buttons -->
+
+            <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -236,20 +401,21 @@
     </div>
 </div>
 
+            <!-- Full screen (wrap in <a> to have style consistency -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
-        <!-- Launch buttons -->
+            <!-- Launch buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/newbackend?urlpath=tree/book/content/intro-solving-problems.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/master?urlpath=tree/book/content/intro-solving-problems.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -257,24 +423,20 @@
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/kyleniemeyer/computational-thermo/blob/newbackend/book/content/intro-solving-problems.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
         
     </div>
 </div>
 
-    </div>
-
-    <!-- Table of contents -->
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
         </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#quick-pint-intro">
    Quick Pint intro
@@ -314,7 +476,8 @@
  </li>
 </ul>
 
-        </nav>
+            </nav>
+        </div>
     </div>
 </div>
     <div id="main-content" class="row">
@@ -449,20 +612,21 @@ Pressure in SI: 68947.57 pascal
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  water:
 
-       temperature          673.15  K
-          pressure     1.99362e+07  Pa
-           density             100  kg/m^3
-  mean mol. weight          18.016  amu
-    vapor fraction               1
+       temperature   673.15 K
+          pressure   1.9936e+07 Pa
+           density   100 kg/m^3
+  mean mol. weight   18.016 kg/kmol
+    vapor fraction   1
+   phase of matter   supercritical
 
-                          1 kg            1 kmol
-                       -----------      ------------
-          enthalpy    -1.31504e+07       -2.369e+08     J
-   internal energy    -1.33497e+07       -2.405e+08     J
-           entropy         9078.37        1.636e+05     J/K
-    Gibbs function    -1.92615e+07        -3.47e+08     J
- heat capacity c_p         6284.65        1.132e+05     J/K
- heat capacity c_v         2693.99        4.853e+04     J/K
+                          1 kg             1 kmol     
+                     ---------------   ---------------
+          enthalpy        -1.315e+07       -2.3692e+08  J
+   internal energy        -1.335e+07       -2.4051e+08  J
+           entropy            9078.4        1.6356e+05  J/K
+    Gibbs function       -1.9261e+07       -3.4701e+08  J
+ heat capacity c_p            6284.6        1.1322e+05  J/K
+ heat capacity c_v              2694             48535  J/K
 </pre></div>
 </div>
 </div>
@@ -486,22 +650,23 @@ Pressure in SI: 68947.57 pascal
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  hfc134a:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  HFC-134a:
 
-       temperature          323.15  K
-          pressure          300000  Pa
-           density         11.9442  kg/m^3
-  mean mol. weight         102.032  amu
-    vapor fraction               1
+       temperature   323.15 K
+          pressure   3e+05 Pa
+           density   11.944 kg/m^3
+  mean mol. weight   102.03 kg/kmol
+    vapor fraction   1
+   phase of matter   gas
 
-                          1 kg            1 kmol
-                       -----------      ------------
-          enthalpy          243187        2.481e+07     J
-   internal energy          218070        2.225e+07     J
-           entropy         1607.36         1.64e+05     J/K
-    Gibbs function         -276232       -2.818e+07     J
- heat capacity c_p         917.046        9.357e+04     J/K
- heat capacity c_v         813.222        8.297e+04     J/K
+                          1 kg             1 kmol     
+                     ---------------   ---------------
+          enthalpy        2.4319e+05        2.4813e+07  J
+   internal energy        2.1807e+05         2.225e+07  J
+           entropy            1607.4          1.64e+05  J/K
+    Gibbs function       -2.7623e+05       -2.8184e+07  J
+ heat capacity c_p            917.05             93568  J/K
+ heat capacity c_v            813.22             82975  J/K
 </pre></div>
 </div>
 </div>
@@ -598,20 +763,21 @@ critical density:  511.95 kg/m^3
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  water:
 
-       temperature          303.15  K
-          pressure          101325  Pa
-           density         995.726  kg/m^3
-  mean mol. weight          18.016  amu
-    vapor fraction               0
+       temperature   303.15 K
+          pressure   1.0132e+05 Pa
+           density   995.73 kg/m^3
+  mean mol. weight   18.016 kg/kmol
+    vapor fraction   0
+   phase of matter   liquid
 
-                          1 kg            1 kmol
-                       -----------      ------------
-          enthalpy    -1.58449e+07       -2.855e+08     J
-   internal energy     -1.5845e+07       -2.855e+08     J
-           entropy         3956.83        7.129e+04     J/K
-    Gibbs function    -1.70445e+07       -3.071e+08     J
- heat capacity c_p         4178.61        7.528e+04     J/K
- heat capacity c_v         4116.12        7.416e+04     J/K
+                          1 kg             1 kmol     
+                     ---------------   ---------------
+          enthalpy       -1.5845e+07       -2.8546e+08  J
+   internal energy       -1.5845e+07       -2.8546e+08  J
+           entropy            3956.8             71286  J/K
+    Gibbs function       -1.7044e+07       -3.0707e+08  J
+ heat capacity c_p            4178.6             75282  J/K
+ heat capacity c_v            4116.1             74156  J/K
 </pre></div>
 </div>
 </div>
@@ -653,7 +819,7 @@ critical density:  511.95 kg/m^3
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Δu for real gas: 647294.70 joule / kilogram
-Δu for ideal gas: 648472.39 joule / kilogram
+Δu for ideal gas: 648460.39 joule / kilogram
 difference:  0.18%
 </pre></div>
 </div>
@@ -681,25 +847,26 @@ difference:  0.18%
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  air:
 
-       temperature             300  K
-          pressure          101325  Pa
-           density         1.17197  kg/m^3
-  mean mol. weight         28.8507  amu
+       temperature   300 K
+          pressure   1.0133e+05 Pa
+           density   1.172 kg/m^3
+  mean mol. weight   28.851 kg/kmol
+   phase of matter   gas
 
-                          1 kg            1 kmol
-                       -----------      ------------
-          enthalpy          1907.6        5.504e+04     J
-   internal energy          -84549       -2.439e+06     J
-           entropy          6891.7        1.988e+05     J/K
-    Gibbs function     -2.0656e+06       -5.959e+07     J
- heat capacity c_p          1010.1        2.914e+04     J/K
- heat capacity c_v          721.88        2.083e+04     J/K
+                          1 kg             1 kmol     
+                     ---------------   ---------------
+          enthalpy            1907.6             55035  J
+   internal energy            -84548       -2.4393e+06  J
+           entropy            6891.7        1.9883e+05  J/K
+    Gibbs function       -2.0656e+06       -5.9594e+07  J
+ heat capacity c_p            1010.1             29141  J/K
+ heat capacity c_v            721.87             20827  J/K
 
-                           X                 Y          Chem. Pot. / RT
-                     -------------     ------------     ------------
-                O2       0.210084         0.233008          -26.234
-                N2       0.789916         0.766992          -23.269
-     [   +6 minor]              0                0
+                      mass frac. Y      mole frac. X     chem. pot. / RT
+                     ---------------   ---------------   ---------------
+                O2             0.233           0.21008           -26.234
+                N2             0.767           0.78992           -23.269
+     [   +6 minor]                 0                 0  
 
 Density:  1.172 kg/m^3
 </pre></div>
@@ -778,23 +945,46 @@ Density:  1.172 kg/m^3
 
               </div>
               
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="setting-up-environment.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Setting up your computing environment</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="intro-using-coolprop.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Using CoolProp</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
         </div>
     </div>
-    
-    
-    <div class='prev-next-bottom'>
-        
-    <a class='left-prev' id="prev-link" href="setting-up-environment.html" title="previous page">Setting up your computing environment</a>
-    <a class='right-next' id="next-link" href="intro-using-coolprop.html" title="next page">Using CoolProp</a>
-
-    </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
           By Kyle Niemeyer<br/>
         
-            &copy; Copyright 2020.<br/>
+          <div class="extra_footer">
+            <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://github.com/kyleniemeyer/computational-thermo">Computational Thermodynamics notes</a> by <span property="cc:attributionName">Kyle Niemeyer</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+
+          </div>
       </p>
     </div>
   </footer>
@@ -803,8 +993,9 @@ Density:  1.172 kg/m^3
 
       </div>
     </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-    <script src="../_static/js/index.js"></script>
-    
+  
   </body>
 </html>
