@@ -1,69 +1,52 @@
-
-- file: content/intro
-  title: Introduction
-
-- part: Getting started
-  #expand_sections: true
-  #- file: content/getting-started
+format: jb-book
+root: content/intro
+title: Introduction
+parts:
+- caption: Getting started
   chapters:
-    - file: content/setting-up-environment
-    - file: content/intro-solving-problems
-    - file: content/intro-using-coolprop
-    - file: content/using-scipy
-    
-
-- part: Modules
+  - file: content/setting-up-environment
+  - file: content/intro-solving-problems
+  - file: content/intro-using-coolprop
+  - file: content/using-scipy
+- caption: Modules
   chapters:
   - file: content/first-law/first-law
     sections:
-      - file: content/first-law/steam-water-equilibrium
-      - file: content/first-law/portable-cooling-system
-      - file: content/first-law/hydrogen-storage-tanks
-      - file: content/first-law/air-tank
-
+    - file: content/first-law/steam-water-equilibrium
+    - file: content/first-law/portable-cooling-system
+    - file: content/first-law/hydrogen-storage-tanks
+    - file: content/first-law/air-tank
   - file: content/second-law/second-law
     sections:
-      - file: content/second-law/vortex-tube
-      - file: content/second-law/heating-water
-      - file: content/second-law/turbine-efficiency
-      - file: content/second-law/solar-powered-pump
-
+    - file: content/second-law/vortex-tube
+    - file: content/second-law/heating-water
+    - file: content/second-law/turbine-efficiency
+    - file: content/second-law/solar-powered-pump
   - file: content/exergy/exergy
     sections:
-      - file: content/exergy/second-law-efficiency
-
+    - file: content/exergy/second-law-efficiency
   - file: content/properties-pure/properties-pure
-    sections: 
-      - file: content/properties-pure/reduced-helmholtz
-
+    sections:
+    - file: content/properties-pure/reduced-helmholtz
   - file: content/mixtures/mixtures
-    sections: 
-      - file: content/mixtures/multicomponent-phase-equilibrium
-
+    sections:
+    - file: content/mixtures/multicomponent-phase-equilibrium
   - file: content/combustion/combustion
-    sections: 
-      - file: content/combustion/adiabatic-flame-temperature
-      - file: content/combustion/heating-values
-      - file: content/combustion/furnace-efficiency
-
+    sections:
+    - file: content/combustion/adiabatic-flame-temperature
+    - file: content/combustion/heating-values
+    - file: content/combustion/furnace-efficiency
   - file: content/chemical-equilibrium/chemical-equilibrium
     sections:
-      - file: content/chemical-equilibrium/equilibrium-constant
-      - file: content/chemical-equilibrium/equilibrium-alternative-methods
-      - file: content/chemical-equilibrium/adiabatic-flame-temperature
-      - file: content/chemical-equilibrium/combustion-acetylene
-
+    - file: content/chemical-equilibrium/equilibrium-constant
+    - file: content/chemical-equilibrium/equilibrium-alternative-methods
+    - file: content/chemical-equilibrium/adiabatic-flame-temperature
+    - file: content/chemical-equilibrium/combustion-acetylene
   - file: content/stat-thermo/stat-thermo
     sections:
-      - file: content/stat-thermo/monatomic-gas
-      - file: content/stat-thermo/diatomic-gases
-
-- part: Reference
+    - file: content/stat-thermo/monatomic-gas
+    - file: content/stat-thermo/diatomic-gases
+- caption: Reference
   chapters:
   - file: content/zbibliography
-  - file: content/contributing
-
-# - file: https://github.com/kyleniemeyer/computational-thermo
-#   title: GitHub repository
-#   #external: true
-#   not_numbered: true
+#  - file: content/contributing

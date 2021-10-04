@@ -1,28 +1,37 @@
 # Book settings
 title: Computational Thermodynamics
 author: Kyle Niemeyer
-copyright: "2020"
+copyright: "2021"
 logo: "images/logo/logo.png"
-
 email: kyle.niemeyer@oregonstate.edu
 
+exclude_patterns: [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", LICENSE.md]
+
 description: >- # this means to ignore newlines until "baseurl:"
-  This is a collection of examples in computational thermodynamics. 
+  This is a collection of note and examples in computational thermodynamics. 
 
 execute_notebooks: auto
 
+# Bibliography settings
+bibtex_bibfiles:
+  - references.bib
+
 html:
   favicon: images/logo/favicon.ico
+  baseurl: https://kyleniemeyer.github.io/computational-thermo
   home_page_in_navbar: true
   use_repository_button: true
   extra_navbar: Powered by <a href="https://jupyterbook.org">Jupyter Book</a>  # Will be displayed underneath the left navbar.
+  extra_footer: |
+    <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://github.com/kyleniemeyer/computational-thermo">Computational Thermodynamics notes</a> by <span property="cc:attributionName">Kyle Niemeyer</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+
 
 #baseurl: "/computational-thermo" # the subpath of your site, e.g. /blog. If there is no subpath for your site, use an empty string ""
 #url: "https://kyleniemeyer.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 repository:
   url: https://github.com/kyleniemeyer/computational-thermo
-  branch: newbackend
+  branch: master
   path_to_book: "book"
 
 launch_buttons:
@@ -33,10 +42,36 @@ binder:
   binderhub_url: "https://mybinder.org"
   text: "Launch binder"
 
-#sphinx:
-#  extra_extensions: []
+sphinx:
+  config:
+    html_show_copyright: false
+    mathjax_config:
+      TeX:
+        Macros:
+          vector: ["\\vec{#1}", 1]
+          uvec: ["\\hat{#1}", 1]
+          mag: ["\\lVert#1\\rVert", 1]
+          cross: "\\times"
+          unit: ["#1~\\mathrm{#2}", 2]
+    # MathJax 3 + Sphinx cannot currently use custom macros as defined here
+    # See: https://github.com/executablebooks/jupyter-book/issues/963
+    # and: https://github.com/executablebooks/jupyter-book/issues/917
+    # mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+parse:
+  myst_enable_extensions:  # default extensions to enable in the myst parser. See https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
+    - amsmath
+    - colon_fence
+    - deflist
+    - dollarmath
+    # - html_admonition
+    # - html_image
+    - linkify
+    - replacements
+    - smartquotes
+    #- substitution
 
 latex:
   latex_documents:
     targetname: book.tex
-  latex_engine: pdflatex  # one of 'pdflatex', 'xelatex' (recommended for unicode), 'luatex', 'platex', 'uplatex'
+  latex_engine: xelatex  # one of 'pdflatex', 'xelatex' (recommended for unicode), 'luatex', 'platex', 'uplatex'
