@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Using NumPy and SciPy modules &#8212; Computational Thermodynamics</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,39 +20,38 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/using-scipy.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -58,10 +59,27 @@
     <link rel="next" title="First Law of Thermodynamics" href="first-law/first-law.html" />
     <link rel="prev" title="Using CoolProp" href="intro-using-coolprop.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -70,9 +88,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -90,14 +109,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Computational Thermodynamics
-  </a>
- </li>
-</ul>
-<p class="caption">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Computational Thermodynamics
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Getting started
  </span>
@@ -124,7 +144,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Modules
  </span>
@@ -327,7 +347,7 @@
   </ul>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Reference
  </span>
@@ -341,104 +361,177 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/using-scipy.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/kyleniemeyer/computational-thermo"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/master?urlpath=tree/book/content/using-scipy.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/kyleniemeyer/computational-thermo/master?urlpath=tree/book/content/using-scipy.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/kyleniemeyer/computational-thermo"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/using-scipy.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#index">
    Index
@@ -512,25 +605,114 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Using NumPy and SciPy modules</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#index">
+   Index
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting">
+   Plotting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-systems-of-equations">
+   Solving systems of equations
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scalar-equations">
+     Scalar equations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#systems-of-equations-vector-functions">
+     Systems of equations / vector functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#integrating-ode-systems">
+   Integrating ODE systems
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerical-integral-of-samples">
+     Numerical integral of samples
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerical-integral-of-expression">
+     Numerical integral of expression
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#initial-value-problems">
+     Initial value problems
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization">
+   Optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#differentiation">
+   Differentiation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerical-derivatives">
+     Numerical derivatives
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analytical-derivative">
+     Analytical derivative
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="using-numpy-and-scipy-modules">
-<h1>Using NumPy and SciPy modules<a class="headerlink" href="#using-numpy-and-scipy-modules" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="using-numpy-and-scipy-modules">
+<h1>Using NumPy and SciPy modules<a class="headerlink" href="#using-numpy-and-scipy-modules" title="Permalink to this headline">#</a></h1>
 <p>In addition to using Cantera and Pint to help solve thermodynamics problems, we will need to use some additional packages in the scientific Python ecosystem to make plots, solve systems of equations, integrate ordinary differential equations, and more.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>The <a class="reference external" href="https://scipy-lectures.org"><em>SciPy Lecture Notes</em></a> are excellent, detailed resources on all these topics, and Python programming in general <span id="id1">[<a class="reference internal" href="zbibliography.html#id7">VGVdeBuyl20</a>]</span>.</p>
-</div>
+<p>The <a class="reference external" href="https://scipy-lectures.org"><em>SciPy Lecture Notes</em></a> are excellent, detailed resources on all these topics, and Python programming in general <span id="id1">[<a class="reference internal" href="zbibliography.html#id7" title="Gaël Varoquaux, Emmanuelle Gouillart, Olav Vahtras, and Pierre de Buyl, editors. SciPy Lecture Notes. 2020.1 edition, March 2020. URL: https://scipy-lectures.org.">VGVdeBuyl20</a>]</span>.</p>
+</aside>
 <p>The examples contained in this electronic book will integrate these techniques as needed, but this notebook contains some specific examples.</p>
-<div class="section" id="index">
-<h2>Index<a class="headerlink" href="#index" title="Permalink to this headline">¶</a></h2>
+<section id="index">
+<h2>Index<a class="headerlink" href="#index" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p><a class="reference external" href="#plotting">Plotting</a></p></li>
 <li><p><a class="reference external" href="#solving-systems-of-equations">Solving systems of equations</a></p></li>
@@ -538,9 +720,9 @@
 <li><p><a class="reference external" href="#optimization">Optimization</a></p></li>
 <li><p><a class="reference external" href="#differentiation">Differentiation</a></p></li>
 </ol>
-</div>
-<div class="section" id="plotting">
-<h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="plotting">
+<h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">#</a></h2>
 <p>We can use <a class="reference external" href="https://matplotlib.org">Matplotlib</a> to produce nice plots of our results. If you used Anaconda to set up your computing environment, you likely already have Matplotlib installed; if not, see their <a class="reference external" href="https://matplotlib.org/users/installing.html">installation instructions</a>.</p>
 <p>Matplotlib provides an interface that is very similar to what you might already know from Matlab: <code class="docutils literal notranslate"><span class="pre">pyplot</span></code>. You can import this in Python files or a Jupyter notebook with the standard abbreviation <code class="docutils literal notranslate"><span class="pre">plt</span></code>:</p>
 <div class="cell docutils container">
@@ -625,19 +807,19 @@
 <img alt="../_images/using-scipy_11_0.png" src="../_images/using-scipy_11_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="solving-systems-of-equations">
-<h2>Solving systems of equations<a class="headerlink" href="#solving-systems-of-equations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="solving-systems-of-equations">
+<h2>Solving systems of equations<a class="headerlink" href="#solving-systems-of-equations" title="Permalink to this headline">#</a></h2>
 <p>Frequently we will encounter a system of one or more equations that involves an equal number of unknowns. If this is a linear system of equations, we can use linear algebra and the NumPy <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.solve.html"><code class="docutils literal notranslate"><span class="pre">linalg.solve()</span></code></a> function, but more often in thermodynamics we encounter complex and/or nonlinear systems.</p>
 <p>In cases like this, we will need to set up our problems to find the roots, or zeroes, of the function(s); in other words, given a function <span class="math notranslate nohighlight">\( f(x) \)</span>, finding the root means to find the value of <span class="math notranslate nohighlight">\(x\)</span> such that <span class="math notranslate nohighlight">\( f(x) = 0 \)</span>. If we are dealing with a system of equations and the same number of unknowns, then these would be vectors: <span class="math notranslate nohighlight">\(\mathbf{f}(\mathbf{x}) = 0\)</span>.</p>
 <p>(You might be wondering what to do about equations that don’t equal zero… for example, if you have something like <span class="math notranslate nohighlight">\(f(x) = g(x)\)</span>. In this case, you just need to manipulate the equation to be in the form <span class="math notranslate nohighlight">\(f(x) - g(x) = 0\)</span>.)</p>
 <p>The <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html">SciPy optimization module</a> provides functions to find roots of equations; for scalar equations, we can use <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root_scalar.html#scipy.optimize.root_scalar"><code class="docutils literal notranslate"><span class="pre">root_scalar()</span></code></a>, and for vector equations, we can use <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root.html"><code class="docutils literal notranslate"><span class="pre">root()</span></code></a>.</p>
-<div class="section" id="scalar-equations">
-<h3>Scalar equations<a class="headerlink" href="#scalar-equations" title="Permalink to this headline">¶</a></h3>
+<section id="scalar-equations">
+<h3>Scalar equations<a class="headerlink" href="#scalar-equations" title="Permalink to this headline">#</a></h3>
 <p>Let’s first look at an example of a scalar function: one equation, one unknown.</p>
 <p>Find the root of this equation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a2e0276-3d8d-4e4d-b9f9-22775006f7b5">
-<span class="eqno">(1)<a class="headerlink" href="#equation-8a2e0276-3d8d-4e4d-b9f9-22775006f7b5" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cb122c9a-8aee-4770-bfe2-a1187e0379b0">
+<span class="eqno">(1)<a class="headerlink" href="#equation-cb122c9a-8aee-4770-bfe2-a1187e0379b0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \cos(x) = x^3
 \end{equation}\]</div>
 <p>We need to create a Python function that returns <span class="math notranslate nohighlight">\(f(x) = 0\)</span>, so that the function returns zero when the input value of <span class="math notranslate nohighlight">\(x\)</span> is the (correct) root. Then, we can use the <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> function with some initial guesses.</p>
@@ -664,9 +846,9 @@ Function evaluated at root: 1.1102230246251565e-16
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="systems-of-equations-vector-functions">
-<h3>Systems of equations / vector functions<a class="headerlink" href="#systems-of-equations-vector-functions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="systems-of-equations-vector-functions">
+<h3>Systems of equations / vector functions<a class="headerlink" href="#systems-of-equations-vector-functions" title="Permalink to this headline">#</a></h3>
 <p>We can also solve systems of equations in a similar fashion using the SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root.html"><code class="docutils literal notranslate"><span class="pre">root()</span></code></a> functino, where we find the roots <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> that satisfy <span class="math notranslate nohighlight">\(\mathbf{f} (\mathbf{x}) = 0\)</span>.</p>
 <p>For example, let’s try to find the values of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> that satisfy these equations:
 $<span class="math notranslate nohighlight">\(
@@ -710,13 +892,13 @@ x \ln (x) - y^3 = 0 \\
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="integrating-ode-systems">
-<h2>Integrating ODE systems<a class="headerlink" href="#integrating-ode-systems" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="integrating-ode-systems">
+<h2>Integrating ODE systems<a class="headerlink" href="#integrating-ode-systems" title="Permalink to this headline">#</a></h2>
 <p>In some cases, we encounter problems that require integrating one or more ordinary different equations in time. Depending on the form of the problem, we may need to integrate a function between two points (definite integral), or we may have a system of ordinary differential equations.</p>
-<div class="section" id="numerical-integral-of-samples">
-<h3>Numerical integral of samples<a class="headerlink" href="#numerical-integral-of-samples" title="Permalink to this headline">¶</a></h3>
+<section id="numerical-integral-of-samples">
+<h3>Numerical integral of samples<a class="headerlink" href="#numerical-integral-of-samples" title="Permalink to this headline">#</a></h3>
 <p>In some cases we have a set of <span class="math notranslate nohighlight">\((x,y)\)</span> data that we want to integrate numerically.
 We can do this using the NumPy <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.trapz.html"><code class="docutils literal notranslate"><span class="pre">trapz()</span></code> function</a>, which implements the composite trapezoidal rule.</p>
 <p>For example, let’s consider a situation where a reciprocating compressor is being used to compress ammonia vapor during a refrigeration cycle. We have some experimental measurements of the pressure-volume data during the compression stroke (see table), and we want to determine the work done on the ammonia by the piston.</p>
@@ -751,8 +933,8 @@ We can do this using the NumPy <a class="reference external" href="https://docs.
 </tbody>
 </table>
 <p>To find the work done by the piston to the ammonia, we can integrate pressure with respect to volume:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a1fc47a-45c8-4998-9f5c-6d6b0184e489">
-<span class="eqno">(2)<a class="headerlink" href="#equation-5a1fc47a-45c8-4998-9f5c-6d6b0184e489" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ae89cdd1-030d-43f7-901a-0fba9ecaa96e">
+<span class="eqno">(2)<a class="headerlink" href="#equation-ae89cdd1-030d-43f7-901a-0fba9ecaa96e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{\text{in}} = -\int_{V_1}^{V_2} P \, dV
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -783,14 +965,14 @@ W_{\text{in}} = -\int_{V_1}^{V_2} P \, dV
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="numerical-integral-of-expression">
-<h3>Numerical integral of expression<a class="headerlink" href="#numerical-integral-of-expression" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="numerical-integral-of-expression">
+<h3>Numerical integral of expression<a class="headerlink" href="#numerical-integral-of-expression" title="Permalink to this headline">#</a></h3>
 <p>We can also numerically integrate expressions/functions using the SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html"><code class="docutils literal notranslate"><span class="pre">quad()</span></code> function</a>, also in the <code class="docutils literal notranslate"><span class="pre">integrate</span></code> module.</p>
 <p>Let’s build on the previous example: first, let’s fit the compressor data to the polytropic form <span class="math notranslate nohighlight">\(P V^n = c\)</span>, where <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(n\)</span> are constants, then we can integrate the resulting function to calculate work.</p>
 <p>To fit the data, we need to rearrange the equation to the form <span class="math notranslate nohighlight">\(y = f(x)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b5270481-64f5-4f9f-a167-fa67dd7962dc">
-<span class="eqno">(3)<a class="headerlink" href="#equation-b5270481-64f5-4f9f-a167-fa67dd7962dc" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d1ac44f0-904d-488c-a2ca-2d941e51783a">
+<span class="eqno">(3)<a class="headerlink" href="#equation-d1ac44f0-904d-488c-a2ca-2d941e51783a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P = c V^{-n}
 \end{equation}\]</div>
 <p>We’ll use the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html"><code class="docutils literal notranslate"><span class="pre">scipy.optimize.curve_fit()</span></code></a> function for that.</p>
@@ -829,7 +1011,7 @@ P = c V^{-n}
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameters: n= 1.170, c= 194.200
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3397/2169371920.py:21: RuntimeWarning: overflow encountered in power
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_5059/2169371920.py:21: RuntimeWarning: overflow encountered in power
   return c * np.power(V, -n)
 </pre></div>
 </div>
@@ -878,12 +1060,12 @@ P = c V^{-n}
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="initial-value-problems">
-<h3>Initial value problems<a class="headerlink" href="#initial-value-problems" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="initial-value-problems">
+<h3>Initial value problems<a class="headerlink" href="#initial-value-problems" title="Permalink to this headline">#</a></h3>
 <p>In other words, we may have a system like</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d6572bf2-092f-4993-b887-b6162aadddfa">
-<span class="eqno">(4)<a class="headerlink" href="#equation-d6572bf2-092f-4993-b887-b6162aadddfa" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-81f22eb6-2f24-4825-99f1-0320f14598b6">
+<span class="eqno">(4)<a class="headerlink" href="#equation-81f22eb6-2f24-4825-99f1-0320f14598b6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d \mathbf{y}}{dt} = \mathbf{f} (t, \mathbf{y})
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the vector of state variables, for which we should have the initial values (<span class="math notranslate nohighlight">\(\mathbf{y}(t=0)\)</span>). In this case, we can use the SciPy function <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html"><code class="docutils literal notranslate"><span class="pre">solve_ivp()</span></code> function</a>, part of the <code class="docutils literal notranslate"><span class="pre">integrate</span></code> module.</p>
@@ -1010,15 +1192,15 @@ V = V_g + V_f \\
 <img alt="../_images/using-scipy_30_0.png" src="../_images/using-scipy_30_0.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="optimization">
-<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="optimization">
+<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this headline">#</a></h2>
 <p>For some problems, we may want to find the input parameter(s) that minimize or maximize some function. In these cases, we can use the SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html"><code class="docutils literal notranslate"><span class="pre">minimize_scalar()</span></code></a> function for a scalar function with one input variable, or the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html"><code class="docutils literal notranslate"><span class="pre">minimize()</span></code></a> function for a scalar function of one or more input variables.</p>
 <p>(Note: this is a fairly complicated topic, and we will only consider relatively simple optimization problems.)</p>
 <p>For example, consider a spring with a horizontal force applied; we can calculate the potential energy of the spring:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cec95c51-9e9d-4bab-80d9-dfc1e45e8dff">
-<span class="eqno">(5)<a class="headerlink" href="#equation-cec95c51-9e9d-4bab-80d9-dfc1e45e8dff" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4a1ec89f-c441-4cfc-bb8c-9dd1e917c910">
+<span class="eqno">(5)<a class="headerlink" href="#equation-4a1ec89f-c441-4cfc-bb8c-9dd1e917c910" title="Permalink to this equation">#</a></span>\[\begin{equation}
 PE(x) = 0.5 k x^2 - F x \;.
 \end{equation}\]</div>
 <p>At equilibrium, the potential energy will be at a minimum, so given a particular force we can find the displacement by finding the value that minimizes the potential energy.</p>
@@ -1049,8 +1231,8 @@ PE(x) = 0.5 k x^2 - F x \;.
 </div>
 <p>A more complicated problem is a system with two springs, connected at one end with a force in some general direction (with <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> components); the system has both horizontal and vertical components. The springs have spring constants <span class="math notranslate nohighlight">\(k_a\)</span> and <span class="math notranslate nohighlight">\(k_b\)</span>, and unloaded lengths <span class="math notranslate nohighlight">\(L_a\)</span> and <span class="math notranslate nohighlight">\(L_b\)</span>.</p>
 <p>The potential energy for this system is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52ec85da-063d-48cc-a8b3-0ca1510f4d0e">
-<span class="eqno">(6)<a class="headerlink" href="#equation-52ec85da-063d-48cc-a8b3-0ca1510f4d0e" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-28ba4f03-bf88-4f9d-941f-a6dbac959366">
+<span class="eqno">(6)<a class="headerlink" href="#equation-28ba4f03-bf88-4f9d-941f-a6dbac959366" title="Permalink to this equation">#</a></span>\[\begin{equation}
 PE(x,y) = 0.5 k_a \left( \sqrt{x^2 + (L_a - y)^2} - L_a \right)^2 + 0.5 k_b \left( \sqrt{x^2 + (L_b + y)^2} - L_b \right)^2 - F_x x - F_y y
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the horizontal and vertical deformations from the unloaded state.
@@ -1098,12 +1280,12 @@ We can minimize this function of two variables to find the displacement based on
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="differentiation">
-<h2>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="differentiation">
+<h2>Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this headline">#</a></h2>
 <p>Many thermodynamic properties are derivatives of other properties, so you may find the need to take derivatives of either data or of an expression. We can use the NumPy function <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.gradient.html"><code class="docutils literal notranslate"><span class="pre">gradient()</span></code></a> to take numerical derivatives of data using finite differences, and we can use <a class="reference external" href="https://www.sympy.org/en/index.html">SymPy</a> to find analytical derivatives of expressions.</p>
-<div class="section" id="numerical-derivatives">
-<h3>Numerical derivatives<a class="headerlink" href="#numerical-derivatives" title="Permalink to this headline">¶</a></h3>
+<section id="numerical-derivatives">
+<h3>Numerical derivatives<a class="headerlink" href="#numerical-derivatives" title="Permalink to this headline">#</a></h3>
 <p>Let’s say we have data for some function <span class="math notranslate nohighlight">\(f(x) = x^2\)</span> at some locations <span class="math notranslate nohighlight">\(x\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1146,9 +1328,9 @@ We can minimize this function of two variables to find the displacement based on
 </div>
 </div>
 <p>The numerical derivative we obtain is very accurate, thanks to the linear nature of the derivative. However, at the boundaries the approximate derivative is a bit off, due to the first-order finite differences used there.</p>
-</div>
-<div class="section" id="analytical-derivative">
-<h3>Analytical derivative<a class="headerlink" href="#analytical-derivative" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="analytical-derivative">
+<h3>Analytical derivative<a class="headerlink" href="#analytical-derivative" title="Permalink to this headline">#</a></h3>
 <p>In some cases we may be given (or obtain) analytical expressions that we need to differentiate. Given a function, we have two options for calculating the derivative:</p>
 <ol class="simple">
 <li><p>Use the function to calculate values over the desired range, then numerically differentiate.</p></li>
@@ -1204,8 +1386,8 @@ We can minimize this function of two variables to find the displacement based on
 <p>As expected, the exact derivative we calculated using SymPy matches the known derivative perfectly—this was obtained symbolically, so there are no approximations/errors involved.</p>
 <p>When taking the derivative of more complicated expressions that involve other functions (e.g., <span class="math notranslate nohighlight">\(\sin\)</span>, <span class="math notranslate nohighlight">\(\log\)</span>), you will need to use the SymPy-provided versions: <code class="docutils literal notranslate"><span class="pre">sympy.sin</span></code>, <code class="docutils literal notranslate"><span class="pre">sympy.log</span></code>, etc. We also need to explicitly define symbolic variables, either using <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">sympy.Symbol('x')</span></code> to create one variable at a time or <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">sympy.symbols('x</span> <span class="pre">y',</span> <span class="pre">real=True)</span></code> to create multiple variables at once. (The string you specify is the displayed representation of the variable, and can include complex formatting such as subscripts/superscripts and Greek letters.)</p>
 <p>For example, let’s take the derivative of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-300a6dc0-44a5-4fad-861e-0179cd1e2be4">
-<span class="eqno">(7)<a class="headerlink" href="#equation-300a6dc0-44a5-4fad-861e-0179cd1e2be4" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fbc010e3-d9f8-4464-9f9f-028bbbee1ec8">
+<span class="eqno">(7)<a class="headerlink" href="#equation-fbc010e3-d9f8-4464-9f9f-028bbbee1ec8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(x) = \log(x) + x^3
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1225,9 +1407,9 @@ f(x) = \log(x) + x^3
 </div>
 </div>
 <p>This matches what we expect for this derivative.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1251,57 +1433,51 @@ f(x) = \log(x) + x^3
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="intro-using-coolprop.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Using CoolProp</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="intro-using-coolprop.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Using CoolProp</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="first-law/first-law.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">First Law of Thermodynamics</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="first-law/first-law.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">First Law of Thermodynamics</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Kyle Niemeyer<br/>
-        
-          <div class="extra_footer">
-            <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://github.com/kyleniemeyer/computational-thermo">Computational Thermodynamics notes</a> by <span property="cc:attributionName">Kyle Niemeyer</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Kyle Niemeyer<br/>
+  
+    <div class="extra_footer">
+      <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://github.com/kyleniemeyer/computational-thermo">Computational Thermodynamics notes</a> by <span property="cc:attributionName">Kyle Niemeyer</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
 
-          </div>
-      </p>
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
+
   </body>
 </html>
