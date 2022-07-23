@@ -12,6 +12,9 @@ description: >- # this means to ignore newlines until "baseurl:"
 
 execute_notebooks: auto
 
+execute:
+  timeout: 120
+
 # Bibliography settings
 bibtex_bibfiles:
   - references.bib
@@ -45,7 +48,7 @@ binder:
 sphinx:
   config:
     html_show_copyright: false
-    mathjax_config:
+    mathjax3_config:
       TeX:
         Macros:
           vector: ["\\vec{#1}", 1]

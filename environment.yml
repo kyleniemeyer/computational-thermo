@@ -12,5 +12,4 @@ dependencies:
  - pandas
  - sympy
 # dependencies for building book
- - pip:
-    - jupyter-book
+ - jupyter-book
