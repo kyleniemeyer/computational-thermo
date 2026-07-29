@@ -1,7 +1,7 @@
 # Computational Thermodynamics
 
 [![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-contributor%20covenant-green.svg)](https://www.contributor-covenant.org/version/2/0/code_of_conduct/)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4017943.svg)](https://doi.org/10.5281/zenodo.4017943)
+[![DOI](https://zenodo.org/badge/252040266.svg)](https://doi.org/10.5281/zenodo.4017942)
 
 This repository contains an electronic book of example problems in thermodynamics, in the format of Jupyter notebooks, developed to supplement the course ME 540, Intermediate Thermodynamics, taught at [Oregon State University](https://oregonstate.edu) by [Prof. Kyle Niemeyer](https://mime.oregonstate.edu/people/kyle-niemeyer).
 
@@ -14,16 +14,16 @@ I developed this material as an open educational resource, with the goal of enab
 
 If you reference this material in a scholarly publication, please cite it:
 
-> Kyle E. Niemeyer. (2020) computational-thermo v0.1.0 [software]. Zenodo. https://doi.org/10.5281/zenodo.4017943
+> Kyle E. Niemeyer. (2026) computational-thermo v2026.02. Zenodo. https://doi.org/10.5281/zenodo.216848202
 
 A BibTeX entry for LaTeX users is
 
 ```TeX
 @misc{computational-thermo-book,
     author = {Kyle E Niemeyer},
-    year = 2020,
-    title = {{computational-thermo} v0.1.0},
-    doi = {10.5281/zenodo.4017943},
+    year = 2026,
+    title = {{computational-thermo} v2026.02},
+    doi = {10.5281/zenodo.21684820},
     url = {https://github.com/kyleniemeyer/computational-thermo},
 }
 ```
